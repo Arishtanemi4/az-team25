@@ -58,3 +58,7 @@ def build_geo_bridge(geo_gsm_columns, df10, df7, df9):
         "geo_matching_type_counts_resolved": bridge["Matching_Type"].value_counts().to_dict(),
     }
     return bridge[["Geo_accession", "ModelID"]], report
+
+
+def filter_human(df7):
+    return df7[df7["Species of origin"].astype(str).str.contains("Homo sapiens", na=False)].copy()
