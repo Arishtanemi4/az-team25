@@ -71,3 +71,10 @@ def build_ccle_bridge(df9):
         .rename(columns={"DepMap_ID": "ModelID", "CCLE_Name": "CCLE_ID"})
         .drop_duplicates(subset="CCLE_ID")
     )
+
+
+def resolve_duplicate_keys(df, key_cols, tie_break_col):
+    n_before = len(df)
+    deduped = df.sort_values(tie_break_col).drop_duplicates(subset=key_cols, keep="first")
+    deduped = deduped.reset_index(drop=True)
+    return deduped, n_before - len(deduped)
