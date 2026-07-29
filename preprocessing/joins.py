@@ -62,3 +62,12 @@ def build_geo_bridge(geo_gsm_columns, df10, df7, df9):
 
 def filter_human(df7):
     return df7[df7["Species of origin"].astype(str).str.contains("Homo sapiens", na=False)].copy()
+
+
+def build_ccle_bridge(df9):
+    return (
+        df9[["DepMap_ID", "CCLE_Name"]]
+        .dropna(subset=["CCLE_Name"])
+        .rename(columns={"DepMap_ID": "ModelID", "CCLE_Name": "CCLE_ID"})
+        .drop_duplicates(subset="CCLE_ID")
+    )
