@@ -9,6 +9,7 @@ RAW = REPO_ROOT / "data" / "raw"
 
 PATHS = {
     "df7": RAW / "nomenclature" / "7_cellosaurus.csv",
+    "df8": RAW / "nomenclature" / "8_DepMap_OmicsProfiles.csv",
     "df9": RAW / "nomenclature" / "9_DepMap_sample_info.csv",
 }
 
@@ -19,6 +20,9 @@ def main():
 
     df9 = pd.read_csv(PATHS["df9"])
     df9, n_df9_dupes = joins.resolve_duplicate_keys(df9, ["DepMap_ID"], "RRID")
+
+    df8 = pd.read_csv(PATHS["df8"])
+    profile_bridge = joins.build_profile_bridge(df8)
 
 
 if __name__ == "__main__":
