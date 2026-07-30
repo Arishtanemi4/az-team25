@@ -24,6 +24,8 @@ def main():
     df8 = pd.read_csv(PATHS["df8"])
     profile_bridge = joins.build_profile_bridge(df8)
 
+    ccle_bridge = joins.build_ccle_bridge(df9)
+
 
 if __name__ == "__main__":
     main()
