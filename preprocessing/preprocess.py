@@ -12,6 +12,8 @@ PATHS = {
     "df8": RAW / "nomenclature" / "8_DepMap_OmicsProfiles.csv",
     "df9": RAW / "nomenclature" / "9_DepMap_sample_info.csv",
     "df11": RAW / "nomenclature" / "11_hpa_rna_celline_description.tsv",
+    "df3": RAW / "gene_expression" / "3_GEOexpression.txt",
+    "df10": RAW / "nomenclature" / "10_GEOInfo.txt",
 }
 
 
@@ -29,6 +31,10 @@ def main():
 
     df11 = pd.read_csv(PATHS["df11"], sep="\t")
     hpa_bridge, hpa_report = joins.build_hpa_bridge(df11, df7, df9)
+
+    df10 = pd.read_csv(PATHS["df10"], sep="\t")
+    geo_gsm_columns = pd.read_csv(PATHS["df3"], sep="\t", nrows=0).columns[1:]
+    geo_bridge, geo_report = joins.build_geo_bridge(geo_gsm_columns, df10, df7, df9)
 
 
 if __name__ == "__main__":
