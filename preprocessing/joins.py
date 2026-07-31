@@ -116,3 +116,36 @@ def build_gene_reference(df1_path, df2_path):
         "ambiguous_symbols_sample": ambiguous_symbols[:15],
     }
     return gene_reference, report
+
+
+def build_symbol_bridge(header_cols, gene_reference, symbol_position="before"):
+    symbol_to_ensembl = gene_reference.groupby("symbol")["ensembl_id"].apply(list).to_dict()
+
+    col_to_ensembl = {}
+    no_match = 0
+    collisions = 0
+    collision_candidates = {}
+    for col in header_cols:
+        if symbol_position == "before":
+            symbol = col.split(" (")[0]
+        else:
+            match = re.search(r"\(([^()]+)\)\s*$", col)
+            symbol = match.group(1) if match else None
+
+        candidates = symbol_to_ensembl.get(symbol) if symbol else None
+        if not candidates:
+            no_match += 1
+        elif len(candidates) > 1:
+            collisions += 1
+            collision_candidates[symbol] = candidates
+        else:
+            col_to_ensembl[col] = candidates[0]
+
+    report = {
+        "n_columns": len(header_cols),
+        "n_resolved": len(col_to_ensembl),
+        "n_no_match": no_match,
+        "n_collisions": collisions,
+        "collision_candidates": collision_candidates,
+    }
+    return col_to_ensembl, report
