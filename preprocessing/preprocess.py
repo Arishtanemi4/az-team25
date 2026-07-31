@@ -24,6 +24,8 @@ def main():
     df9 = pd.read_csv(PATHS["df9"])
     df9, n_df9_dupes = joins.resolve_duplicate_keys(df9, ["DepMap_ID"], "RRID")
 
+    df9_age_avg, n_age_dupes = joins.average_duplicate_rna_profiles(df9, ["patient_id"], "age")
+
     df8 = pd.read_csv(PATHS["df8"])
     profile_bridge = joins.build_profile_bridge(df8)
 

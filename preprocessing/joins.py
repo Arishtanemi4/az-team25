@@ -78,3 +78,9 @@ def resolve_duplicate_keys(df, key_cols, tie_break_col):
     deduped = df.sort_values(tie_break_col).drop_duplicates(subset=key_cols, keep="first")
     deduped = deduped.reset_index(drop=True)
     return deduped, n_before - len(deduped)
+
+
+def average_duplicate_rna_profiles(df, key_cols, value_col):
+    n_before = len(df)
+    averaged = df.groupby(key_cols, as_index=False)[value_col].mean()
+    return averaged, n_before - len(averaged)
