@@ -1,3 +1,5 @@
+import re
+
 import pandas as pd
 
 
@@ -84,3 +86,33 @@ def average_duplicate_rna_profiles(df, key_cols, value_col):
     n_before = len(df)
     averaged = df.groupby(key_cols, as_index=False)[value_col].mean()
     return averaged, n_before - len(averaged)
+
+
+def build_gene_reference(df1_path, df2_path):
+    df1_genes = pd.read_csv(df1_path, sep="\t", usecols=["Gene", "Gene name"])
+    df1_genes = df1_genes.drop_duplicates().rename(
+        columns={"Gene": "ensembl_id", "Gene name": "symbol"}
+    )
+
+    header = pd.read_csv(df2_path, nrows=0)
+    pairs = []
+    for col in header.columns[1:]:
+        match = re.match(r"^(.*) \((ENSG\d+)\)$", col)
+        if match:
+            pairs.append((match.group(2), match.group(1)))
+    df2_genes = pd.DataFrame(pairs, columns=["ensembl_id", "symbol"]).drop_duplicates()
+
+    all_genes = pd.concat([df1_genes, df2_genes], ignore_index=True).drop_duplicates()
+
+    symbol_counts = all_genes.groupby("symbol")["ensembl_id"].nunique()
+    ambiguous_symbols = symbol_counts[symbol_counts > 1].index.tolist()
+
+    gene_reference = all_genes.drop_duplicates(subset="ensembl_id", keep="first")
+    gene_reference = gene_reference.reset_index(drop=True)
+
+    report = {
+        "n_genes": len(gene_reference),
+        "n_ambiguous_symbols": len(ambiguous_symbols),
+        "ambiguous_symbols_sample": ambiguous_symbols[:15],
+    }
+    return gene_reference, report
