@@ -6,6 +6,7 @@ import joins
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 RAW = REPO_ROOT / "data" / "raw"
+AUGMENTED = REPO_ROOT / "data" / "augmented"
 
 PATHS = {
     "df7": RAW / "nomenclature" / "7_cellosaurus.csv",
@@ -14,7 +15,18 @@ PATHS = {
     "df11": RAW / "nomenclature" / "11_hpa_rna_celline_description.tsv",
     "df3": RAW / "gene_expression" / "3_GEOexpression.txt",
     "df10": RAW / "nomenclature" / "10_GEOInfo.txt",
+    "df1": RAW / "gene_expression" / "1_4_hpa_rna_celline.tsv",
+    "df2": RAW / "gene_expression" / "2_DepMap_OmicsExpressionAllGenesTPMLogp1Profile.csv",
+    "df4": RAW / "gene_expression" / "4_Harmonized_MS_CCLE_Gygi_subsetted.csv",
+    "df14": RAW / "non_gene_expression" / "14_OmicsGlobalSignatures.csv",
+    "df15": AUGMENTED / "gene_properties" / "15_CRISPRGeneEffect.csv",
+    "df16": AUGMENTED / "gene_properties" / "16_OmicsCNGeneWGS.csv",
+    "df17": AUGMENTED / "nomenclature" / "17_Model.csv",
 }
+
+
+def scan_model_ids(path, **read_kwargs):
+    return set(pd.read_csv(path, **read_kwargs).iloc[:, 0].astype(str))
 
 
 def main():
@@ -23,6 +35,8 @@ def main():
 
     df9 = pd.read_csv(PATHS["df9"])
     df9, n_df9_dupes = joins.resolve_duplicate_keys(df9, ["DepMap_ID"], "RRID")
+
+    df9_age_avg, n_age_dupes = joins.average_duplicate_rna_profiles(df9, ["patient_id"], "age")
 
     df8 = pd.read_csv(PATHS["df8"])
     profile_bridge = joins.build_profile_bridge(df8)
@@ -35,6 +49,35 @@ def main():
     df10 = pd.read_csv(PATHS["df10"], sep="\t")
     geo_gsm_columns = pd.read_csv(PATHS["df3"], sep="\t", nrows=0).columns[1:]
     geo_bridge, geo_report = joins.build_geo_bridge(geo_gsm_columns, df10, df7, df9)
+
+    gene_reference, gene_ref_report = joins.build_gene_reference(PATHS["df1"], PATHS["df2"])
+
+    df4 = pd.read_csv(PATHS["df4"])
+    protein_cols = [c for c in df4.columns if c != df4.columns[0]]
+    protein_bridge, protein_bridge_report = joins.build_symbol_bridge(
+        protein_cols, gene_reference, symbol_position="inside"
+    )
+
+    rna_assayed_ids = set(df8.loc[df8["Datatype"] == "rna", "ModelID"])
+    dna_assayed_ids = set(df8.loc[df8["Datatype"].isin(["wes", "wgs"]), "ModelID"])
+    fusion_assayed_ids = rna_assayed_ids
+    protein_assayed_ids = scan_model_ids(PATHS["df4"], usecols=[0])
+    dependency_assayed_ids = scan_model_ids(PATHS["df15"], usecols=[0])
+    copy_number_assayed_ids = scan_model_ids(PATHS["df16"], usecols=["ModelID"])
+    signatures_assayed_ids = scan_model_ids(PATHS["df14"], usecols=["ModelID"])
+
+    omics_model_ids = (
+        rna_assayed_ids
+        | dna_assayed_ids
+        | protein_assayed_ids
+        | fusion_assayed_ids
+        | dependency_assayed_ids
+        | copy_number_assayed_ids
+        | signatures_assayed_ids
+    )
+
+    df17 = pd.read_csv(PATHS["df17"])
+    cell_lines, cell_lines_report = joins.build_cell_lines(df9, df7, df11, df17, omics_model_ids)
 
 
 if __name__ == "__main__":
