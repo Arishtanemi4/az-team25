@@ -2,6 +2,8 @@ import re
 
 import pandas as pd
 
+PROBLEM_PATTERN = re.compile(r"problematic|contaminated|misidentified", re.IGNORECASE)
+
 
 def build_profile_bridge(df8):
     return df8[["ProfileID", "ModelID", "Datatype"]].copy()
@@ -149,3 +151,48 @@ def build_symbol_bridge(header_cols, gene_reference, symbol_position="before"):
         "collision_candidates": collision_candidates,
     }
     return col_to_ensembl, report
+
+
+def build_cell_lines(df9, df7, df11, df17, omics_model_ids):
+    df9 = df9.rename(columns={"DepMap_ID": "ModelID"}).copy()
+
+    df7_clean = df7.dropna(subset=["Identifier (cell line name)"]).copy()
+    df7_clean["is_problematic"] = (
+        df7_clean["Comments"].fillna("").str.contains(PROBLEM_PATTERN)
+    )
+    problem_accessions = set(
+        df7_clean.loc[df7_clean["is_problematic"], "Accession (CVCL_xxxx)"]
+    )
+    df9["is_problematic"] = df9["RRID"].isin(problem_accessions)
+
+    df9_ids = set(df9["ModelID"])
+    orphans = set(omics_model_ids) - df9_ids
+    df17_ids = set(df17["ModelID"])
+    resolved_orphans = orphans & df17_ids
+    still_excluded = orphans - df17_ids
+
+    rename_map = {
+        "OncotreeLineage": "lineage",
+        "CellLineName": "cell_line_name",
+        "StrippedCellLineName": "stripped_cell_line_name",
+        "OncotreePrimaryDisease": "primary_disease",
+        "PatientID": "patient_id",
+        "Sex": "sex",
+        "PrimaryOrMetastasis": "primary_or_metastasis",
+    }
+    backfill = df17[df17["ModelID"].isin(resolved_orphans)].copy()
+    backfill = backfill.rename(columns=rename_map)
+    if "sex" in backfill.columns:
+        backfill["sex"] = backfill["sex"].str.lower()
+    keep_cols = ["ModelID", "RRID"] + [c for c in rename_map.values() if c in backfill.columns]
+    backfill = backfill[keep_cols]
+    backfill["is_problematic"] = backfill["RRID"].isin(problem_accessions)
+
+    cell_lines = pd.concat([df9, backfill], ignore_index=True, sort=False)
+
+    report = {
+        "n_orphans_total": len(orphans),
+        "n_orphans_resolved_by_df17": len(resolved_orphans),
+        "n_orphans_still_excluded": len(still_excluded),
+    }
+    return cell_lines, report
