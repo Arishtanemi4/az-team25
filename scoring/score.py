@@ -27,3 +27,21 @@ def _load_unresolved_symbols(path):
     except FileNotFoundError:
         return {}
     return {layer: set(ids) for layer, ids in data.items() if not layer.startswith("_")}
+
+
+def resolve_genes(tokens, gene_reference_df):
+    resolved, ambiguous, unresolved = {}, [], []
+    for token in tokens:
+        by_id = gene_reference_df[gene_reference_df["ensembl_id"] == token]
+        if len(by_id) == 1:
+            resolved[token] = token
+            continue
+
+        by_symbol = gene_reference_df[gene_reference_df["symbol"] == token]
+        if len(by_symbol) == 1:
+            resolved[token] = by_symbol.iloc[0]["ensembl_id"]
+        elif len(by_symbol) > 1:
+            ambiguous.append(token)
+        else:
+            unresolved.append(token)
+    return resolved, ambiguous, unresolved
