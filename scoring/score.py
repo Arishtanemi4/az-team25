@@ -54,3 +54,53 @@ def resolve_genes_or_raise(tokens, gene_reference_df):
     if unresolved:
         raise ValueError(f"Gene(s) not found in gene_reference: {unresolved}")
     return resolved
+
+STAGE_LABELS = {
+    "resolve_genes": "Resolving requested genes against the reference table",
+    "filter_candidates": "Filtering candidate cell lines by lineage, disease, and QC criteria",
+    "load_tables": "Loading expression, dependency, mutation, copy-number, and fusion evidence tables",
+    "correlation": "Computing inter-gene correlation weights across the reference expression panel",
+    "score_candidates": "Scoring each candidate cell line against the requested gene panel",
+    "rank": "Ranking candidates and splitting results by confidence tier",
+    "similarity": "Identifying similar backup cell lines for top-ranked results",
+}
+
+
+COVERAGE_FILTER_COLUMNS = ["ModelID", "msi_high", "ploidy", "metabolomics_available", "mirna_available"]
+
+
+def filter_candidates(cell_lines_df, coverage_df=None, lineage=None, primary_disease=None,
+                       exclude_problematic=False, msi_high=None, ploidy_min=None, ploidy_max=None,
+                       require_metabolomics=False, require_mirna=False):
+    needs_coverage = (
+        msi_high is not None or ploidy_min is not None or ploidy_max is not None
+        or require_metabolomics or require_mirna
+    )
+    if needs_coverage and coverage_df is None:
+        raise ValueError(
+            "filter_candidates: msi_high/ploidy_min/ploidy_max/require_metabolomics/"
+            "require_mirna need coverage_df (data/processed/coverage.csv) -- none was given."
+        )
+
+    subset = cell_lines_df
+    if lineage is not None:
+        subset = subset[subset["lineage"] == lineage]
+    if primary_disease is not None:
+        subset = subset[subset["primary_disease"] == primary_disease]
+    if exclude_problematic:
+        subset = subset[~subset["is_problematic"].astype(bool)]
+
+    if needs_coverage:
+        subset = subset.merge(coverage_df[COVERAGE_FILTER_COLUMNS], on="ModelID", how="left")
+        if msi_high is not None:
+            subset = subset[subset["msi_high"] == msi_high]
+        if ploidy_min is not None:
+            subset = subset[subset["ploidy"] >= ploidy_min]
+        if ploidy_max is not None:
+            subset = subset[subset["ploidy"] <= ploidy_max]
+        if require_metabolomics:
+            subset = subset[subset["metabolomics_available"].astype(bool)]
+        if require_mirna:
+            subset = subset[subset["mirna_available"].astype(bool)]
+
+    return subset, len(subset)
