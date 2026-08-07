@@ -45,3 +45,12 @@ def resolve_genes(tokens, gene_reference_df):
         else:
             unresolved.append(token)
     return resolved, ambiguous, unresolved
+
+
+def resolve_genes_or_raise(tokens, gene_reference_df):
+    resolved, ambiguous, unresolved = resolve_genes(tokens, gene_reference_df)
+    if ambiguous:
+        raise ValueError(f"Ambiguous gene symbol(s) -- specify by Ensembl ID instead: {ambiguous}")
+    if unresolved:
+        raise ValueError(f"Gene(s) not found in gene_reference: {unresolved}")
+    return resolved
