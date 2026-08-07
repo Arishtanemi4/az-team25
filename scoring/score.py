@@ -1,5 +1,7 @@
 import json
 
+import io_utils
+
 DATA_DIR = "data/processed"
 GENE_ROLE_REFERENCE_PATH = "preprocessing/resources/gene_role_reference.csv"
 UNRESOLVED_SYMBOLS_PATH = "preprocessing/resources/unresolved_gene_symbols.json"
@@ -104,3 +106,9 @@ def filter_candidates(cell_lines_df, coverage_df=None, lineage=None, primary_dis
             subset = subset[subset["mirna_available"].astype(bool)]
 
     return subset, len(subset)
+
+
+def _load_filtered(path, genes, model_ids, chunksize=1_000_000):
+    model_ids = set(model_ids)
+    df = io_utils.read_gene_filtered(path, genes, chunksize=chunksize)
+    return df[df["ModelID"].isin(model_ids)].reset_index(drop=True)
