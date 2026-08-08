@@ -208,3 +208,94 @@ def missing_evidence_report(per_gene_results, unresolved_symbols=None):
                 "severity": severity,
             })
     return report
+
+
+TUMOUR_REPRESENTATIVENESS_GAP = (
+    "Not available: Jin et al. (2023) tumour representativeness has no corresponding table "
+    "in data/processed/ or data/augmented/ (the file is reserved for external validation)."
+)
+HALLMARK_TAGS_GAP = (
+    "Not available: no gene-to-hallmark mapping resource exists anywhere in this repo."
+)
+RNA_ONLY_CORRELATION_NOTE = (
+    "The correlation discount (rho_bar/m_eff) is estimated from RNA co-expression alone, but "
+    "is applied to d_gene, which aggregates all six evidence layers. Two genes can be "
+    "RNA-co-regulated yet functionally independent, or RNA-independent yet functionally "
+    "redundant -- a disclosed structural mismatch, not corrected here."
+)
+
+
+def build_result(model_id, D, veto_info, per_gene_results, rho_bar, m_eff, m,
+                  cell_lines_row, hpa_agreement=None, geo_agreement=None,
+                  fusion_context=None, mutation_context=None, pan_essential_context=None,
+                  tier_params=None, build_narrative=True, unresolved_symbols=None):
+    per_gene_layer_counts = {
+        g["ensembl_id"]: sum(1 for info in g["layers"].values() if info["d"] is not None)
+        for g in per_gene_results if g["d_gene"] is not None
+    }
+    inclusion_genes = [g for g in per_gene_results if g["role"] == "inclusion"]
+    inclusion_abstained = sum(1 for g in inclusion_genes if g["d_gene"] is None)
+    inclusion_abstention_fraction = (
+        inclusion_abstained / len(inclusion_genes) if inclusion_genes else 1.0
+    )
+
+    tier = confidence_tier(
+        per_gene_layer_counts, hpa_agreement, inclusion_abstention_fraction,
+        **(tier_params or {}),
+    )
+
+    veto = None
+    if veto_info is not None:
+        vetoed_gene = next(g for g in per_gene_results if g["ensembl_id"] == veto_info["ensembl_id"])
+        reason = "exclusion_expressed" if vetoed_gene["role"] == "exclusion" else "inclusion_below_floor"
+        veto = {"ensembl_id": vetoed_gene["ensembl_id"], "symbol": vetoed_gene["symbol"], "reason": reason}
+
+    mutation_by_gene = {c["ensembl_id"]: c for c in (mutation_context or [])}
+    fusion_by_gene = {c["ensembl_id"]: c for c in (fusion_context or [])}
+    pan_essential_by_gene = {c["ensembl_id"]: c for c in (pan_essential_context or [])}
+
+    warnings = [
+        {
+            "type": "pan_essential",
+            "ensembl_id": c["ensembl_id"],
+            "symbol": c["symbol"],
+            "message": PAN_ESSENTIAL_NOTE.format(fraction_strong=c.get("fraction_strong") or 0.0),
+        }
+        for c in (pan_essential_context or [])
+    ]
+    if m > 1:
+        warnings.append({"type": "correlation_layer_scope", "message": RNA_ONLY_CORRELATION_NOTE})
+
+    return {
+        "model_id": model_id,
+        "D": D,
+        "confidence_tier": tier,
+        "hpa_agreement": hpa_agreement,
+        "geo_agreement": geo_agreement,
+        "veto": veto,
+        "rho_bar": rho_bar,
+        "m_eff": m_eff,
+        "m": m,
+        "warnings": warnings,
+        "per_gene": [
+            {
+                **g,
+                "narrative": gene_narrative(
+                    g, mutation_by_gene.get(g["ensembl_id"]), fusion_by_gene.get(g["ensembl_id"]),
+                    pan_essential_by_gene.get(g["ensembl_id"]),
+                ) if build_narrative else None,
+            }
+            for g in per_gene_results
+        ],
+        "missing_evidence": missing_evidence_report(per_gene_results, unresolved_symbols),
+        "is_problematic": bool(cell_lines_row.get("is_problematic", False)),
+        "tumour_representativeness": None,
+        "tumour_representativeness_note": TUMOUR_REPRESENTATIVENESS_GAP,
+        "hallmark_tags": None,
+        "hallmark_tags_note": HALLMARK_TAGS_GAP,
+        "fusion_context": [
+            {"ensembl_id": c["ensembl_id"], "symbol": c["symbol"], "events": c["events"]}
+            for c in (fusion_context or [])
+        ],
+        "similar_lines": [],
+    }
