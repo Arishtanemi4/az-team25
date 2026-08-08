@@ -177,3 +177,34 @@ def gene_narrative(gene_result, mutation_ctx=None, fusion_ctx=None, pan_essentia
     if fusion_ctx is not None:
         narrative += f" {_fusion_narrative_clause(fusion_ctx)}"
     return narrative
+
+
+def missing_evidence_report(per_gene_results, unresolved_symbols=None):
+    report = []
+    for gene in per_gene_results:
+        for layer in _gene_role_abstained_layers(gene):
+            report.append({
+                "ensembl_id": gene["ensembl_id"],
+                "symbol": gene["symbol"],
+                "role": gene["role"],
+                "severity": "gene_role_unknown",
+                "layer": layer,
+            })
+        for layer in _identity_unresolvable_layers(gene, unresolved_symbols):
+            report.append({
+                "ensembl_id": gene["ensembl_id"],
+                "symbol": gene["symbol"],
+                "role": gene["role"],
+                "severity": "measured_unresolvable",
+                "layer": layer,
+            })
+    for gene in per_gene_results:
+        if gene["d_gene"] is None:
+            severity = "cannot_certify_absence" if gene["role"] == "exclusion" else "untested"
+            report.append({
+                "ensembl_id": gene["ensembl_id"],
+                "symbol": gene["symbol"],
+                "role": gene["role"],
+                "severity": severity,
+            })
+    return report
