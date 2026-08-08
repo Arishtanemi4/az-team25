@@ -95,3 +95,7 @@ def score_dependency(chronos_score, ensembl_id, direction, extended_constants):
         return None
     dependency_strength = -chronos_score
     return desirability_transform(dependency_strength, lt[0], lt[1], direction)
+
+
+def is_pan_essential(ensembl_id, essentiality_constants):
+    return ensembl_id in essentiality_constants["pan_essential"]
