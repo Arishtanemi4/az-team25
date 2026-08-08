@@ -22,3 +22,7 @@ ESSENTIALITY_CONSTANTS_PATH = "scoring/resources/common_essential_genes.json"
 def load_essentiality_constants(path=ESSENTIALITY_CONSTANTS_PATH):
     with open(path) as f:
         return json.load(f)
+
+
+def _flip_role(direction):
+    return "exclusion" if direction == "inclusion" else "inclusion"
