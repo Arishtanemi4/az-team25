@@ -99,3 +99,13 @@ def score_dependency(chronos_score, ensembl_id, direction, extended_constants):
 
 def is_pan_essential(ensembl_id, essentiality_constants):
     return ensembl_id in essentiality_constants["pan_essential"]
+
+
+def score_copy_number(copy_number_value, ensembl_id, direction, extended_constants, gene_class="unknown"):
+    if gene_class == "unknown":
+        return None
+    lt = get_lt(ensembl_id, "copy_number", extended_constants=extended_constants)
+    if lt is None:
+        return None
+    effective_direction = direction if gene_class == "oncogene" else _flip_role(direction)
+    return desirability_transform(copy_number_value, lt[0], lt[1], effective_direction)
