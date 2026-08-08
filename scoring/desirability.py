@@ -181,3 +181,12 @@ def fusion_confidence_factor(rows):
     if has_high_confidence or has_in_frame:
         return FUSION_CONFIDENCE_FACTORS["one"]
     return FUSION_CONFIDENCE_FACTORS["neither"]
+
+
+def score_fusion(rows, fusions_state, direction):
+    category = classify_fusion_rows(rows, fusions_state)
+    if category == "no_assay":
+        return None, 1.0
+    if category == "fusion_present":
+        return FUSION_D_TABLE[category][direction], fusion_confidence_factor(rows)
+    return FUSION_D_TABLE[category][direction], 1.0
