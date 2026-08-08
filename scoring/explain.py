@@ -74,3 +74,15 @@ def _fusion_narrative_clause(fusion_ctx):
         f"Fusion evidence: {n_events} event(s){partner_note}, "
         f"{n_high_conf} high-confidence, {n_in_frame} in-frame."
     )
+
+
+GENE_ROLE_DEPENDENT_LAYERS = ("mutation", "copy_number")
+
+
+def _gene_role_abstained_layers(gene_result):
+    abstained = []
+    for layer in GENE_ROLE_DEPENDENT_LAYERS:
+        info = gene_result["layers"].get(layer, {})
+        if info.get("d") is None and info.get("state") != "not_assayed" and info.get("gene_class") == "unknown":
+            abstained.append(layer)
+    return abstained
