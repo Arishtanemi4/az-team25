@@ -171,3 +171,13 @@ def classify_fusion_rows(rows, fusions_state):
     if rows is None or len(rows) == 0:
         return "assayed_no_fusion"
     return "fusion_present"
+
+
+def fusion_confidence_factor(rows):
+    has_high_confidence = bool(rows["confidence_high"].any())
+    has_in_frame = bool(rows["in_frame"].any())
+    if has_high_confidence and has_in_frame:
+        return FUSION_CONFIDENCE_FACTORS["both"]
+    if has_high_confidence or has_in_frame:
+        return FUSION_CONFIDENCE_FACTORS["one"]
+    return FUSION_CONFIDENCE_FACTORS["neither"]
