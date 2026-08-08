@@ -87,3 +87,11 @@ def score_protein(zscore, direction, extended_constants, detected=True):
         return None
     lt = get_lt(None, "protein", extended_constants=extended_constants)
     return desirability_transform(zscore, lt[0], lt[1], direction)
+
+
+def score_dependency(chronos_score, ensembl_id, direction, extended_constants):
+    lt = get_lt(ensembl_id, "dependency", extended_constants=extended_constants)
+    if lt is None:
+        return None
+    dependency_strength = -chronos_score
+    return desirability_transform(dependency_strength, lt[0], lt[1], direction)
