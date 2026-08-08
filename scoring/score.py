@@ -1,4 +1,5 @@
 import json
+import math
 
 import pandas as pd
 
@@ -451,3 +452,71 @@ def score_panel(inclusion_tokens,
     if on_stage:
         on_stage(STAGE_LABELS["similarity"])
     return outcome
+
+
+def rank_and_diagnose(results, top_n=10):
+    allowed_tiers = {"High", "Moderate", "Low", "Insufficient"}
+    for result in results:
+        if result["confidence_tier"] not in allowed_tiers:
+            raise ValueError(
+                f"Unexpected confidence tier for {result['model_id']}: "
+                f"{result['confidence_tier']!r}."
+            )
+        if result["D"] is not None:
+            try:
+                is_finite = math.isfinite(result["D"])
+            except TypeError as exc:
+                raise ValueError(f"Non-numeric desirability score for {result['model_id']}.") from exc
+            if not is_finite:
+                raise ValueError(f"Non-finite desirability score for {result['model_id']}.")
+
+    insufficient_ids = {
+        r["model_id"] for r in results if r["D"] is None or r["confidence_tier"] == "Insufficient"
+    }
+    insufficient = [r for r in results if r["model_id"] in insufficient_ids]
+    scored = [r for r in results if r["model_id"] not in insufficient_ids]
+
+    disqualified = [r for r in scored if r["D"] <= 0.0 or r["veto"] is not None]
+    recommendation_candidates = [
+        r for r in scored if r["D"] > 0.0 and r["veto"] is None
+    ]
+
+    if not scored or all(r["D"] == 0.0 for r in scored):
+        zero_scored = [r for r in results if r["D"] == 0.0]
+        if not zero_scored:
+            return {
+                "ranked": [], "low_confidence": [], "ranked_beyond_top_n": [], "total_ranked": 0,
+                "insufficient": insufficient, "disqualified": disqualified, "diagnostic": None,
+            }
+
+        veto_counts = {}
+        for r in zero_scored:
+            if r["veto"]:
+                key = (r["veto"]["ensembl_id"], r["veto"]["symbol"])
+                veto_counts[key] = veto_counts.get(key, 0) + 1
+        most_disqualifying = max(veto_counts, key=veto_counts.get) if veto_counts else None
+        return {
+            "ranked": [], "low_confidence": [], "ranked_beyond_top_n": [], "total_ranked": 0,
+            "insufficient": insufficient, "disqualified": disqualified,
+            "diagnostic": {
+                "message": "Every candidate scored D=0 -- this query is over-constrained.",
+                "most_disqualifying_gene": most_disqualifying,
+                "veto_counts": veto_counts,
+            },
+        }
+
+    recommendation_candidates.sort(key=lambda r: (-r["D"], r["model_id"]))
+    moderate_or_better = [
+        r for r in recommendation_candidates if r["confidence_tier"] in ("High", "Moderate")
+    ]
+    low_confidence = [r for r in recommendation_candidates if r["confidence_tier"] == "Low"]
+
+    return {
+        "ranked": moderate_or_better[:top_n],
+        "low_confidence": low_confidence,
+        "ranked_beyond_top_n": moderate_or_better[top_n:],
+        "total_ranked": len(moderate_or_better),
+        "insufficient": insufficient,
+        "disqualified": disqualified,
+        "diagnostic": None,
+    }
