@@ -80,3 +80,10 @@ def score_rna(y, ensembl_id, direction, rna_constants, lineage=None):
     if lt is None:
         return None
     return desirability_transform(y, lt[0], lt[1], direction)
+
+
+def score_protein(zscore, direction, extended_constants, detected=True):
+    if not detected:
+        return None
+    lt = get_lt(None, "protein", extended_constants=extended_constants)
+    return desirability_transform(zscore, lt[0], lt[1], direction)
