@@ -100,3 +100,80 @@ def _identity_unresolvable_layers(gene_result, unresolved_symbols):
         if info.get("state") == "not_assayed" and gene_result["ensembl_id"] in unresolved_symbols.get(layer, ()):
             unresolvable.append(layer)
     return unresolvable
+
+
+FUSION_STATUS_UNKNOWN = (
+    "Fusion status unknown -- this line was never RNA-assayed for fusion calling, so an "
+    "absent fusion call here is missing evidence, not a confirmed negative."
+)
+PAN_ESSENTIAL_NOTE = (
+    "Dependency evidence withheld: this gene is broadly essential across measured cell lines "
+    "(strongly negative in {fraction_strong:.0%} of profiled lines), so a strong Chronos "
+    "dependency here is not selective evidence for this query. Never a score bonus, never "
+    "silent."
+)
+GENE_ROLE_UNKNOWN_NOTE = (
+    "{layer} evidence withheld: whether this reading is desirable depends on whether the gene "
+    "is an oncogene or a tumour suppressor, and that role is not yet classified for this gene "
+    "(most genes in this build now have a classified role; this one does not). Abstained "
+    "rather than guessed a direction."
+)
+PROTEIN_NON_DETECTED_NOTE = (
+    "Protein assay ran but the target was not detected -- abstained (excluded from the "
+    "weighted mean) rather than scored at the imputed detection floor. Biologically "
+    "consistent with low expression (protein missingness tracks low RNA 6.1x more often than "
+    "high) -- that context is disclosed here, never used to infer or score a specific value."
+)
+PROTEIN_MIXED_SCALE_NOTE = (
+    "Protein evidence is a z-score, panel-relative by construction (it arrives that way and "
+    "cannot be undone) -- its floor/target are in z-units, a mixed-scale limitation on this "
+    "gene's evidence combination, disclosed here rather than corrected (edge case 14)."
+)
+
+
+def gene_narrative(gene_result, mutation_ctx=None, fusion_ctx=None, pan_essential_ctx=None):
+    symbol = gene_result["symbol"]
+    role = gene_result["role"]
+
+    dependency_state = gene_result["layers"]["dependency"]["state"]
+    pan_essential_clause = ""
+    if dependency_state == "excluded_pan_essential" and pan_essential_ctx is not None:
+        fraction = pan_essential_ctx.get("fraction_strong") or 0.0
+        pan_essential_clause = f" {PAN_ESSENTIAL_NOTE.format(fraction_strong=fraction)}"
+
+    gene_role_layers = _gene_role_abstained_layers(gene_result)
+    gene_role_clause = "".join(
+        f" {GENE_ROLE_UNKNOWN_NOTE.format(layer=layer.replace('_', ' ').capitalize())}"
+        for layer in gene_role_layers
+    )
+
+    protein_non_detected_clause = (
+        f" {PROTEIN_NON_DETECTED_NOTE}"
+        if gene_result["layers"]["protein"]["state"] == "non_detected"
+        else ""
+    )
+
+    if gene_result["d_gene"] is None:
+        narrative = f"{symbol} ({role}): no evidence in any measured layer -- abstained, not scored."
+        if gene_result["layers"]["fusion"]["state"] == "not_assayed":
+            narrative += f" {FUSION_STATUS_UNKNOWN}"
+        narrative += pan_essential_clause + gene_role_clause + protein_non_detected_clause
+        return narrative
+
+    layer_parts = [
+        f"{layer} (d={info['d']:.2f})" for layer, info in gene_result["layers"].items()
+        if info["d"] is not None
+    ]
+    narrative = f"{symbol} ({role}): d_gene={gene_result['d_gene']:.2f}, from " + ", ".join(layer_parts)
+    if gene_result["missing_layers"]:
+        narrative += f". Missing: {', '.join(gene_result['missing_layers'])}."
+    if gene_result["layers"]["fusion"]["state"] == "not_assayed":
+        narrative += f" {FUSION_STATUS_UNKNOWN}"
+    narrative += pan_essential_clause + gene_role_clause + protein_non_detected_clause
+    if "protein" in [l for l, i in gene_result["layers"].items() if i["d"] is not None]:
+        narrative += f" {PROTEIN_MIXED_SCALE_NOTE}"
+    if mutation_ctx is not None:
+        narrative += f" {_mutation_narrative_clause(mutation_ctx)}"
+    if fusion_ctx is not None:
+        narrative += f" {_fusion_narrative_clause(fusion_ctx)}"
+    return narrative
