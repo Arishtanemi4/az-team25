@@ -61,3 +61,16 @@ def _mutation_narrative_clause(mutation_ctx):
     if isinstance(civic, str) and civic:
         parts.append(f"CIViC: {civic[:120]}")
     return f"Somatic variant evidence: {', '.join(parts)}."
+
+
+def _fusion_narrative_clause(fusion_ctx):
+    rows = fusion_ctx["rows"]
+    partners = sorted({p for p in rows.get("partner_ensembl_id", []) if isinstance(p, str)})
+    n_events = fusion_ctx["events"]
+    n_high_conf = int(rows["confidence_high"].sum())
+    n_in_frame = int(rows["in_frame"].sum())
+    partner_note = f" with partner(s) {', '.join(partners)}" if partners else ""
+    return (
+        f"Fusion evidence: {n_events} event(s){partner_note}, "
+        f"{n_high_conf} high-confidence, {n_in_frame} in-frame."
+    )
