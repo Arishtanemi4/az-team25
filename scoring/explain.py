@@ -86,3 +86,17 @@ def _gene_role_abstained_layers(gene_result):
         if info.get("d") is None and info.get("state") != "not_assayed" and info.get("gene_class") == "unknown":
             abstained.append(layer)
     return abstained
+
+
+IDENTITY_RESOLUTION_LAYERS = ("protein", "dependency", "copy_number")
+
+
+def _identity_unresolvable_layers(gene_result, unresolved_symbols):
+    if not unresolved_symbols:
+        return []
+    unresolvable = []
+    for layer in IDENTITY_RESOLUTION_LAYERS:
+        info = gene_result["layers"].get(layer, {})
+        if info.get("state") == "not_assayed" and gene_result["ensembl_id"] in unresolved_symbols.get(layer, ()):
+            unresolvable.append(layer)
+    return unresolvable
