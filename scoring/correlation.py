@@ -34,3 +34,35 @@ def compute_weights(rho_bar, m):
             weights[gene] = 1 / vif
     m_eff = sum(weights.values())
     return weights, m_eff
+
+
+SMALL_QUERY_CAVEAT = (
+    "CAMERA's variance-inflation correction was validated on gene sets of ~15-580 genes. "
+    "This query has fewer genes than that, so rho_bar and m_eff should be read as an informed "
+    "estimate of shared signal, not a fully validated statistical guarantee."
+)
+
+
+def get_correlation_weights(ensembl_ids, expression_rna_path=EXPRESSION_RNA_PATH):
+    m = len(ensembl_ids)
+    if m == 1:
+        gene = ensembl_ids[0]
+        return {
+            "weights": {gene: 1.0},
+            "rho_bar": {gene: None},
+            "m_eff": 1.0,
+            "note": "m=1: no correlation discount is possible, none was applied.",
+        }
+
+    wide_df = load_query_expression(ensembl_ids, expression_rna_path)
+    corr_matrix = compute_pairwise_spearman(wide_df)
+    rho_bar = compute_rho_bar(corr_matrix)
+    weights, m_eff = compute_weights(rho_bar, m)
+
+    for gene in ensembl_ids:
+        if gene not in weights:
+            weights[gene] = 1.0
+            rho_bar[gene] = None
+            m_eff += 1.0
+
+    return {"weights": weights, "rho_bar": rho_bar, "m_eff": m_eff, "note": SMALL_QUERY_CAVEAT}
