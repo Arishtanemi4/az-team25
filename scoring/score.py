@@ -191,3 +191,89 @@ def load_tables_for_query(query_genes, model_ids, gene_reference_df, data_dir=DA
             else _load_unresolved_symbols(unresolved_symbols_path)
         ),
     }
+
+
+def _score_gene_layers(model_id, ensembl_id, role, tables, lineage, has_mutations, fusions_state_line):
+    rna_constants = tables["rna_constants"]
+    extended_constants = tables["extended_constants"]
+    layers = {}
+
+    y_rna = tables["expression_rna"].get((model_id, ensembl_id))
+    if y_rna is not None:
+        d = desirability.score_rna(y_rna, ensembl_id, role, rna_constants, lineage=lineage)
+        layers["rna"] = {"value": y_rna, "unit": LAYER_UNITS["rna"], "d": d, "state": "measured"}
+    else:
+        layers["rna"] = {"value": None, "unit": LAYER_UNITS["rna"], "d": None, "state": "not_assayed"}
+
+    protein_row = tables["protein"].get((model_id, ensembl_id))
+    if protein_row is not None:
+        zscore, detected = protein_row
+        d = desirability.score_protein(zscore, role, extended_constants, detected=detected)
+
+        state = "measured" if detected else "non_detected"
+        value = zscore if detected else None
+        layers["protein"] = {"value": value, "unit": LAYER_UNITS["protein"], "d": d, "state": state}
+    else:
+        layers["protein"] = {"value": None, "unit": LAYER_UNITS["protein"], "d": None, "state": "not_assayed"}
+
+    y_dep = tables["dependency"].get((model_id, ensembl_id))
+    if y_dep is not None:
+        essentiality_constants = tables.get("essentiality_constants", {"pan_essential": {}})
+        pan_essential = desirability.is_pan_essential(ensembl_id, essentiality_constants)
+        if pan_essential:
+
+            d = None
+        else:
+            d = desirability.score_dependency(y_dep, ensembl_id, role, extended_constants)
+        state = "excluded_pan_essential" if pan_essential else "measured"
+        layers["dependency"] = {
+            "value": y_dep, "unit": LAYER_UNITS["dependency"], "d": d, "state": state,
+            "pan_essential": pan_essential,
+        }
+    else:
+        layers["dependency"] = {
+            "value": None, "unit": LAYER_UNITS["dependency"], "d": None, "state": "not_assayed",
+            "pan_essential": False,
+        }
+
+    gene_class = tables.get("gene_class", {}).get(ensembl_id, "unknown")
+
+    y_cn = tables["copy_number"].get((model_id, ensembl_id))
+    if y_cn is not None:
+        d = desirability.score_copy_number(y_cn, ensembl_id, role, extended_constants, gene_class=gene_class)
+        layers["copy_number"] = {
+            "value": y_cn, "unit": LAYER_UNITS["copy_number"], "d": d, "state": "measured",
+            "gene_class": gene_class,
+        }
+    else:
+        layers["copy_number"] = {
+            "value": None, "unit": LAYER_UNITS["copy_number"], "d": None, "state": "not_assayed",
+            "gene_class": gene_class,
+        }
+
+    mutation_rows = tables["mutations"].get((model_id, ensembl_id))
+    mutation_category = desirability.classify_mutation_rows(mutation_rows, has_mutations)
+    d_mutation = desirability.score_mutation(mutation_rows, has_mutations, role, gene_class=gene_class)
+    mutation_state = {
+        "no_sequencing": "not_assayed",
+        "none_sequenced_clean": "measured_absent",
+    }.get(mutation_category, "measured")
+    layers["mutation"] = {
+        "value": mutation_category, "unit": LAYER_UNITS["mutation"], "d": d_mutation, "state": mutation_state,
+        "gene_class": gene_class,
+    }
+
+    fusion_rows = tables["fusions"].get((model_id, ensembl_id))
+    d_fusion, fusion_confidence_factor = desirability.score_fusion(fusion_rows, fusions_state_line, role)
+    fusion_category = desirability.classify_fusion_rows(fusion_rows, fusions_state_line)
+    fusion_state = {
+        "no_assay": "not_assayed",
+        "assayed_no_fusion": "measured_absent",
+        "fusion_present": "measured",
+    }[fusion_category]
+    layers["fusion"] = {
+        "value": 0 if fusion_rows is None else len(fusion_rows), "unit": LAYER_UNITS["fusion"],
+        "d": d_fusion, "state": fusion_state, "confidence_factor": fusion_confidence_factor,
+    }
+
+    return layers, mutation_rows, fusion_rows
