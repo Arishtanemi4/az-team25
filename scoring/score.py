@@ -3,10 +3,12 @@ import json
 import pandas as pd
 
 import combine
+import correlation
 import desirability
 import evidence
 import explain
 import io_utils
+import similarity
 
 DATA_DIR = "data/processed"
 GENE_ROLE_REFERENCE_PATH = "preprocessing/resources/gene_role_reference.csv"
@@ -367,3 +369,85 @@ def score_one_line(model_id, inclusion_genes, exclusion_genes, tables, correlati
         tier_params=tier_params, build_narrative=build_narrative,
         unresolved_symbols=tables.get("unresolved_symbols"),
     )
+
+
+def score_panel(inclusion_tokens,
+                exclusion_tokens,
+                gene_reference_df,
+                cell_lines_df,
+                lineage=None,
+                data_dir=DATA_DIR,
+                rna_constants_path=desirability.RNA_CONSTANTS_PATH,
+                extended_constants_path=desirability.EXTENDED_CONSTANTS_PATH,
+                essentiality_constants_path=desirability.ESSENTIALITY_CONSTANTS_PATH,
+                gene_role_path=GENE_ROLE_REFERENCE_PATH,
+                unresolved_symbols_path=UNRESOLVED_SYMBOLS_PATH,
+                top_k_similar=3,
+                primary_disease=None,
+                exclude_problematic=False,
+                msi_high=None,
+                ploidy_min=None,
+                ploidy_max=None,
+                require_metabolomics=False,
+                require_mirna=False,
+                top_n=10,
+                layer_weights=None,
+                tier_params=None,
+                on_stage=None):
+    if not inclusion_tokens and not exclusion_tokens:
+        raise ValueError("At least one inclusion or exclusion gene is required.")
+
+    resolved = resolve_genes_or_raise(inclusion_tokens + exclusion_tokens, gene_reference_df)
+    if on_stage:
+        on_stage(STAGE_LABELS["resolve_genes"])
+
+    inclusion_genes = [resolved[t] for t in inclusion_tokens]
+    exclusion_genes = [resolved[t] for t in exclusion_tokens]
+    query_genes = inclusion_genes + exclusion_genes
+
+    coverage_df = pd.read_csv(f"{data_dir}/coverage.csv")
+    candidates, candidate_count = filter_candidates(
+        cell_lines_df, coverage_df=coverage_df, lineage=lineage, primary_disease=primary_disease,
+        exclude_problematic=exclude_problematic, msi_high=msi_high, ploidy_min=ploidy_min,
+        ploidy_max=ploidy_max, require_metabolomics=require_metabolomics, require_mirna=require_mirna,
+    )
+    if candidate_count < 10:
+        print(f"Note: the requested filters left only {candidate_count} candidate line(s).")
+    if on_stage:
+        on_stage(STAGE_LABELS["filter_candidates"])
+
+    model_ids = candidates["ModelID"].tolist()
+    tables = load_tables_for_query(
+        query_genes, model_ids, gene_reference_df, data_dir=data_dir,
+        rna_constants_path=rna_constants_path, extended_constants_path=extended_constants_path,
+        essentiality_constants_path=essentiality_constants_path, gene_role_path=gene_role_path,
+        unresolved_symbols_path=unresolved_symbols_path, coverage_df=coverage_df,
+    )
+    if on_stage:
+        on_stage(STAGE_LABELS["load_tables"])
+    correlation_weights = correlation.get_correlation_weights(query_genes, f"{data_dir}/expression_rna.csv")
+    if on_stage:
+        on_stage(STAGE_LABELS["correlation"])
+
+    cell_lines_by_id = candidates.set_index("ModelID").to_dict(orient="index")
+
+    results = []
+    for model_id in model_ids:
+        result = score_one_line(
+            model_id, inclusion_genes, exclusion_genes, tables, correlation_weights,
+            cell_lines_by_id[model_id], layer_weights=layer_weights, tier_params=tier_params,
+        )
+        result["_coverage_count"] = tables["coverage_layer_count"].get(model_id, 0)
+        results.append(result)
+    if on_stage:
+        on_stage(STAGE_LABELS["score_candidates"])
+
+    outcome = rank_and_diagnose(results, top_n=top_n)
+    if on_stage:
+        on_stage(STAGE_LABELS["rank"])
+    outcome["ranked"] = similarity.attach_similar_lines(
+        outcome["ranked"], tables, query_genes, top_k=top_k_similar
+    )
+    if on_stage:
+        on_stage(STAGE_LABELS["similarity"])
+    return outcome
