@@ -145,3 +145,13 @@ def classify_mutation_rows(rows, has_mutations):
     if (rows["vep_impact"] == "MODERATE").any():
         return "moderate_vus"
     return "low_or_modifier"
+
+
+def score_mutation(rows, has_mutations, direction, gene_class="unknown"):
+    if gene_class == "unknown":
+        return None
+    category = classify_mutation_rows(rows, has_mutations)
+    if category == "no_sequencing":
+        return None
+    table = MUTATION_D_TABLE if gene_class == "oncogene" else TUMOUR_SUPPRESSOR_MUTATION_D_TABLE
+    return table[category][direction]
