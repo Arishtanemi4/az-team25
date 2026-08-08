@@ -2,7 +2,10 @@ import json
 
 import pandas as pd
 
+import combine
 import desirability
+import evidence
+import explain
 import io_utils
 
 DATA_DIR = "data/processed"
@@ -277,3 +280,90 @@ def _score_gene_layers(model_id, ensembl_id, role, tables, lineage, has_mutation
     }
 
     return layers, mutation_rows, fusion_rows
+
+
+def score_one_line(model_id, inclusion_genes, exclusion_genes, tables, correlation_weights,
+                    cell_lines_row, layer_weights=None, tier_params=None, build_narrative=True):
+    lineage = cell_lines_row.get("lineage")
+    has_mutations = tables["mutations_state"].get(model_id, "not_assayed") != "not_assayed"
+    fusions_state_line = tables["fusions_state"].get(model_id, "not_assayed")
+
+    query = [(g, "inclusion") for g in inclusion_genes] + [(g, "exclusion") for g in exclusion_genes]
+
+    per_gene_results = []
+    rna_values, hpa_values, geo_values = {}, {}, {}
+    fusion_context, mutation_context, pan_essential_context = [], [], []
+
+    for ensembl_id, role in query:
+        symbol = tables["gene_symbols"].get(ensembl_id, ensembl_id)
+        layers, mutation_rows, fusion_rows = _score_gene_layers(
+            model_id, ensembl_id, role, tables, lineage, has_mutations, fusions_state_line
+        )
+
+        if layers["rna"]["d"] is not None:
+            rna_values[ensembl_id] = layers["rna"]["value"]
+        y_hpa = tables["expression_rna_hpa"].get((model_id, ensembl_id))
+        if y_hpa is not None:
+            hpa_values[ensembl_id] = y_hpa  # corroboration only -- never scored (CONSTRAINTS.md #9)
+        y_geo = tables["expression_rna_geo"].get((model_id, ensembl_id))
+        if y_geo is not None:
+            geo_values[ensembl_id] = y_geo  # corroboration/breadth only (METHOD_DECISION.md SS2)
+
+        if mutation_rows is not None and len(mutation_rows) > 0:
+            mutation_context.append({
+                "ensembl_id": ensembl_id, "symbol": symbol,
+                "category": layers["mutation"]["value"], "rows": mutation_rows,
+            })
+        if fusion_rows is not None and len(fusion_rows) > 0:
+            fusion_context.append({
+                "ensembl_id": ensembl_id, "symbol": symbol,
+                "events": len(fusion_rows), "rows": fusion_rows,
+            })
+        if layers["dependency"].get("pan_essential"):
+            pan_essential_context.append({
+                "ensembl_id": ensembl_id, "symbol": symbol,
+                "fraction_strong": tables["essentiality_constants"]["pan_essential"].get(ensembl_id),
+            })
+
+        layer_d = {layer: info["d"] for layer, info in layers.items() if info["d"] is not None}
+        gene_weights = dict(layer_weights) if layer_weights is not None else dict(evidence.LAYER_WEIGHTS)
+        if layers["fusion"]["state"] == "measured":
+            gene_weights["fusion"] = evidence.LAYER_WEIGHTS["fusion"] * layers["fusion"]["confidence_factor"]
+        fusion_weight_zeroed = False
+        if role == "exclusion" and layers["fusion"]["state"] == "measured_absent":
+            gene_weights["fusion"] = 0.0
+            fusion_weight_zeroed = True
+
+        per_gene_results.append({
+            "ensembl_id": ensembl_id,
+            "symbol": symbol,
+            "role": role,
+            "d_gene": evidence.combine_gene_evidence(layer_d, weights=gene_weights),
+            "layers": layers,
+            "missing_layers": [
+                l for l, info in layers.items()
+                if info["state"] in ("not_assayed", "non_detected")
+            ],
+            "fusion_weight_zeroed": fusion_weight_zeroed,
+        })
+
+    active = [g for g in per_gene_results if g["d_gene"] is not None]
+    if not active:
+        D, veto_info = None, None
+    else:
+        d_gene = {g["ensembl_id"]: g["d_gene"] for g in active}
+        weights = {eid: correlation_weights["weights"].get(eid, 1.0) for eid in d_gene}
+        D, veto_info = combine.combine_across_genes(d_gene, weights)
+
+    hpa_agreement = explain.check_hpa_corroboration(rna_values, hpa_values, tables["rna_constants"])
+    geo_agreement = explain.check_geo_corroboration(rna_values, geo_values, tables["rna_constants"])
+
+    return explain.build_result(
+        model_id, D, veto_info, per_gene_results,
+        correlation_weights["rho_bar"], correlation_weights["m_eff"], len(active),
+        cell_lines_row, hpa_agreement=hpa_agreement, geo_agreement=geo_agreement,
+        fusion_context=fusion_context, mutation_context=mutation_context,
+        pan_essential_context=pan_essential_context,
+        tier_params=tier_params, build_narrative=build_narrative,
+        unresolved_symbols=tables.get("unresolved_symbols"),
+    )
