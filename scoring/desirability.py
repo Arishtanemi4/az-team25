@@ -47,3 +47,29 @@ def get_lt(ensembl_id, layer, rna_constants=None, extended_constants=None, linea
         return (entry["L"], entry["T"]) if entry else None
 
     raise ValueError(f"unknown layer: {layer}")
+
+
+R_EXPONENT = 1
+
+
+def desirability_transform(y, L, T, direction, r=R_EXPONENT):
+    if T <= L:
+        return None  # no discrimination available for this gene; should not occur post-calibration
+
+    fraction = min(max((y - L) / (T - L), 0.0), 1.0) ** r
+
+    if direction == "inclusion":
+        if y < L:
+            return 0.0
+        if y > T:
+            return 1.0
+        return fraction
+
+    if direction == "exclusion":
+        if y < L:
+            return 1.0
+        if y > T:
+            return 0.0
+        return 1.0 - fraction
+
+    raise ValueError(f"unknown direction: {direction}")
