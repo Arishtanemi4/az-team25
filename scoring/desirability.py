@@ -155,3 +155,19 @@ def score_mutation(rows, has_mutations, direction, gene_class="unknown"):
         return None
     table = MUTATION_D_TABLE if gene_class == "oncogene" else TUMOUR_SUPPRESSOR_MUTATION_D_TABLE
     return table[category][direction]
+
+
+FUSION_D_TABLE = {
+    "fusion_present": {"inclusion": 1.0, "exclusion": 0.0},
+    "assayed_no_fusion": {"inclusion": 0.0, "exclusion": 1.0},
+}
+
+FUSION_CONFIDENCE_FACTORS = {"both": 1.0, "one": 0.5, "neither": 0.25}
+
+
+def classify_fusion_rows(rows, fusions_state):
+    if fusions_state == "not_assayed":
+        return "no_assay"
+    if rows is None or len(rows) == 0:
+        return "assayed_no_fusion"
+    return "fusion_present"
