@@ -47,3 +47,17 @@ def confidence_tier(per_gene_layer_counts, hpa_agreement, inclusion_abstention_f
     if frac_ge_moderate >= moderate_fraction_threshold:
         return "Moderate"
     return "Low"
+
+
+def _mutation_narrative_clause(mutation_ctx):
+    row = mutation_ctx["rows"].iloc[0]
+    parts = [f"variant {row.get('protein_change')}" if row.get("protein_change") else "a variant"]
+    if row.get("vep_impact"):
+        parts.append(f"{row['vep_impact']} impact")
+    clin_sig = row.get("VepClinSig")
+    if isinstance(clin_sig, str) and clin_sig:
+        parts.append(f"ClinVar: {clin_sig}")
+    civic = row.get("CivicDescription")
+    if isinstance(civic, str) and civic:
+        parts.append(f"CIViC: {civic[:120]}")
+    return f"Somatic variant evidence: {', '.join(parts)}."
