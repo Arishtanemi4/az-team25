@@ -73,3 +73,10 @@ def desirability_transform(y, L, T, direction, r=R_EXPONENT):
         return 1.0 - fraction
 
     raise ValueError(f"unknown direction: {direction}")
+
+
+def score_rna(y, ensembl_id, direction, rna_constants, lineage=None):
+    lt = get_lt(ensembl_id, "rna", rna_constants=rna_constants, lineage=lineage)
+    if lt is None:
+        return None
+    return desirability_transform(y, lt[0], lt[1], direction)
