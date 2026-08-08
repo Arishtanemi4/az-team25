@@ -30,3 +30,20 @@ def check_geo_corroboration(rna_values, geo_values, rna_constants):
         if rna_on != geo_on:
             return False
     return True
+
+
+def confidence_tier(per_gene_layer_counts, hpa_agreement, inclusion_abstention_fraction,
+                     insufficient_fraction=0.5, high_min_layers=3, high_fraction_threshold=0.8,
+                     moderate_min_layers=2, moderate_fraction_threshold=0.8):
+    if inclusion_abstention_fraction >= insufficient_fraction or not per_gene_layer_counts:
+        return "Insufficient"
+
+    n = len(per_gene_layer_counts)
+    frac_ge_high = sum(1 for c in per_gene_layer_counts.values() if c >= high_min_layers) / n
+    frac_ge_moderate = sum(1 for c in per_gene_layer_counts.values() if c >= moderate_min_layers) / n
+
+    if frac_ge_high >= high_fraction_threshold and hpa_agreement is not False:
+        return "High"
+    if frac_ge_moderate >= moderate_fraction_threshold:
+        return "Moderate"
+    return "Low"
