@@ -22,3 +22,15 @@ def compute_rho_bar(corr_matrix):
         mean_corr = others.mean() if m > 1 else None
         rho_bar[gene] = max(mean_corr, 0.0) if mean_corr is not None else None
     return rho_bar
+
+
+def compute_weights(rho_bar, m):
+    weights = {}
+    for gene, rho in rho_bar.items():
+        if rho is None:
+            weights[gene] = 1.0
+        else:
+            vif = 1 + (m - 1) * rho
+            weights[gene] = 1 / vif
+    m_eff = sum(weights.values())
+    return weights, m_eff
