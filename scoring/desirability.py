@@ -109,3 +109,39 @@ def score_copy_number(copy_number_value, ensembl_id, direction, extended_constan
         return None
     effective_direction = direction if gene_class == "oncogene" else _flip_role(direction)
     return desirability_transform(copy_number_value, lt[0], lt[1], effective_direction)
+
+
+VUS_D = 0.5
+
+MUTATION_D_TABLE = {
+
+    "driver_hotspot": {"inclusion": 1.0, "exclusion": 0.0},
+
+    "high_lof": {"inclusion": 0.0, "exclusion": 1.0},
+
+    "moderate_vus": {"inclusion": VUS_D, "exclusion": VUS_D},
+
+    "low_or_modifier": {"inclusion": 1.0, "exclusion": 1.0},
+
+    "none_sequenced_clean": {"inclusion": 1.0, "exclusion": 1.0},
+}
+
+TUMOUR_SUPPRESSOR_MUTATION_D_TABLE = dict(MUTATION_D_TABLE)
+TUMOUR_SUPPRESSOR_MUTATION_D_TABLE["high_lof"] = {
+    "inclusion": MUTATION_D_TABLE["high_lof"]["exclusion"],
+    "exclusion": MUTATION_D_TABLE["high_lof"]["inclusion"],
+}
+
+
+def classify_mutation_rows(rows, has_mutations):
+    if not has_mutations:
+        return "no_sequencing"
+    if rows is None or len(rows) == 0:
+        return "none_sequenced_clean"
+    if (rows["is_driver"] | rows["is_hotspot"]).any():
+        return "driver_hotspot"
+    if (rows["vep_impact"] == "HIGH").any():
+        return "high_lof"
+    if (rows["vep_impact"] == "MODERATE").any():
+        return "moderate_vus"
+    return "low_or_modifier"
