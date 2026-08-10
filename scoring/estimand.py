@@ -268,3 +268,42 @@ def run_lineage_shuffle_control(query_cache, full_cell_lines_by_id, K=SHUFFLE_DR
         "m_eff_invariant": m_eff_invariant,
         "pass": passed,
     }
+
+
+def run_shuffled_lineage_null(battery, gene_reference_df, cell_lines_df, coverage_df,
+                               data_dir=DATA_DIR, K=SHUFFLE_DRAWS, layer_frames=None):
+    if layer_frames is None:
+        battery_genes = sensitivity.resolve_battery_genes(battery, gene_reference_df)
+        layer_frames = sensitivity.load_layer_frames(battery_genes, data_dir)
+
+    sample_cache = sensitivity.build_query_cache(
+        battery[0], gene_reference_df, cell_lines_df, coverage_df, layer_frames, data_dir
+    )
+    rna_constants = sample_cache["tables"]["rna_constants"]
+    informative_names = set(
+        find_override_informative_queries(battery, rna_constants, gene_reference_df)
+    )
+    full_cell_lines_by_id = cell_lines_df.set_index("ModelID").to_dict(orient="index")
+
+    per_query_results = []
+    for query in battery:
+        if query["name"] not in informative_names:
+            continue
+        query_cache = sensitivity.build_query_cache(
+            query, gene_reference_df, cell_lines_df, coverage_df, layer_frames, data_dir
+        )
+        per_query_results.append(
+            run_lineage_shuffle_control(query_cache, full_cell_lines_by_id, K=K)
+        )
+
+    n_informative = len(per_query_results)
+    n_passed = sum(1 for r in per_query_results if r["pass"])
+    passed = n_informative > 0 and n_passed >= (n_informative / 2)
+
+    return {
+        "informative_queries": sorted(informative_names),
+        "per_query": per_query_results,
+        "n_informative": n_informative,
+        "n_passed": n_passed,
+        "pass": passed,
+    }
