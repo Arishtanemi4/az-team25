@@ -335,3 +335,116 @@ def _compare_to_baseline(baseline, top10, full_ranked):
     tau = kendall_tau_full(baseline["full_ranked"], full_ranked)
     changed, n_diff = top10_membership_change(baseline["top10"], top10)
     return {"rbo_at_10": rbo, "kendall_tau": tau, "top10_changed": changed, "top10_n_diff": n_diff}
+
+
+def run_sweep(gene_reference_df, cell_lines_df, coverage_df, battery=None, data_dir=DATA_DIR,
+              resources_dir=RESOURCES_DIR, n_sobol=2, n_dirichlet=8, seed=20260810):
+    if battery is None:
+        battery = load_battery(f"{resources_dir}/sensitivity_battery.json")
+
+    battery_genes = resolve_battery_genes(battery, gene_reference_df)
+    layer_frames = load_layer_frames(battery_genes, data_dir)
+    query_caches = [
+        build_query_cache(q, gene_reference_df, cell_lines_df, coverage_df, layer_frames, data_dir)
+        for q in battery
+    ]
+
+    rna_floor = restrict_rna_floor_to_genes(
+        _load_json(f"{resources_dir}/desirability_constants_rna_sweep_floor.json"), battery_genes,
+    )
+    extended_floor = restrict_extended_floor_to_genes(
+        _load_json(f"{resources_dir}/desirability_constants_extended_sweep_floor.json"), battery_genes,
+    )
+    extended_production = _load_json(f"{resources_dir}/desirability_constants_extended.json")
+    protein_global = extended_production["protein"]["global"]
+    dep_gene_codes, dep_scores, dep_gene_categories = load_dependency_raw(
+        battery_genes, f"{data_dir}/dependency.parquet"
+    )
+
+    def constants_for(thresholds):
+        return build_constants_for_thresholds(
+            thresholds, rna_floor, extended_floor, protein_global,
+            dep_gene_codes, dep_scores, dep_gene_categories,
+        )
+
+    t0 = time.time()
+    default_weights, default_thresholds = default_sample()
+    default_rna, default_extended, default_essentiality = constants_for(default_thresholds)
+    default_tier_params = tier_params_from_thresholds(default_thresholds)
+
+    baseline = {}
+    for qc in query_caches:
+        top10, full_ranked = run_query_under_sample(
+            qc, default_weights, default_tier_params, default_rna, default_extended, default_essentiality,
+        )
+        baseline[qc["name"]] = {"top10": top10, "full_ranked": full_ranked}
+    seconds_per_battery_pass = time.time() - t0
+
+    # -- Dirichlet weight-stability pass: default thresholds, weights only --
+    dirichlet_records = []
+    for weights in dirichlet_weight_samples(n_dirichlet, seed):
+        per_query = []
+        for qc in query_caches:
+            top10, full_ranked = run_query_under_sample(
+                qc, weights, default_tier_params, default_rna, default_extended, default_essentiality,
+            )
+            per_query.append(_compare_to_baseline(baseline[qc["name"]], top10, full_ranked))
+        dirichlet_records.append({"weights": weights, "per_query": per_query})
+
+    # -- Joint 12-factor Sobol pass: weights + T1-T6 --
+    problem = build_sobol_problem()
+    sobol_design = sample_sobol(problem, n_sobol)
+    sobol_records, sobol_mean_rbo = [], []
+    for row in sobol_design:
+        weights, thresholds = row_to_sample(row, problem)
+        tier_params = tier_params_from_thresholds(thresholds)
+        rna_c, extended_c, essentiality_c = constants_for(thresholds)
+        per_query_rbo = []
+        for qc in query_caches:
+            top10, full_ranked = run_query_under_sample(
+                qc, weights, tier_params, rna_c, extended_c, essentiality_c,
+            )
+            comparison = _compare_to_baseline(baseline[qc["name"]], top10, full_ranked)
+            per_query_rbo.append(comparison["rbo_at_10"] if comparison["rbo_at_10"] is not None else 0.0)
+        mean_rbo = float(np.mean(per_query_rbo))
+        sobol_mean_rbo.append(mean_rbo)
+        sobol_records.append({"weights": weights, "thresholds": thresholds, "mean_rbo_at_10": mean_rbo})
+
+    sobol_indices = None
+    if len(sobol_mean_rbo) == len(sobol_design):
+        Si = sobol_analyze.analyze(problem, np.array(sobol_mean_rbo))
+        sobol_indices = {
+            "names": problem["names"],
+            "S1": [float(v) for v in Si["S1"]],
+            "ST": [float(v) for v in Si["ST"]],
+        }
+
+    # -- T7/T8 discrete layer-count grid: default weights/thresholds otherwise --
+    grid_records = []
+    for high_min, moderate_min in LAYER_COUNT_GRID:
+        tier_params = tier_params_from_thresholds(
+            default_thresholds, high_min_layers=high_min, moderate_min_layers=moderate_min,
+        )
+        per_query = []
+        for qc in query_caches:
+            top10, full_ranked = run_query_under_sample(
+                qc, default_weights, tier_params, default_rna, default_extended, default_essentiality,
+            )
+            per_query.append(_compare_to_baseline(baseline[qc["name"]], top10, full_ranked))
+        grid_records.append({
+            "high_min_layers": high_min, "moderate_min_layers": moderate_min, "per_query": per_query,
+        })
+
+    results = {
+        "seed": seed,
+        "n_sobol": n_sobol,
+        "n_dirichlet": n_dirichlet,
+        "battery_size": len(battery),
+        "seconds_per_battery_pass": seconds_per_battery_pass,
+        "dirichlet": dirichlet_records,
+        "sobol": {"design_rows": len(sobol_design), "records": sobol_records, "indices": sobol_indices},
+        "layer_count_grid": grid_records,
+    }
+    with open(f"{resources_dir}/sensitivity_sweep_results.json", "w") as f:
+        json.dump(results, f, indent=2)
+    return results
