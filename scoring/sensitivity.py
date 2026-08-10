@@ -130,3 +130,21 @@ def build_rna_constants_at_threshold(rna_floor, min_lineage_n):
         if kept:
             per_lineage[lineage] = kept
     return {"global": rna_floor["global"], "per_lineage": per_lineage}
+
+
+def build_extended_constants_at_threshold(extended_floor, min_calibration_n, protein_global):
+    dep_counts = extended_floor["dependency_gene_counts"]
+    dep_kept = {
+        g: lt for g, lt in extended_floor["dependency"]["global"].items()
+        if dep_counts.get(g, 0) >= min_calibration_n
+    }
+    cn_counts = extended_floor["copy_number_gene_counts"]
+    cn_kept = {
+        g: lt for g, lt in extended_floor["copy_number"]["global"].items()
+        if cn_counts.get(g, 0) >= min_calibration_n
+    }
+    return {
+        "protein": {"global": protein_global},
+        "dependency": {"global": dep_kept},
+        "copy_number": {"global": cn_kept},
+    }
