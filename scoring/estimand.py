@@ -404,3 +404,58 @@ def _run_real_battery_baseline(battery, gene_reference_df, cell_lines_df, covera
                 layer_weights=weights, tier_params=tier_params, build_narrative=False,
             ))
     return all_results
+
+
+def run_all_controls(gene_reference_df, cell_lines_df, coverage_df, battery=None,
+                      data_dir=DATA_DIR, resources_dir=RESOURCES_DIR):
+    if battery is None:
+        battery = sensitivity.load_battery(f"{resources_dir}/sensitivity_battery.json")
+
+    battery_gene_ids = sensitivity.resolve_battery_genes(battery, gene_reference_df)
+    layer_frames = sensitivity.load_layer_frames(battery_gene_ids, data_dir)
+
+    real_baseline = _run_real_battery_baseline(
+        battery, gene_reference_df, cell_lines_df, coverage_df, data_dir, layer_frames=layer_frames
+    )
+
+    known_negative_query = next(q for q in battery if q["name"] == KNOWN_NEGATIVE_PAIR_QUERY_NAME)
+    known_negative = run_known_negative_pair_control(
+        known_negative_query, gene_reference_df, cell_lines_df, coverage_df, data_dir,
+        layer_frames=layer_frames,
+    )
+    known_negative_lung = run_known_negative_pair_control(
+        KNOWN_NEGATIVE_PAIR_QUERY_LUNG, gene_reference_df, cell_lines_df, coverage_df, data_dir,
+        layer_frames=layer_frames,
+    )
+
+    shadow_battery = build_shadow_battery(battery, gene_reference_df, exclude=battery_gene_ids)
+    random_lists = run_random_control(
+        shadow_battery, real_baseline, gene_reference_df, cell_lines_df, coverage_df, data_dir
+    )
+
+    shuffled_lineage = run_shuffled_lineage_null(
+        battery, gene_reference_df, cell_lines_df, coverage_df, data_dir, layer_frames=layer_frames
+    )
+
+    holdout_lineages = select_holdout_lineages(cell_lines_df)
+    loo = run_loo_control(
+        battery, holdout_lineages, gene_reference_df, cell_lines_df, coverage_df, data_dir,
+        layer_frames=layer_frames,
+    )
+
+    results = {
+        "battery_size": len(battery),
+        "known_negative_pairs": known_negative,
+        "known_negative_pairs_lung": known_negative_lung,
+        "random_gene_lists": random_lists,
+        "shuffled_lineage_null": shuffled_lineage,
+        "leave_one_lineage_out": loo,
+        "any_control_passed": any([
+            known_negative["pass"], known_negative_lung["pass"],
+            random_lists["pass"], shuffled_lineage["pass"], loo["pass"],
+        ]),
+    }
+
+    with open(f"{resources_dir}/estimand_results.json", "w") as f:
+        json.dump(results, f, indent=2)
+    return results
