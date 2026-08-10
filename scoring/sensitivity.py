@@ -1,0 +1,450 @@
+import json
+import time
+
+import numpy as np
+import pandas as pd
+from scipy.stats import kendalltau
+from SALib.sample import sobol as sobol_sample
+from SALib.analyze import sobol as sobol_analyze
+
+import correlation
+import evidence
+import score
+
+DATA_DIR = "data/processed"
+RESOURCES_DIR = "scoring/resources"
+
+LAYER_ORDER = ["rna", "protein", "fusion", "copy_number", "mutation", "dependency"]
+
+LAYER_FRAME_NAMES = [
+    "expression_rna", "expression_rna_hpa", "expression_rna_geo", "protein",
+    "dependency", "copy_number", "mutations", "fusions",
+]
+
+THRESHOLD_BOUNDS = {
+    "min_lineage_n": [5, 50],                        # T1, default 15
+    "min_calibration_n": [10, 100],                  # T2, default 30 (shared with essentiality's MIN_N)
+    "tier_insufficient_fraction": [0.2, 0.8],         # T3, default 0.5
+    "tier_fraction_threshold": [0.5, 0.95],           # T4, default 0.8 (shared High/Moderate literal)
+    "strong_dependency_cutoff": [-1.5, -0.5],         # T5, default -1.0
+    "pan_essential_fraction_threshold": [0.75, 0.99], # T6, default 0.90
+}
+
+LAYER_COUNT_GRID = [(2, 1), (3, 1), (3, 2), (4, 2), (4, 3)]  # (high_min_layers, moderate_min_layers)
+
+RBO_P = 0.9 
+
+
+def rbo_at_10(ranked_a, ranked_b, p=RBO_P):
+    k = min(10, len(ranked_a), len(ranked_b))
+    if k == 0:
+        return None
+    seen_a, seen_b, overlaps = set(), set(), []
+    for d in range(1, k + 1):
+        seen_a.add(ranked_a[d - 1])
+        seen_b.add(ranked_b[d - 1])
+        overlaps.append(len(seen_a & seen_b))
+    weighted_sum = sum((overlaps[d - 1] / d) * (p ** d) for d in range(1, k + 1))
+    extrapolation_term = (overlaps[-1] / k) * (p ** k)
+    return extrapolation_term + ((1 - p) / p) * weighted_sum
+
+
+def kendall_tau_full(ranked_a, ranked_b):
+    common = set(ranked_a) & set(ranked_b)
+    if len(common) < 2:
+        return None
+    rank_a = {m: i for i, m in enumerate(ranked_a)}
+    rank_b = {m: i for i, m in enumerate(ranked_b)}
+    xs = [rank_a[m] for m in ranked_a if m in common]
+    ys = [rank_b[m] for m in ranked_a if m in common]
+    tau, _p_value = kendalltau(xs, ys)
+    return float(tau)
+
+
+def top10_membership_change(ranked_a, ranked_b):
+    set_a, set_b = set(ranked_a[:10]), set(ranked_b[:10])
+    return set_a != set_b, len(set_a ^ set_b)
+
+
+def load_dependency_raw(battery_genes, path=f"{DATA_DIR}/dependency.parquet"):
+    df = pd.read_parquet(
+        path, engine="pyarrow", columns=["ModelID", "ensembl_id", "dependency_score"],
+        filters=[("ensembl_id", "in", list(battery_genes))],
+    )
+    gene_codes_series = df["ensembl_id"].astype("category")
+    gene_codes = gene_codes_series.cat.codes.to_numpy()
+    gene_categories = gene_codes_series.cat.categories.to_numpy()
+    scores = df["dependency_score"].to_numpy(dtype="float32")
+    return gene_codes, scores, gene_categories
+
+
+def essentiality_for_sample(gene_codes, scores, cutoff, fraction_threshold, min_n, gene_categories):
+    n_genes = len(gene_categories)
+    strong = (scores < cutoff).astype(np.float64)
+    n_strong = np.bincount(gene_codes, weights=strong, minlength=n_genes)
+    n_total = np.bincount(gene_codes, minlength=n_genes).astype(np.float64)
+    frac = np.divide(n_strong, n_total, out=np.zeros(n_genes), where=n_total > 0)
+    flagged = np.nonzero((n_total >= min_n) & (frac >= fraction_threshold))[0]
+    return {"pan_essential": {str(gene_categories[i]): float(frac[i]) for i in flagged}}
+
+
+def _load_json(path):
+    with open(path) as f:
+        return json.load(f)
+
+
+def restrict_rna_floor_to_genes(rna_floor, genes):
+    genes = set(genes)
+    per_lineage = {
+        lineage: {g: lt for g, lt in gene_map.items() if g in genes}
+        for lineage, gene_map in rna_floor["per_lineage"].items()
+    }
+    per_lineage = {lineage: gm for lineage, gm in per_lineage.items() if gm}
+    lineage_gene_counts = {
+        lineage: {g: n for g, n in count_map.items() if g in genes}
+        for lineage, count_map in rna_floor["lineage_gene_counts"].items()
+    }
+    return {
+        "global": {g: lt for g, lt in rna_floor["global"].items() if g in genes},
+        "per_lineage": per_lineage,
+        "lineage_gene_counts": lineage_gene_counts,
+    }
+
+
+def restrict_extended_floor_to_genes(extended_floor, genes):
+    genes = set(genes)
+    return {
+        "dependency": {"global": {g: lt for g, lt in extended_floor["dependency"]["global"].items() if g in genes}},
+        "copy_number": {"global": {g: lt for g, lt in extended_floor["copy_number"]["global"].items() if g in genes}},
+        "dependency_gene_counts": {g: n for g, n in extended_floor["dependency_gene_counts"].items() if g in genes},
+        "copy_number_gene_counts": {g: n for g, n in extended_floor["copy_number_gene_counts"].items() if g in genes},
+    }
+
+
+def build_rna_constants_at_threshold(rna_floor, min_lineage_n):
+    per_lineage = {}
+    counts = rna_floor["lineage_gene_counts"]
+    for lineage, genes in rna_floor["per_lineage"].items():
+        lineage_counts = counts.get(lineage, {})
+        kept = {g: lt for g, lt in genes.items() if lineage_counts.get(g, 0) >= min_lineage_n}
+        if kept:
+            per_lineage[lineage] = kept
+    return {"global": rna_floor["global"], "per_lineage": per_lineage}
+
+
+def build_extended_constants_at_threshold(extended_floor, min_calibration_n, protein_global):
+    dep_counts = extended_floor["dependency_gene_counts"]
+    dep_kept = {
+        g: lt for g, lt in extended_floor["dependency"]["global"].items()
+        if dep_counts.get(g, 0) >= min_calibration_n
+    }
+    cn_counts = extended_floor["copy_number_gene_counts"]
+    cn_kept = {
+        g: lt for g, lt in extended_floor["copy_number"]["global"].items()
+        if cn_counts.get(g, 0) >= min_calibration_n
+    }
+    return {
+        "protein": {"global": protein_global},
+        "dependency": {"global": dep_kept},
+        "copy_number": {"global": cn_kept},
+    }
+
+
+def build_constants_for_thresholds(thresholds, rna_floor, extended_floor, protein_global,
+                                    dep_gene_codes, dep_scores, dep_gene_categories):
+    rna_constants = build_rna_constants_at_threshold(rna_floor, thresholds["min_lineage_n"])
+    extended_constants = build_extended_constants_at_threshold(
+        extended_floor, thresholds["min_calibration_n"], protein_global,
+    )
+    essentiality_constants = essentiality_for_sample(
+        dep_gene_codes, dep_scores, thresholds["strong_dependency_cutoff"],
+        thresholds["pan_essential_fraction_threshold"], thresholds["min_calibration_n"],
+        dep_gene_categories,
+    )
+    return rna_constants, extended_constants, essentiality_constants
+
+
+def dirichlet_weight_samples(n_samples, seed, alpha=None):
+    rng = np.random.default_rng(seed)
+    if alpha is None:
+        alpha = np.ones(len(LAYER_ORDER))
+    draws = rng.dirichlet(alpha, size=n_samples)
+    return [dict(zip(LAYER_ORDER, row)) for row in draws]
+
+
+def build_sobol_problem():
+    names = [f"weight_{layer}" for layer in LAYER_ORDER] + list(THRESHOLD_BOUNDS.keys())
+    bounds = [[0.0, 1.0]] * len(LAYER_ORDER) + list(THRESHOLD_BOUNDS.values())
+    return {"num_vars": len(names), "names": names, "bounds": bounds}
+
+
+def sample_sobol(problem, n):
+    return sobol_sample.sample(problem, n)
+
+
+def row_to_sample(row, problem):
+    raw = dict(zip(problem["names"], row))
+    raw_weights = np.array([raw[f"weight_{layer}"] for layer in LAYER_ORDER])
+    weight_sum = raw_weights.sum()
+    if weight_sum < 1e-9:
+        normalized = np.ones(len(LAYER_ORDER)) / len(LAYER_ORDER)
+    else:
+        normalized = raw_weights / weight_sum
+    layer_weights = dict(zip(LAYER_ORDER, normalized))
+    thresholds = {name: raw[name] for name in THRESHOLD_BOUNDS}
+    thresholds["min_lineage_n"] = int(round(thresholds["min_lineage_n"]))
+    thresholds["min_calibration_n"] = int(round(thresholds["min_calibration_n"]))
+    return layer_weights, thresholds
+
+
+def default_sample():
+    layer_weights = dict(evidence.LAYER_WEIGHTS)
+    thresholds = {
+        "min_lineage_n": 15, "min_calibration_n": 30,
+        "tier_insufficient_fraction": 0.5, "tier_fraction_threshold": 0.8,
+        "strong_dependency_cutoff": -1.0, "pan_essential_fraction_threshold": 0.90,
+    }
+    return layer_weights, thresholds
+
+
+def tier_params_from_thresholds(thresholds, high_min_layers=3, moderate_min_layers=2):
+    return {
+        "insufficient_fraction": thresholds["tier_insufficient_fraction"],
+        "high_fraction_threshold": thresholds["tier_fraction_threshold"],
+        "moderate_fraction_threshold": thresholds["tier_fraction_threshold"],
+        "high_min_layers": high_min_layers,
+        "moderate_min_layers": moderate_min_layers,
+    }
+
+
+def load_battery(path=f"{RESOURCES_DIR}/sensitivity_battery.json"):
+    with open(path) as f:
+        return json.load(f)["queries"]
+
+
+def resolve_battery_genes(battery, gene_reference_df):
+    all_tokens = sorted({t for q in battery for t in q["inclusion"] + q["exclusion"]})
+    resolved, ambiguous, unresolved = score.resolve_genes(all_tokens, gene_reference_df)
+    if ambiguous or unresolved:
+        raise ValueError(
+            f"battery gene resolution failed: ambiguous={ambiguous} unresolved={unresolved}"
+        )
+    return set(resolved.values())
+
+
+def load_layer_frames(battery_genes, data_dir=DATA_DIR):
+    genes = list(set(battery_genes))
+    frames = {}
+    for name in LAYER_FRAME_NAMES:
+        df = pd.read_parquet(
+            f"{data_dir}/{name}.parquet", engine="pyarrow", filters=[("ensembl_id", "in", genes)],
+        )
+        if "ModelID" in df.columns:
+            df["ModelID"] = df["ModelID"].astype("category")
+        if "ensembl_id" in df.columns:
+            df["ensembl_id"] = df["ensembl_id"].astype("category")
+        frames[name] = df
+    return frames
+
+
+def correlation_weights_from_frame(ensembl_ids, expression_frame):
+    m = len(ensembl_ids)
+    if m == 1:
+        gene = ensembl_ids[0]
+        return {
+            "weights": {gene: 1.0}, "rho_bar": {gene: None}, "m_eff": 1.0,
+            "note": "m=1: no correlation discount is possible, none was applied.",
+        }
+
+    subset = expression_frame[expression_frame["ensembl_id"].isin(ensembl_ids)]
+    long = subset.groupby(["ModelID", "ensembl_id"], as_index=False, observed=True)["log2tpm1"].mean()
+    wide = long.pivot(index="ModelID", columns="ensembl_id", values="log2tpm1")
+    corr_matrix = correlation.compute_pairwise_spearman(wide)
+    rho_bar = correlation.compute_rho_bar(corr_matrix)
+    weights, m_eff = correlation.compute_weights(rho_bar, m)
+    for gene in ensembl_ids:
+        if gene not in weights:
+            weights[gene] = 1.0
+            rho_bar[gene] = None
+            m_eff += 1.0
+    return {"weights": weights, "rho_bar": rho_bar, "m_eff": m_eff, "note": correlation.SMALL_QUERY_CAVEAT}
+
+
+def build_query_cache(query, gene_reference_df, cell_lines_df, coverage_df, layer_frames,
+                       data_dir=DATA_DIR):
+    resolved, ambiguous, unresolved = score.resolve_genes(
+        query["inclusion"] + query["exclusion"], gene_reference_df
+    )
+    if ambiguous or unresolved:
+        raise ValueError(
+            f"battery query {query['name']!r} failed to resolve genes: "
+            f"ambiguous={ambiguous} unresolved={unresolved}"
+        )
+    inclusion_genes = [resolved[t] for t in query["inclusion"]]
+    exclusion_genes = [resolved[t] for t in query["exclusion"]]
+    query_genes = inclusion_genes + exclusion_genes
+
+    candidates, _count = score.filter_candidates(
+        cell_lines_df, coverage_df=coverage_df, lineage=query.get("lineage"),
+    )
+    model_ids = candidates["ModelID"].tolist()
+
+    tables = score.load_tables_for_query(
+        query_genes, model_ids, gene_reference_df, data_dir=data_dir,
+        preloaded_layer_frames=layer_frames, coverage_df=coverage_df,
+    )
+    correlation_weights = correlation_weights_from_frame(query_genes, layer_frames["expression_rna"])
+    cell_lines_by_id = candidates.set_index("ModelID").to_dict(orient="index")
+
+    return {
+        "name": query["name"], "inclusion_genes": inclusion_genes, "exclusion_genes": exclusion_genes,
+        "model_ids": model_ids, "tables": tables, "correlation_weights": correlation_weights,
+        "cell_lines_by_id": cell_lines_by_id,
+    }
+
+
+def run_query_under_sample(query_cache, layer_weights, tier_params, rna_constants,
+                            extended_constants, essentiality_constants, top_n=10,
+                            cell_lines_by_id_override=None):
+    tables = dict(query_cache["tables"])
+    tables["rna_constants"] = rna_constants
+    tables["extended_constants"] = extended_constants
+    tables["essentiality_constants"] = essentiality_constants
+    cell_lines_by_id = cell_lines_by_id_override or query_cache["cell_lines_by_id"]
+
+    results = [
+        score.score_one_line(
+            model_id, query_cache["inclusion_genes"], query_cache["exclusion_genes"],
+            tables, query_cache["correlation_weights"], cell_lines_by_id[model_id],
+            layer_weights=layer_weights, tier_params=tier_params, build_narrative=False,
+        )
+        for model_id in query_cache["model_ids"]
+    ]
+
+    outcome = score.rank_and_diagnose(results, top_n=top_n)
+    top10 = [r["model_id"] for r in outcome["ranked"][:top_n]]
+    scored_full = sorted(
+        (r for r in results if r["D"] is not None), key=lambda r: (-r["D"], r["model_id"])
+    )
+    full_ranked = [r["model_id"] for r in scored_full]
+    return top10, full_ranked
+
+
+def _compare_to_baseline(baseline, top10, full_ranked):
+    rbo = rbo_at_10(baseline["top10"], top10)
+    tau = kendall_tau_full(baseline["full_ranked"], full_ranked)
+    changed, n_diff = top10_membership_change(baseline["top10"], top10)
+    return {"rbo_at_10": rbo, "kendall_tau": tau, "top10_changed": changed, "top10_n_diff": n_diff}
+
+
+def run_sweep(gene_reference_df, cell_lines_df, coverage_df, battery=None, data_dir=DATA_DIR,
+              resources_dir=RESOURCES_DIR, n_sobol=2, n_dirichlet=8, seed=20260810):
+    if battery is None:
+        battery = load_battery(f"{resources_dir}/sensitivity_battery.json")
+
+    battery_genes = resolve_battery_genes(battery, gene_reference_df)
+    layer_frames = load_layer_frames(battery_genes, data_dir)
+    query_caches = [
+        build_query_cache(q, gene_reference_df, cell_lines_df, coverage_df, layer_frames, data_dir)
+        for q in battery
+    ]
+
+    rna_floor = restrict_rna_floor_to_genes(
+        _load_json(f"{resources_dir}/desirability_constants_rna_sweep_floor.json"), battery_genes,
+    )
+    extended_floor = restrict_extended_floor_to_genes(
+        _load_json(f"{resources_dir}/desirability_constants_extended_sweep_floor.json"), battery_genes,
+    )
+    extended_production = _load_json(f"{resources_dir}/desirability_constants_extended.json")
+    protein_global = extended_production["protein"]["global"]
+    dep_gene_codes, dep_scores, dep_gene_categories = load_dependency_raw(
+        battery_genes, f"{data_dir}/dependency.parquet"
+    )
+
+    def constants_for(thresholds):
+        return build_constants_for_thresholds(
+            thresholds, rna_floor, extended_floor, protein_global,
+            dep_gene_codes, dep_scores, dep_gene_categories,
+        )
+
+    t0 = time.time()
+    default_weights, default_thresholds = default_sample()
+    default_rna, default_extended, default_essentiality = constants_for(default_thresholds)
+    default_tier_params = tier_params_from_thresholds(default_thresholds)
+
+    baseline = {}
+    for qc in query_caches:
+        top10, full_ranked = run_query_under_sample(
+            qc, default_weights, default_tier_params, default_rna, default_extended, default_essentiality,
+        )
+        baseline[qc["name"]] = {"top10": top10, "full_ranked": full_ranked}
+    seconds_per_battery_pass = time.time() - t0
+
+    # -- Dirichlet weight-stability pass: default thresholds, weights only --
+    dirichlet_records = []
+    for weights in dirichlet_weight_samples(n_dirichlet, seed):
+        per_query = []
+        for qc in query_caches:
+            top10, full_ranked = run_query_under_sample(
+                qc, weights, default_tier_params, default_rna, default_extended, default_essentiality,
+            )
+            per_query.append(_compare_to_baseline(baseline[qc["name"]], top10, full_ranked))
+        dirichlet_records.append({"weights": weights, "per_query": per_query})
+
+    # -- Joint 12-factor Sobol pass: weights + T1-T6 --
+    problem = build_sobol_problem()
+    sobol_design = sample_sobol(problem, n_sobol)
+    sobol_records, sobol_mean_rbo = [], []
+    for row in sobol_design:
+        weights, thresholds = row_to_sample(row, problem)
+        tier_params = tier_params_from_thresholds(thresholds)
+        rna_c, extended_c, essentiality_c = constants_for(thresholds)
+        per_query_rbo = []
+        for qc in query_caches:
+            top10, full_ranked = run_query_under_sample(
+                qc, weights, tier_params, rna_c, extended_c, essentiality_c,
+            )
+            comparison = _compare_to_baseline(baseline[qc["name"]], top10, full_ranked)
+            per_query_rbo.append(comparison["rbo_at_10"] if comparison["rbo_at_10"] is not None else 0.0)
+        mean_rbo = float(np.mean(per_query_rbo))
+        sobol_mean_rbo.append(mean_rbo)
+        sobol_records.append({"weights": weights, "thresholds": thresholds, "mean_rbo_at_10": mean_rbo})
+
+    sobol_indices = None
+    if len(sobol_mean_rbo) == len(sobol_design):
+        Si = sobol_analyze.analyze(problem, np.array(sobol_mean_rbo))
+        sobol_indices = {
+            "names": problem["names"],
+            "S1": [float(v) for v in Si["S1"]],
+            "ST": [float(v) for v in Si["ST"]],
+        }
+
+    # -- T7/T8 discrete layer-count grid: default weights/thresholds otherwise --
+    grid_records = []
+    for high_min, moderate_min in LAYER_COUNT_GRID:
+        tier_params = tier_params_from_thresholds(
+            default_thresholds, high_min_layers=high_min, moderate_min_layers=moderate_min,
+        )
+        per_query = []
+        for qc in query_caches:
+            top10, full_ranked = run_query_under_sample(
+                qc, default_weights, tier_params, default_rna, default_extended, default_essentiality,
+            )
+            per_query.append(_compare_to_baseline(baseline[qc["name"]], top10, full_ranked))
+        grid_records.append({
+            "high_min_layers": high_min, "moderate_min_layers": moderate_min, "per_query": per_query,
+        })
+
+    results = {
+        "seed": seed,
+        "n_sobol": n_sobol,
+        "n_dirichlet": n_dirichlet,
+        "battery_size": len(battery),
+        "seconds_per_battery_pass": seconds_per_battery_pass,
+        "dirichlet": dirichlet_records,
+        "sobol": {"design_rows": len(sobol_design), "records": sobol_records, "indices": sobol_indices},
+        "layer_count_grid": grid_records,
+    }
+    with open(f"{resources_dir}/sensitivity_sweep_results.json", "w") as f:
+        json.dump(results, f, indent=2)
+    return results
