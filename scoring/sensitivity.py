@@ -91,3 +91,21 @@ def essentiality_for_sample(gene_codes, scores, cutoff, fraction_threshold, min_
 def _load_json(path):
     with open(path) as f:
         return json.load(f)
+
+
+def restrict_rna_floor_to_genes(rna_floor, genes):
+    genes = set(genes)
+    per_lineage = {
+        lineage: {g: lt for g, lt in gene_map.items() if g in genes}
+        for lineage, gene_map in rna_floor["per_lineage"].items()
+    }
+    per_lineage = {lineage: gm for lineage, gm in per_lineage.items() if gm}
+    lineage_gene_counts = {
+        lineage: {g: n for g, n in count_map.items() if g in genes}
+        for lineage, count_map in rna_floor["lineage_gene_counts"].items()
+    }
+    return {
+        "global": {g: lt for g, lt in rna_floor["global"].items() if g in genes},
+        "per_lineage": per_lineage,
+        "lineage_gene_counts": lineage_gene_counts,
+    }
