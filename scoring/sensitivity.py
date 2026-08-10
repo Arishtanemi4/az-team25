@@ -268,3 +268,36 @@ def correlation_weights_from_frame(ensembl_ids, expression_frame):
             rho_bar[gene] = None
             m_eff += 1.0
     return {"weights": weights, "rho_bar": rho_bar, "m_eff": m_eff, "note": correlation.SMALL_QUERY_CAVEAT}
+
+
+def build_query_cache(query, gene_reference_df, cell_lines_df, coverage_df, layer_frames,
+                       data_dir=DATA_DIR):
+    resolved, ambiguous, unresolved = score.resolve_genes(
+        query["inclusion"] + query["exclusion"], gene_reference_df
+    )
+    if ambiguous or unresolved:
+        raise ValueError(
+            f"battery query {query['name']!r} failed to resolve genes: "
+            f"ambiguous={ambiguous} unresolved={unresolved}"
+        )
+    inclusion_genes = [resolved[t] for t in query["inclusion"]]
+    exclusion_genes = [resolved[t] for t in query["exclusion"]]
+    query_genes = inclusion_genes + exclusion_genes
+
+    candidates, _count = score.filter_candidates(
+        cell_lines_df, coverage_df=coverage_df, lineage=query.get("lineage"),
+    )
+    model_ids = candidates["ModelID"].tolist()
+
+    tables = score.load_tables_for_query(
+        query_genes, model_ids, gene_reference_df, data_dir=data_dir,
+        preloaded_layer_frames=layer_frames, coverage_df=coverage_df,
+    )
+    correlation_weights = correlation_weights_from_frame(query_genes, layer_frames["expression_rna"])
+    cell_lines_by_id = candidates.set_index("ModelID").to_dict(orient="index")
+
+    return {
+        "name": query["name"], "inclusion_genes": inclusion_genes, "exclusion_genes": exclusion_genes,
+        "model_ids": model_ids, "tables": tables, "correlation_weights": correlation_weights,
+        "cell_lines_by_id": cell_lines_by_id,
+    }
