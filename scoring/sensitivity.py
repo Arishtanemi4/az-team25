@@ -180,3 +180,18 @@ def build_sobol_problem():
 
 def sample_sobol(problem, n):
     return sobol_sample.sample(problem, n)
+
+
+def row_to_sample(row, problem):
+    raw = dict(zip(problem["names"], row))
+    raw_weights = np.array([raw[f"weight_{layer}"] for layer in LAYER_ORDER])
+    weight_sum = raw_weights.sum()
+    if weight_sum < 1e-9:
+        normalized = np.ones(len(LAYER_ORDER)) / len(LAYER_ORDER)
+    else:
+        normalized = raw_weights / weight_sum
+    layer_weights = dict(zip(LAYER_ORDER, normalized))
+    thresholds = {name: raw[name] for name in THRESHOLD_BOUNDS}
+    thresholds["min_lineage_n"] = int(round(thresholds["min_lineage_n"]))
+    thresholds["min_calibration_n"] = int(round(thresholds["min_calibration_n"]))
+    return layer_weights, thresholds
