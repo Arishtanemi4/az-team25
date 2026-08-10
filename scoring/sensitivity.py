@@ -230,3 +230,18 @@ def resolve_battery_genes(battery, gene_reference_df):
             f"battery gene resolution failed: ambiguous={ambiguous} unresolved={unresolved}"
         )
     return set(resolved.values())
+
+
+def load_layer_frames(battery_genes, data_dir=DATA_DIR):
+    genes = list(set(battery_genes))
+    frames = {}
+    for name in LAYER_FRAME_NAMES:
+        df = pd.read_parquet(
+            f"{data_dir}/{name}.parquet", engine="pyarrow", filters=[("ensembl_id", "in", genes)],
+        )
+        if "ModelID" in df.columns:
+            df["ModelID"] = df["ModelID"].astype("category")
+        if "ensembl_id" in df.columns:
+            df["ensembl_id"] = df["ensembl_id"].astype("category")
+        frames[name] = df
+    return frames
