@@ -215,3 +215,8 @@ def tier_params_from_thresholds(thresholds, high_min_layers=3, moderate_min_laye
         "high_min_layers": high_min_layers,
         "moderate_min_layers": moderate_min_layers,
     }
+
+
+def load_battery(path=f"{RESOURCES_DIR}/sensitivity_battery.json"):
+    with open(path) as f:
+        return json.load(f)["queries"]
