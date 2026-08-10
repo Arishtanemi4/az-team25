@@ -170,3 +170,9 @@ def dirichlet_weight_samples(n_samples, seed, alpha=None):
         alpha = np.ones(len(LAYER_ORDER))
     draws = rng.dirichlet(alpha, size=n_samples)
     return [dict(zip(LAYER_ORDER, row)) for row in draws]
+
+
+def build_sobol_problem():
+    names = [f"weight_{layer}" for layer in LAYER_ORDER] + list(THRESHOLD_BOUNDS.keys())
+    bounds = [[0.0, 1.0]] * len(LAYER_ORDER) + list(THRESHOLD_BOUNDS.values())
+    return {"num_vars": len(names), "names": names, "bounds": bounds}
