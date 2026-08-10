@@ -47,3 +47,15 @@ def rbo_at_10(ranked_a, ranked_b, p=RBO_P):
     weighted_sum = sum((overlaps[d - 1] / d) * (p ** d) for d in range(1, k + 1))
     extrapolation_term = (overlaps[-1] / k) * (p ** k)
     return extrapolation_term + ((1 - p) / p) * weighted_sum
+
+
+def kendall_tau_full(ranked_a, ranked_b):
+    common = set(ranked_a) & set(ranked_b)
+    if len(common) < 2:
+        return None
+    rank_a = {m: i for i, m in enumerate(ranked_a)}
+    rank_b = {m: i for i, m in enumerate(ranked_b)}
+    xs = [rank_a[m] for m in ranked_a if m in common]
+    ys = [rank_b[m] for m in ranked_a if m in common]
+    tau, _p_value = kendalltau(xs, ys)
+    return float(tau)
