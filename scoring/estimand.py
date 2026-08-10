@@ -317,3 +317,15 @@ def select_holdout_lineages(cell_lines_df, top_k=LOO_TOP_K_LINEAGES, min_n=LOO_M
     counts = cell_lines_df["lineage"].value_counts()
     eligible = counts[counts >= min_n]
     return eligible.head(top_k).index.tolist()
+
+
+def recompute_global_rna_constants(expression_rna_frame, exclude_lineage, cell_lines_df):
+    excluded_ids = set(cell_lines_df.loc[cell_lines_df["lineage"] == exclude_lineage, "ModelID"])
+    subset = expression_rna_frame[~expression_rna_frame["ModelID"].isin(excluded_ids)]
+    q = subset.groupby("ensembl_id", observed=True)["log2tpm1"].quantile([0.1, 0.9]).unstack()
+    q.columns = ["L", "T"]
+    kept = q[q["T"] > q["L"]]
+    return {
+        gene: {"L": round(float(row["L"]), 4), "T": round(float(row["T"]), 4)}
+        for gene, row in kept.iterrows()
+    }
