@@ -328,3 +328,10 @@ def run_query_under_sample(query_cache, layer_weights, tier_params, rna_constant
     )
     full_ranked = [r["model_id"] for r in scored_full]
     return top10, full_ranked
+
+
+def _compare_to_baseline(baseline, top10, full_ranked):
+    rbo = rbo_at_10(baseline["top10"], top10)
+    tau = kendall_tau_full(baseline["full_ranked"], full_ranked)
+    changed, n_diff = top10_membership_change(baseline["top10"], top10)
+    return {"rbo_at_10": rbo, "kendall_tau": tau, "top10_changed": changed, "top10_n_diff": n_diff}
