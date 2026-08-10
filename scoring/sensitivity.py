@@ -59,3 +59,8 @@ def kendall_tau_full(ranked_a, ranked_b):
     ys = [rank_b[m] for m in ranked_a if m in common]
     tau, _p_value = kendalltau(xs, ys)
     return float(tau)
+
+
+def top10_membership_change(ranked_a, ranked_b):
+    set_a, set_b = set(ranked_a[:10]), set(ranked_b[:10])
+    return set_a != set_b, len(set_a ^ set_b)
