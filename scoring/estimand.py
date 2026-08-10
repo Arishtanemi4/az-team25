@@ -307,3 +307,13 @@ def run_shuffled_lineage_null(battery, gene_reference_df, cell_lines_df, coverag
         "n_passed": n_passed,
         "pass": passed,
     }
+
+LOO_TOP_K_LINEAGES = 5
+LOO_MIN_N = 100
+LOO_MEMBERSHIP_CEILING = 2  # of 10, disclosed heuristic
+
+
+def select_holdout_lineages(cell_lines_df, top_k=LOO_TOP_K_LINEAGES, min_n=LOO_MIN_N):
+    counts = cell_lines_df["lineage"].value_counts()
+    eligible = counts[counts >= min_n]
+    return eligible.head(top_k).index.tolist()
