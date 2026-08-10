@@ -162,3 +162,11 @@ def build_constants_for_thresholds(thresholds, rna_floor, extended_floor, protei
         dep_gene_categories,
     )
     return rna_constants, extended_constants, essentiality_constants
+
+
+def dirichlet_weight_samples(n_samples, seed, alpha=None):
+    rng = np.random.default_rng(seed)
+    if alpha is None:
+        alpha = np.ones(len(LAYER_ORDER))
+    draws = rng.dirichlet(alpha, size=n_samples)
+    return [dict(zip(LAYER_ORDER, row)) for row in draws]
