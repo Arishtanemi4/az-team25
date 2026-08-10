@@ -64,3 +64,15 @@ def kendall_tau_full(ranked_a, ranked_b):
 def top10_membership_change(ranked_a, ranked_b):
     set_a, set_b = set(ranked_a[:10]), set(ranked_b[:10])
     return set_a != set_b, len(set_a ^ set_b)
+
+
+def load_dependency_raw(battery_genes, path=f"{DATA_DIR}/dependency.parquet"):
+    df = pd.read_parquet(
+        path, engine="pyarrow", columns=["ModelID", "ensembl_id", "dependency_score"],
+        filters=[("ensembl_id", "in", list(battery_genes))],
+    )
+    gene_codes_series = df["ensembl_id"].astype("category")
+    gene_codes = gene_codes_series.cat.codes.to_numpy()
+    gene_categories = gene_codes_series.cat.categories.to_numpy()
+    scores = df["dependency_score"].to_numpy(dtype="float32")
+    return gene_codes, scores, gene_categories
