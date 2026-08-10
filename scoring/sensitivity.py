@@ -119,3 +119,14 @@ def restrict_extended_floor_to_genes(extended_floor, genes):
         "dependency_gene_counts": {g: n for g, n in extended_floor["dependency_gene_counts"].items() if g in genes},
         "copy_number_gene_counts": {g: n for g, n in extended_floor["copy_number_gene_counts"].items() if g in genes},
     }
+
+
+def build_rna_constants_at_threshold(rna_floor, min_lineage_n):
+    per_lineage = {}
+    counts = rna_floor["lineage_gene_counts"]
+    for lineage, genes in rna_floor["per_lineage"].items():
+        lineage_counts = counts.get(lineage, {})
+        kept = {g: lt for g, lt in genes.items() if lineage_counts.get(g, 0) >= min_lineage_n}
+        if kept:
+            per_lineage[lineage] = kept
+    return {"global": rna_floor["global"], "per_lineage": per_lineage}
