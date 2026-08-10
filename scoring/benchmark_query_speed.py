@@ -41,3 +41,18 @@ def benchmark_table(filename: str, ensembl_ids: list[str]) -> None:
         f"{filename:28s} parquet={with_parquet_seconds:6.2f}s  csv={csv_fallback_seconds:6.2f}s  "
         f"speedup={speedup:5.1f}x"
     )
+
+
+def main() -> None:
+    gene_reference = pd.read_csv(DATA_DIR / "gene_reference.csv")
+    resolved, ambiguous, unresolved = score.resolve_genes(SAMPLE_SYMBOLS, gene_reference)
+    assert not ambiguous and not unresolved, (ambiguous, unresolved)
+    ensembl_ids = list(resolved.values())
+
+    print(f"Benchmarking with sample query genes: {SAMPLE_SYMBOLS} -> {ensembl_ids}\n")
+    for filename in BENCHMARK_TABLES:
+        benchmark_table(filename, ensembl_ids)
+
+
+if __name__ == "__main__":
+    main()
