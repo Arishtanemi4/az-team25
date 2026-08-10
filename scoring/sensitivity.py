@@ -195,3 +195,13 @@ def row_to_sample(row, problem):
     thresholds["min_lineage_n"] = int(round(thresholds["min_lineage_n"]))
     thresholds["min_calibration_n"] = int(round(thresholds["min_calibration_n"]))
     return layer_weights, thresholds
+
+
+def default_sample():
+    layer_weights = dict(evidence.LAYER_WEIGHTS)
+    thresholds = {
+        "min_lineage_n": 15, "min_calibration_n": 30,
+        "tier_insufficient_fraction": 0.5, "tier_fraction_threshold": 0.8,
+        "strong_dependency_cutoff": -1.0, "pan_essential_fraction_threshold": 0.90,
+    }
+    return layer_weights, thresholds
