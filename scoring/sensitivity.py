@@ -205,3 +205,13 @@ def default_sample():
         "strong_dependency_cutoff": -1.0, "pan_essential_fraction_threshold": 0.90,
     }
     return layer_weights, thresholds
+
+
+def tier_params_from_thresholds(thresholds, high_min_layers=3, moderate_min_layers=2):
+    return {
+        "insufficient_fraction": thresholds["tier_insufficient_fraction"],
+        "high_fraction_threshold": thresholds["tier_fraction_threshold"],
+        "moderate_fraction_threshold": thresholds["tier_fraction_threshold"],
+        "high_min_layers": high_min_layers,
+        "moderate_min_layers": moderate_min_layers,
+    }
