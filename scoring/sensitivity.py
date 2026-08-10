@@ -76,3 +76,13 @@ def load_dependency_raw(battery_genes, path=f"{DATA_DIR}/dependency.parquet"):
     gene_categories = gene_codes_series.cat.categories.to_numpy()
     scores = df["dependency_score"].to_numpy(dtype="float32")
     return gene_codes, scores, gene_categories
+
+
+def essentiality_for_sample(gene_codes, scores, cutoff, fraction_threshold, min_n, gene_categories):
+    n_genes = len(gene_categories)
+    strong = (scores < cutoff).astype(np.float64)
+    n_strong = np.bincount(gene_codes, weights=strong, minlength=n_genes)
+    n_total = np.bincount(gene_codes, minlength=n_genes).astype(np.float64)
+    frac = np.divide(n_strong, n_total, out=np.zeros(n_genes), where=n_total > 0)
+    flagged = np.nonzero((n_total >= min_n) & (frac >= fraction_threshold))[0]
+    return {"pan_essential": {str(gene_categories[i]): float(frac[i]) for i in flagged}}
