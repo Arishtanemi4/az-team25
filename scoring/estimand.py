@@ -185,3 +185,25 @@ def run_random_control(shadow_battery, real_baseline_results, gene_reference_df,
         "real_D_summary": real_d_summary,
         "pass": passed,
     }
+
+
+SHUFFLE_DRAWS = 20
+SHUFFLE_SEED_BASE = 20260813  # disclosed, fixed -- PARAMETERS.md
+
+SHUFFLE_RBO_CEILING = 0.90
+
+
+def find_override_informative_queries(battery, rna_constants, gene_reference_df):
+    per_lineage = rna_constants.get("per_lineage", {})
+    informative = []
+    for query in battery:
+        lineage = query.get("lineage")
+        if lineage is None or lineage not in per_lineage:
+            continue
+        override_genes = per_lineage[lineage]
+        resolved, _ambiguous, _unresolved = score.resolve_genes(
+            query["inclusion"] + query["exclusion"], gene_reference_df
+        )
+        if any(eid in override_genes for eid in resolved.values()):
+            informative.append(query["name"])
+    return informative
