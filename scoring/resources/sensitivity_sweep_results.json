@@ -1,0 +1,1271 @@
+{
+  "seed": 20260810,
+  "n_sobol": 2,
+  "n_dirichlet": 2,
+  "battery_size": 4,
+  "seconds_per_battery_pass": 1.057647943496704,
+  "dirichlet": [
+    {
+      "weights": {
+        "rna": 0.04020499650513908,
+        "protein": 0.1349469191675941,
+        "fusion": 0.10357553866339161,
+        "copy_number": 0.42405984260266233,
+        "mutation": 0.01827929631670378,
+        "dependency": 0.278933406744509
+      },
+      "per_query": [
+        {
+          "rbo_at_10": 0.7829144642285712,
+          "kendall_tau": 0.6648767886686211,
+          "top10_changed": true,
+          "top10_n_diff": 6
+        },
+        {
+          "rbo_at_10": 1.0,
+          "kendall_tau": 0.6769878557979703,
+          "top10_changed": false,
+          "top10_n_diff": 0
+        },
+        {
+          "rbo_at_10": 0.7052155405428571,
+          "kendall_tau": 0.7489333294633268,
+          "top10_changed": true,
+          "top10_n_diff": 8
+        },
+        {
+          "rbo_at_10": 0.5724522028928571,
+          "kendall_tau": 0.5706558271305143,
+          "top10_changed": true,
+          "top10_n_diff": 10
+        }
+      ]
+    },
+    {
+      "weights": {
+        "rna": 0.0341579716132437,
+        "protein": 0.08783984302273813,
+        "fusion": 0.2541003745498629,
+        "copy_number": 0.3594170788464804,
+        "mutation": 0.019732228740572236,
+        "dependency": 0.24475250322710254
+      },
+      "per_query": [
+        {
+          "rbo_at_10": 0.7547192696928571,
+          "kendall_tau": 0.5767567410675413,
+          "top10_changed": true,
+          "top10_n_diff": 6
+        },
+        {
+          "rbo_at_10": 1.0,
+          "kendall_tau": 0.6010839536152316,
+          "top10_changed": false,
+          "top10_n_diff": 0
+        },
+        {
+          "rbo_at_10": 0.6430570405428571,
+          "kendall_tau": 0.6961077409804661,
+          "top10_changed": true,
+          "top10_n_diff": 8
+        },
+        {
+          "rbo_at_10": 0.5997272171785715,
+          "kendall_tau": 0.47456806509754823,
+          "top10_changed": true,
+          "top10_n_diff": 10
+        }
+      ]
+    }
+  ],
+  "sobol": {
+    "design_rows": 52,
+    "records": [
+      {
+        "weights": {
+          "rna": 0.13206624199062605,
+          "protein": 0.2955062235333991,
+          "fusion": 0.09388203012355599,
+          "copy_number": 0.24762646540904185,
+          "mutation": 0.08599677760606506,
+          "dependency": 0.14492226133731198
+        },
+        "thresholds": {
+          "min_lineage_n": 18,
+          "min_calibration_n": 94,
+          "tier_insufficient_fraction": 0.7748326305299997,
+          "tier_fraction_threshold": 0.6421433830168098,
+          "strong_dependency_cutoff": -1.1810889635235071,
+          "pan_essential_fraction_threshold": 0.8649553283303976
+        },
+        "mean_rbo_at_10": 0.8072187493928572
+      },
+      {
+        "weights": {
+          "rna": 0.20370748664551708,
+          "protein": 0.2711144615333197,
+          "fusion": 0.08613279185886934,
+          "copy_number": 0.22718680854849663,
+          "mutation": 0.07889840618410474,
+          "dependency": 0.13296004522969251
+        },
+        "thresholds": {
+          "min_lineage_n": 18,
+          "min_calibration_n": 94,
+          "tier_insufficient_fraction": 0.7748326305299997,
+          "tier_fraction_threshold": 0.6421433830168098,
+          "strong_dependency_cutoff": -1.1810889635235071,
+          "pan_essential_fraction_threshold": 0.8649553283303976
+        },
+        "mean_rbo_at_10": 0.8174824835892857
+      },
+      {
+        "weights": {
+          "rna": 0.15768980342254638,
+          "protein": 0.1588199720916508,
+          "fusion": 0.11209707077258936,
+          "copy_number": 0.29567108190557423,
+          "mutation": 0.10268191743227896,
+          "dependency": 0.17304015437536027
+        },
+        "thresholds": {
+          "min_lineage_n": 18,
+          "min_calibration_n": 94,
+          "tier_insufficient_fraction": 0.7748326305299997,
+          "tier_fraction_threshold": 0.6421433830168098,
+          "strong_dependency_cutoff": -1.1810889635235071,
+          "pan_essential_fraction_threshold": 0.8649553283303976
+        },
+        "mean_rbo_at_10": 0.840460383942857
+      },
+      {
+        "weights": {
+          "rna": 0.12795918973192813,
+          "protein": 0.28631644509699683,
+          "fusion": 0.12206087279170713,
+          "copy_number": 0.2399256720894002,
+          "mutation": 0.08332241317815317,
+          "dependency": 0.14041540711181455
+        },
+        "thresholds": {
+          "min_lineage_n": 18,
+          "min_calibration_n": 94,
+          "tier_insufficient_fraction": 0.7748326305299997,
+          "tier_fraction_threshold": 0.6421433830168098,
+          "strong_dependency_cutoff": -1.1810889635235071,
+          "pan_essential_fraction_threshold": 0.8649553283303976
+        },
+        "mean_rbo_at_10": 0.7772914391410715
+      },
+      {
+        "weights": {
+          "rna": 0.1528429951713951,
+          "protein": 0.3419954684546742,
+          "fusion": 0.10865161649616661,
+          "copy_number": 0.1292625368810484,
+          "mutation": 0.09952585056014761,
+          "dependency": 0.16772153243656807
+        },
+        "thresholds": {
+          "min_lineage_n": 18,
+          "min_calibration_n": 94,
+          "tier_insufficient_fraction": 0.7748326305299997,
+          "tier_fraction_threshold": 0.6421433830168098,
+          "strong_dependency_cutoff": -1.1810889635235071,
+          "pan_essential_fraction_threshold": 0.8649553283303976
+        },
+        "mean_rbo_at_10": 0.8301741172428572
+      },
+      {
+        "weights": {
+          "rna": 0.13753251604793815,
+          "protein": 0.30773734315282114,
+          "fusion": 0.09776784452984925,
+          "copy_number": 0.2578758228781929,
+          "mutation": 0.048165822264530866,
+          "dependency": 0.1509206511266677
+        },
+        "thresholds": {
+          "min_lineage_n": 18,
+          "min_calibration_n": 94,
+          "tier_insufficient_fraction": 0.7748326305299997,
+          "tier_fraction_threshold": 0.6421433830168098,
+          "strong_dependency_cutoff": -1.1810889635235071,
+          "pan_essential_fraction_threshold": 0.8649553283303976
+        },
+        "mean_rbo_at_10": 0.7967161700625
+      },
+      {
+        "weights": {
+          "rna": 0.11543223648270544,
+          "protein": 0.2582866277018748,
+          "fusion": 0.08205740194733484,
+          "copy_number": 0.2164374202190282,
+          "mutation": 0.07516531264725868,
+          "dependency": 0.252621001001798
+        },
+        "thresholds": {
+          "min_lineage_n": 18,
+          "min_calibration_n": 94,
+          "tier_insufficient_fraction": 0.7748326305299997,
+          "tier_fraction_threshold": 0.6421433830168098,
+          "strong_dependency_cutoff": -1.1810889635235071,
+          "pan_essential_fraction_threshold": 0.8649553283303976
+        },
+        "mean_rbo_at_10": 0.8233660382089286
+      },
+      {
+        "weights": {
+          "rna": 0.13206624199062605,
+          "protein": 0.2955062235333991,
+          "fusion": 0.09388203012355599,
+          "copy_number": 0.24762646540904185,
+          "mutation": 0.08599677760606506,
+          "dependency": 0.14492226133731198
+        },
+        "thresholds": {
+          "min_lineage_n": 32,
+          "min_calibration_n": 94,
+          "tier_insufficient_fraction": 0.7748326305299997,
+          "tier_fraction_threshold": 0.6421433830168098,
+          "strong_dependency_cutoff": -1.1810889635235071,
+          "pan_essential_fraction_threshold": 0.8649553283303976
+        },
+        "mean_rbo_at_10": 0.8072187493928572
+      },
+      {
+        "weights": {
+          "rna": 0.13206624199062605,
+          "protein": 0.2955062235333991,
+          "fusion": 0.09388203012355599,
+          "copy_number": 0.24762646540904185,
+          "mutation": 0.08599677760606506,
+          "dependency": 0.14492226133731198
+        },
+        "thresholds": {
+          "min_lineage_n": 18,
+          "min_calibration_n": 28,
+          "tier_insufficient_fraction": 0.7748326305299997,
+          "tier_fraction_threshold": 0.6421433830168098,
+          "strong_dependency_cutoff": -1.1810889635235071,
+          "pan_essential_fraction_threshold": 0.8649553283303976
+        },
+        "mean_rbo_at_10": 0.8072187493928572
+      },
+      {
+        "weights": {
+          "rna": 0.13206624199062605,
+          "protein": 0.2955062235333991,
+          "fusion": 0.09388203012355599,
+          "copy_number": 0.24762646540904185,
+          "mutation": 0.08599677760606506,
+          "dependency": 0.14492226133731198
+        },
+        "thresholds": {
+          "min_lineage_n": 18,
+          "min_calibration_n": 94,
+          "tier_insufficient_fraction": 0.31349999681115154,
+          "tier_fraction_threshold": 0.6421433830168098,
+          "strong_dependency_cutoff": -1.1810889635235071,
+          "pan_essential_fraction_threshold": 0.8649553283303976
+        },
+        "mean_rbo_at_10": 0.8072187493928572
+      },
+      {
+        "weights": {
+          "rna": 0.13206624199062605,
+          "protein": 0.2955062235333991,
+          "fusion": 0.09388203012355599,
+          "copy_number": 0.24762646540904185,
+          "mutation": 0.08599677760606506,
+          "dependency": 0.14492226133731198
+        },
+        "thresholds": {
+          "min_lineage_n": 18,
+          "min_calibration_n": 94,
+          "tier_insufficient_fraction": 0.7748326305299997,
+          "tier_fraction_threshold": 0.7368940186686814,
+          "strong_dependency_cutoff": -1.1810889635235071,
+          "pan_essential_fraction_threshold": 0.8649553283303976
+        },
+        "mean_rbo_at_10": 0.8072187493928572
+      },
+      {
+        "weights": {
+          "rna": 0.13206624199062605,
+          "protein": 0.2955062235333991,
+          "fusion": 0.09388203012355599,
+          "copy_number": 0.24762646540904185,
+          "mutation": 0.08599677760606506,
+          "dependency": 0.14492226133731198
+        },
+        "thresholds": {
+          "min_lineage_n": 18,
+          "min_calibration_n": 94,
+          "tier_insufficient_fraction": 0.7748326305299997,
+          "tier_fraction_threshold": 0.6421433830168098,
+          "strong_dependency_cutoff": -1.3292329432442784,
+          "pan_essential_fraction_threshold": 0.8649553283303976
+        },
+        "mean_rbo_at_10": 0.8072187493928572
+      },
+      {
+        "weights": {
+          "rna": 0.13206624199062605,
+          "protein": 0.2955062235333991,
+          "fusion": 0.09388203012355599,
+          "copy_number": 0.24762646540904185,
+          "mutation": 0.08599677760606506,
+          "dependency": 0.14492226133731198
+        },
+        "thresholds": {
+          "min_lineage_n": 18,
+          "min_calibration_n": 94,
+          "tier_insufficient_fraction": 0.7748326305299997,
+          "tier_fraction_threshold": 0.6421433830168098,
+          "strong_dependency_cutoff": -1.1810889635235071,
+          "pan_essential_fraction_threshold": 0.8212095893919468
+        },
+        "mean_rbo_at_10": 0.8072187493928572
+      },
+      {
+        "weights": {
+          "rna": 0.15759235100494878,
+          "protein": 0.15872182122896222,
+          "fusion": 0.1503280846749643,
+          "copy_number": 0.13327916703742243,
+          "mutation": 0.055191058717403,
+          "dependency": 0.34488751733629924
+        },
+        "thresholds": {
+          "min_lineage_n": 32,
+          "min_calibration_n": 28,
+          "tier_insufficient_fraction": 0.31349999681115154,
+          "tier_fraction_threshold": 0.7368940186686814,
+          "strong_dependency_cutoff": -1.3292329432442784,
+          "pan_essential_fraction_threshold": 0.8212095893919468
+        },
+        "mean_rbo_at_10": 0.825398939430357
+      },
+      {
+        "weights": {
+          "rna": 0.2036107407770978,
+          "protein": 0.2709857023774635,
+          "fusion": 0.11552515376845157,
+          "copy_number": 0.10242328503965573,
+          "mutation": 0.04241360194775019,
+          "dependency": 0.2650415160895812
+        },
+        "thresholds": {
+          "min_lineage_n": 32,
+          "min_calibration_n": 28,
+          "tier_insufficient_fraction": 0.31349999681115154,
+          "tier_fraction_threshold": 0.7368940186686814,
+          "strong_dependency_cutoff": -1.3292329432442784,
+          "pan_essential_fraction_threshold": 0.8212095893919468
+        },
+        "mean_rbo_at_10": 0.8446862944482143
+      },
+      {
+        "weights": {
+          "rna": 0.24783529971211243,
+          "protein": 0.14846891992082248,
+          "fusion": 0.10479117207179803,
+          "copy_number": 0.12466977649814341,
+          "mutation": 0.05162590004079613,
+          "dependency": 0.3226089317563275
+        },
+        "thresholds": {
+          "min_lineage_n": 32,
+          "min_calibration_n": 28,
+          "tier_insufficient_fraction": 0.31349999681115154,
+          "tier_fraction_threshold": 0.7368940186686814,
+          "strong_dependency_cutoff": -1.3292329432442784,
+          "pan_essential_fraction_threshold": 0.8212095893919468
+        },
+        "mean_rbo_at_10": 0.8685335611482143
+      },
+      {
+        "weights": {
+          "rna": 0.2086933517150531,
+          "protein": 0.1250204331658246,
+          "fusion": 0.11840893783559615,
+          "copy_number": 0.23274734435233008,
+          "mutation": 0.043472346866387436,
+          "dependency": 0.2716575860648086
+        },
+        "thresholds": {
+          "min_lineage_n": 32,
+          "min_calibration_n": 28,
+          "tier_insufficient_fraction": 0.31349999681115154,
+          "tier_fraction_threshold": 0.7368940186686814,
+          "strong_dependency_cutoff": -1.3292329432442784,
+          "pan_essential_fraction_threshold": 0.8212095893919468
+        },
+        "mean_rbo_at_10": 0.832499594592857
+      },
+      {
+        "weights": {
+          "rna": 0.22943677234761395,
+          "protein": 0.13744704576038672,
+          "fusion": 0.130178389923999,
+          "copy_number": 0.11541467725646384,
+          "mutation": 0.08886367387052725,
+          "dependency": 0.29865944084100926
+        },
+        "thresholds": {
+          "min_lineage_n": 32,
+          "min_calibration_n": 28,
+          "tier_insufficient_fraction": 0.31349999681115154,
+          "tier_fraction_threshold": 0.7368940186686814,
+          "strong_dependency_cutoff": -1.3292329432442784,
+          "pan_essential_fraction_threshold": 0.8212095893919468
+        },
+        "mean_rbo_at_10": 0.8642439361482143
+      },
+      {
+        "weights": {
+          "rna": 0.2832469487076084,
+          "protein": 0.16968272314047583,
+          "fusion": 0.1607093377245439,
+          "copy_number": 0.14248306770737557,
+          "mutation": 0.05900240473340787,
+          "dependency": 0.1848755179865884
+        },
+        "thresholds": {
+          "min_lineage_n": 32,
+          "min_calibration_n": 28,
+          "tier_insufficient_fraction": 0.31349999681115154,
+          "tier_fraction_threshold": 0.7368940186686814,
+          "strong_dependency_cutoff": -1.3292329432442784,
+          "pan_essential_fraction_threshold": 0.8212095893919468
+        },
+        "mean_rbo_at_10": 0.8353528797642857
+      },
+      {
+        "weights": {
+          "rna": 0.2392633969186186,
+          "protein": 0.14333381143992954,
+          "fusion": 0.13575384390180725,
+          "copy_number": 0.1203578112265697,
+          "mutation": 0.049840310186201636,
+          "dependency": 0.3114508263268733
+        },
+        "thresholds": {
+          "min_lineage_n": 18,
+          "min_calibration_n": 28,
+          "tier_insufficient_fraction": 0.31349999681115154,
+          "tier_fraction_threshold": 0.7368940186686814,
+          "strong_dependency_cutoff": -1.3292329432442784,
+          "pan_essential_fraction_threshold": 0.8212095893919468
+        },
+        "mean_rbo_at_10": 0.8524738031017857
+      },
+      {
+        "weights": {
+          "rna": 0.2392633969186186,
+          "protein": 0.14333381143992954,
+          "fusion": 0.13575384390180725,
+          "copy_number": 0.1203578112265697,
+          "mutation": 0.049840310186201636,
+          "dependency": 0.3114508263268733
+        },
+        "thresholds": {
+          "min_lineage_n": 32,
+          "min_calibration_n": 94,
+          "tier_insufficient_fraction": 0.31349999681115154,
+          "tier_fraction_threshold": 0.7368940186686814,
+          "strong_dependency_cutoff": -1.3292329432442784,
+          "pan_essential_fraction_threshold": 0.8212095893919468
+        },
+        "mean_rbo_at_10": 0.8524738031017857
+      },
+      {
+        "weights": {
+          "rna": 0.2392633969186186,
+          "protein": 0.14333381143992954,
+          "fusion": 0.13575384390180725,
+          "copy_number": 0.1203578112265697,
+          "mutation": 0.049840310186201636,
+          "dependency": 0.3114508263268733
+        },
+        "thresholds": {
+          "min_lineage_n": 32,
+          "min_calibration_n": 28,
+          "tier_insufficient_fraction": 0.7748326305299997,
+          "tier_fraction_threshold": 0.7368940186686814,
+          "strong_dependency_cutoff": -1.3292329432442784,
+          "pan_essential_fraction_threshold": 0.8212095893919468
+        },
+        "mean_rbo_at_10": 0.8524738031017857
+      },
+      {
+        "weights": {
+          "rna": 0.2392633969186186,
+          "protein": 0.14333381143992954,
+          "fusion": 0.13575384390180725,
+          "copy_number": 0.1203578112265697,
+          "mutation": 0.049840310186201636,
+          "dependency": 0.3114508263268733
+        },
+        "thresholds": {
+          "min_lineage_n": 32,
+          "min_calibration_n": 28,
+          "tier_insufficient_fraction": 0.31349999681115154,
+          "tier_fraction_threshold": 0.6421433830168098,
+          "strong_dependency_cutoff": -1.3292329432442784,
+          "pan_essential_fraction_threshold": 0.8212095893919468
+        },
+        "mean_rbo_at_10": 0.8524738031017857
+      },
+      {
+        "weights": {
+          "rna": 0.2392633969186186,
+          "protein": 0.14333381143992954,
+          "fusion": 0.13575384390180725,
+          "copy_number": 0.1203578112265697,
+          "mutation": 0.049840310186201636,
+          "dependency": 0.3114508263268733
+        },
+        "thresholds": {
+          "min_lineage_n": 32,
+          "min_calibration_n": 28,
+          "tier_insufficient_fraction": 0.31349999681115154,
+          "tier_fraction_threshold": 0.7368940186686814,
+          "strong_dependency_cutoff": -1.1810889635235071,
+          "pan_essential_fraction_threshold": 0.8212095893919468
+        },
+        "mean_rbo_at_10": 0.8524738031017857
+      },
+      {
+        "weights": {
+          "rna": 0.2392633969186186,
+          "protein": 0.14333381143992954,
+          "fusion": 0.13575384390180725,
+          "copy_number": 0.1203578112265697,
+          "mutation": 0.049840310186201636,
+          "dependency": 0.3114508263268733
+        },
+        "thresholds": {
+          "min_lineage_n": 32,
+          "min_calibration_n": 28,
+          "tier_insufficient_fraction": 0.31349999681115154,
+          "tier_fraction_threshold": 0.7368940186686814,
+          "strong_dependency_cutoff": -1.3292329432442784,
+          "pan_essential_fraction_threshold": 0.8649553283303976
+        },
+        "mean_rbo_at_10": 0.8524738031017857
+      },
+      {
+        "weights": {
+          "rna": 0.2392633969186186,
+          "protein": 0.14333381143992954,
+          "fusion": 0.13575384390180725,
+          "copy_number": 0.1203578112265697,
+          "mutation": 0.049840310186201636,
+          "dependency": 0.3114508263268733
+        },
+        "thresholds": {
+          "min_lineage_n": 32,
+          "min_calibration_n": 28,
+          "tier_insufficient_fraction": 0.31349999681115154,
+          "tier_fraction_threshold": 0.7368940186686814,
+          "strong_dependency_cutoff": -1.3292329432442784,
+          "pan_essential_fraction_threshold": 0.8212095893919468
+        },
+        "mean_rbo_at_10": 0.8524738031017857
+      },
+      {
+        "weights": {
+          "rna": 0.18676741813234843,
+          "protein": 0.10814036600537842,
+          "fusion": 0.1600567550237169,
+          "copy_number": 0.10575205434643724,
+          "mutation": 0.26542553486464937,
+          "dependency": 0.17385787162746966
+        },
+        "thresholds": {
+          "min_lineage_n": 28,
+          "min_calibration_n": 49,
+          "tier_insufficient_fraction": 0.3683261573314667,
+          "tier_fraction_threshold": 0.7711097524967044,
+          "strong_dependency_cutoff": -0.7558221211656928,
+          "pan_essential_fraction_threshold": 0.9793156713992357
+        },
+        "mean_rbo_at_10": 0.8232433135267857
+      },
+      {
+        "weights": {
+          "rna": 0.10181756723963176,
+          "protein": 0.11943665217549618,
+          "fusion": 0.17677620008383826,
+          "copy_number": 0.11679885872765955,
+          "mutation": 0.2931517476512652,
+          "dependency": 0.19201897412210903
+        },
+        "thresholds": {
+          "min_lineage_n": 28,
+          "min_calibration_n": 49,
+          "tier_insufficient_fraction": 0.3683261573314667,
+          "tier_fraction_threshold": 0.7711097524967044,
+          "strong_dependency_cutoff": -0.7558221211656928,
+          "pan_essential_fraction_threshold": 0.9793156713992357
+        },
+        "mean_rbo_at_10": 0.7988701240964285
+      },
+      {
+        "weights": {
+          "rna": 0.16981655151024486,
+          "protein": 0.18908485756957646,
+          "fusion": 0.1455301275556906,
+          "copy_number": 0.09615407957029277,
+          "mutation": 0.2413357183185807,
+          "dependency": 0.15807866547561458
+        },
+        "thresholds": {
+          "min_lineage_n": 28,
+          "min_calibration_n": 49,
+          "tier_insufficient_fraction": 0.3683261573314667,
+          "tier_fraction_threshold": 0.7711097524967044,
+          "strong_dependency_cutoff": -0.7558221211656928,
+          "pan_essential_fraction_threshold": 0.9793156713992357
+        },
+        "mean_rbo_at_10": 0.826899567705357
+      },
+      {
+        "weights": {
+          "rna": 0.16613034194220672,
+          "protein": 0.09619127448395813,
+          "fusion": 0.2528672297591287,
+          "copy_number": 0.09406686201131102,
+          "mutation": 0.23609704148723754,
+          "dependency": 0.1546472503161579
+        },
+        "thresholds": {
+          "min_lineage_n": 28,
+          "min_calibration_n": 49,
+          "tier_insufficient_fraction": 0.3683261573314667,
+          "tier_fraction_threshold": 0.7711097524967044,
+          "strong_dependency_cutoff": -0.7558221211656928,
+          "pan_essential_fraction_threshold": 0.9793156713992357
+        },
+        "mean_rbo_at_10": 0.7536292117910715
+      },
+      {
+        "weights": {
+          "rna": 0.17569361171279352,
+          "protein": 0.10172851167201297,
+          "fusion": 0.1505666761919864,
+          "copy_number": 0.1587737684134747,
+          "mutation": 0.24968793447754595,
+          "dependency": 0.16354949753218645
+        },
+        "thresholds": {
+          "min_lineage_n": 28,
+          "min_calibration_n": 49,
+          "tier_insufficient_fraction": 0.3683261573314667,
+          "tier_fraction_threshold": 0.7711097524967044,
+          "strong_dependency_cutoff": -0.7558221211656928,
+          "pan_essential_fraction_threshold": 0.9793156713992357
+        },
+        "mean_rbo_at_10": 0.8166531059142856
+      },
+      {
+        "weights": {
+          "rna": 0.20202487284378987,
+          "protein": 0.11697459819268942,
+          "fusion": 0.1731321549808129,
+          "copy_number": 0.11439117992823056,
+          "mutation": 0.20541647789925382,
+          "dependency": 0.1880607161552234
+        },
+        "thresholds": {
+          "min_lineage_n": 28,
+          "min_calibration_n": 49,
+          "tier_insufficient_fraction": 0.3683261573314667,
+          "tier_fraction_threshold": 0.7711097524967044,
+          "strong_dependency_cutoff": -0.7558221211656928,
+          "pan_essential_fraction_threshold": 0.9793156713992357
+        },
+        "mean_rbo_at_10": 0.8489608752892858
+      },
+      {
+        "weights": {
+          "rna": 0.2084010691985876,
+          "protein": 0.12066648521680286,
+          "fusion": 0.1785964554896939,
+          "copy_number": 0.11800153054601498,
+          "mutation": 0.2961703160623136,
+          "dependency": 0.07816414348658705
+        },
+        "thresholds": {
+          "min_lineage_n": 28,
+          "min_calibration_n": 49,
+          "tier_insufficient_fraction": 0.3683261573314667,
+          "tier_fraction_threshold": 0.7711097524967044,
+          "strong_dependency_cutoff": -0.7558221211656928,
+          "pan_essential_fraction_threshold": 0.9793156713992357
+        },
+        "mean_rbo_at_10": 0.6893206828660714
+      },
+      {
+        "weights": {
+          "rna": 0.18676741813234843,
+          "protein": 0.10814036600537842,
+          "fusion": 0.1600567550237169,
+          "copy_number": 0.10575205434643724,
+          "mutation": 0.26542553486464937,
+          "dependency": 0.17385787162746966
+        },
+        "thresholds": {
+          "min_lineage_n": 25,
+          "min_calibration_n": 49,
+          "tier_insufficient_fraction": 0.3683261573314667,
+          "tier_fraction_threshold": 0.7711097524967044,
+          "strong_dependency_cutoff": -0.7558221211656928,
+          "pan_essential_fraction_threshold": 0.9793156713992357
+        },
+        "mean_rbo_at_10": 0.8232433135267857
+      },
+      {
+        "weights": {
+          "rna": 0.18676741813234843,
+          "protein": 0.10814036600537842,
+          "fusion": 0.1600567550237169,
+          "copy_number": 0.10575205434643724,
+          "mutation": 0.26542553486464937,
+          "dependency": 0.17385787162746966
+        },
+        "thresholds": {
+          "min_lineage_n": 28,
+          "min_calibration_n": 77,
+          "tier_insufficient_fraction": 0.3683261573314667,
+          "tier_fraction_threshold": 0.7711097524967044,
+          "strong_dependency_cutoff": -0.7558221211656928,
+          "pan_essential_fraction_threshold": 0.9793156713992357
+        },
+        "mean_rbo_at_10": 0.8232433135267857
+      },
+      {
+        "weights": {
+          "rna": 0.18676741813234843,
+          "protein": 0.10814036600537842,
+          "fusion": 0.1600567550237169,
+          "copy_number": 0.10575205434643724,
+          "mutation": 0.26542553486464937,
+          "dependency": 0.17385787162746966
+        },
+        "thresholds": {
+          "min_lineage_n": 28,
+          "min_calibration_n": 49,
+          "tier_insufficient_fraction": 0.5498932182788849,
+          "tier_fraction_threshold": 0.7711097524967044,
+          "strong_dependency_cutoff": -0.7558221211656928,
+          "pan_essential_fraction_threshold": 0.9793156713992357
+        },
+        "mean_rbo_at_10": 0.8232433135267857
+      },
+      {
+        "weights": {
+          "rna": 0.18676741813234843,
+          "protein": 0.10814036600537842,
+          "fusion": 0.1600567550237169,
+          "copy_number": 0.10575205434643724,
+          "mutation": 0.26542553486464937,
+          "dependency": 0.17385787162746966
+        },
+        "thresholds": {
+          "min_lineage_n": 28,
+          "min_calibration_n": 49,
+          "tier_insufficient_fraction": 0.3683261573314667,
+          "tier_fraction_threshold": 0.5067502458579838,
+          "strong_dependency_cutoff": -0.7558221211656928,
+          "pan_essential_fraction_threshold": 0.9793156713992357
+        },
+        "mean_rbo_at_10": 0.8232433135267857
+      },
+      {
+        "weights": {
+          "rna": 0.18676741813234843,
+          "protein": 0.10814036600537842,
+          "fusion": 0.1600567550237169,
+          "copy_number": 0.10575205434643724,
+          "mutation": 0.26542553486464937,
+          "dependency": 0.17385787162746966
+        },
+        "thresholds": {
+          "min_lineage_n": 28,
+          "min_calibration_n": 49,
+          "tier_insufficient_fraction": 0.3683261573314667,
+          "tier_fraction_threshold": 0.7711097524967044,
+          "strong_dependency_cutoff": -0.9601377313956618,
+          "pan_essential_fraction_threshold": 0.9793156713992357
+        },
+        "mean_rbo_at_10": 0.8232433135267857
+      },
+      {
+        "weights": {
+          "rna": 0.18676741813234843,
+          "protein": 0.10814036600537842,
+          "fusion": 0.1600567550237169,
+          "copy_number": 0.10575205434643724,
+          "mutation": 0.26542553486464937,
+          "dependency": 0.17385787162746966
+        },
+        "thresholds": {
+          "min_lineage_n": 28,
+          "min_calibration_n": 49,
+          "tier_insufficient_fraction": 0.3683261573314667,
+          "tier_fraction_threshold": 0.7711097524967044,
+          "strong_dependency_cutoff": -0.7558221211656928,
+          "pan_essential_fraction_threshold": 0.898973222002387
+        },
+        "mean_rbo_at_10": 0.8232433135267857
+      },
+      {
+        "weights": {
+          "rna": 0.16860228501223212,
+          "protein": 0.18773281381538215,
+          "fusion": 0.25662977782188445,
+          "copy_number": 0.15236535861232747,
+          "mutation": 0.17143278976227058,
+          "dependency": 0.0632369749759032
+        },
+        "thresholds": {
+          "min_lineage_n": 25,
+          "min_calibration_n": 77,
+          "tier_insufficient_fraction": 0.5498932182788849,
+          "tier_fraction_threshold": 0.5067502458579838,
+          "strong_dependency_cutoff": -0.9601377313956618,
+          "pan_essential_fraction_threshold": 0.898973222002387
+        },
+        "mean_rbo_at_10": 0.6478569406232142
+      },
+      {
+        "weights": {
+          "rna": 0.1009345659040407,
+          "protein": 0.11840085131864328,
+          "fusion": 0.3112516746938504,
+          "copy_number": 0.18479528539486526,
+          "mutation": 0.20792108914180435,
+          "dependency": 0.07669653354679606
+        },
+        "thresholds": {
+          "min_lineage_n": 25,
+          "min_calibration_n": 77,
+          "tier_insufficient_fraction": 0.5498932182788849,
+          "tier_fraction_threshold": 0.5067502458579838,
+          "strong_dependency_cutoff": -0.9601377313956618,
+          "pan_essential_fraction_threshold": 0.898973222002387
+        },
+        "mean_rbo_at_10": 0.6150950453517856
+      },
+      {
+        "weights": {
+          "rna": 0.10370546554393494,
+          "protein": 0.23394111975550047,
+          "fusion": 0.18005397912951096,
+          "copy_number": 0.18986836601069307,
+          "mutation": 0.213629029388728,
+          "dependency": 0.07880204017163256
+        },
+        "thresholds": {
+          "min_lineage_n": 25,
+          "min_calibration_n": 77,
+          "tier_insufficient_fraction": 0.5498932182788849,
+          "tier_fraction_threshold": 0.5067502458579838,
+          "strong_dependency_cutoff": -0.9601377313956618,
+          "pan_essential_fraction_threshold": 0.898973222002387
+        },
+        "mean_rbo_at_10": 0.6827685542946428
+      },
+      {
+        "weights": {
+          "rna": 0.09702632056257797,
+          "protein": 0.21887415440557864,
+          "fusion": 0.299199828066787,
+          "copy_number": 0.11130263485456794,
+          "mutation": 0.1998702631363419,
+          "dependency": 0.0737267989741465
+        },
+        "thresholds": {
+          "min_lineage_n": 25,
+          "min_calibration_n": 77,
+          "tier_insufficient_fraction": 0.5498932182788849,
+          "tier_fraction_threshold": 0.5067502458579838,
+          "strong_dependency_cutoff": -0.9601377313956618,
+          "pan_essential_fraction_threshold": 0.898973222002387
+        },
+        "mean_rbo_at_10": 0.6136116217178571
+      },
+      {
+        "weights": {
+          "rna": 0.0846782160870362,
+          "protein": 0.19101902282967984,
+          "fusion": 0.26112200841320155,
+          "copy_number": 0.15503247047605806,
+          "mutation": 0.24380436212429704,
+          "dependency": 0.06434392006972732
+        },
+        "thresholds": {
+          "min_lineage_n": 25,
+          "min_calibration_n": 77,
+          "tier_insufficient_fraction": 0.5498932182788849,
+          "tier_fraction_threshold": 0.5067502458579838,
+          "strong_dependency_cutoff": -0.9601377313956618,
+          "pan_essential_fraction_threshold": 0.898973222002387
+        },
+        "mean_rbo_at_10": 0.6118145453517856
+      },
+      {
+        "weights": {
+          "rna": 0.08253389832920209,
+          "protein": 0.1861818226421276,
+          "fusion": 0.25450958097346643,
+          "copy_number": 0.15110656255257265,
+          "mutation": 0.17001646440963847,
+          "dependency": 0.15565167109299272
+        },
+        "thresholds": {
+          "min_lineage_n": 25,
+          "min_calibration_n": 77,
+          "tier_insufficient_fraction": 0.5498932182788849,
+          "tier_fraction_threshold": 0.5067502458579838,
+          "strong_dependency_cutoff": -0.9601377313956618,
+          "pan_essential_fraction_threshold": 0.898973222002387
+        },
+        "mean_rbo_at_10": 0.7092583242696429
+      },
+      {
+        "weights": {
+          "rna": 0.0909902742485996,
+          "protein": 0.20525790548193892,
+          "fusion": 0.2805864867705899,
+          "copy_number": 0.16658885434661472,
+          "mutation": 0.18743625390994947,
+          "dependency": 0.06914022524230738
+        },
+        "thresholds": {
+          "min_lineage_n": 28,
+          "min_calibration_n": 77,
+          "tier_insufficient_fraction": 0.5498932182788849,
+          "tier_fraction_threshold": 0.5067502458579838,
+          "strong_dependency_cutoff": -0.9601377313956618,
+          "pan_essential_fraction_threshold": 0.898973222002387
+        },
+        "mean_rbo_at_10": 0.6150950453517856
+      },
+      {
+        "weights": {
+          "rna": 0.0909902742485996,
+          "protein": 0.20525790548193892,
+          "fusion": 0.2805864867705899,
+          "copy_number": 0.16658885434661472,
+          "mutation": 0.18743625390994947,
+          "dependency": 0.06914022524230738
+        },
+        "thresholds": {
+          "min_lineage_n": 25,
+          "min_calibration_n": 49,
+          "tier_insufficient_fraction": 0.5498932182788849,
+          "tier_fraction_threshold": 0.5067502458579838,
+          "strong_dependency_cutoff": -0.9601377313956618,
+          "pan_essential_fraction_threshold": 0.898973222002387
+        },
+        "mean_rbo_at_10": 0.6150950453517856
+      },
+      {
+        "weights": {
+          "rna": 0.0909902742485996,
+          "protein": 0.20525790548193892,
+          "fusion": 0.2805864867705899,
+          "copy_number": 0.16658885434661472,
+          "mutation": 0.18743625390994947,
+          "dependency": 0.06914022524230738
+        },
+        "thresholds": {
+          "min_lineage_n": 25,
+          "min_calibration_n": 77,
+          "tier_insufficient_fraction": 0.3683261573314667,
+          "tier_fraction_threshold": 0.5067502458579838,
+          "strong_dependency_cutoff": -0.9601377313956618,
+          "pan_essential_fraction_threshold": 0.898973222002387
+        },
+        "mean_rbo_at_10": 0.6150950453517856
+      },
+      {
+        "weights": {
+          "rna": 0.0909902742485996,
+          "protein": 0.20525790548193892,
+          "fusion": 0.2805864867705899,
+          "copy_number": 0.16658885434661472,
+          "mutation": 0.18743625390994947,
+          "dependency": 0.06914022524230738
+        },
+        "thresholds": {
+          "min_lineage_n": 25,
+          "min_calibration_n": 77,
+          "tier_insufficient_fraction": 0.5498932182788849,
+          "tier_fraction_threshold": 0.7711097524967044,
+          "strong_dependency_cutoff": -0.9601377313956618,
+          "pan_essential_fraction_threshold": 0.898973222002387
+        },
+        "mean_rbo_at_10": 0.6150950453517856
+      },
+      {
+        "weights": {
+          "rna": 0.0909902742485996,
+          "protein": 0.20525790548193892,
+          "fusion": 0.2805864867705899,
+          "copy_number": 0.16658885434661472,
+          "mutation": 0.18743625390994947,
+          "dependency": 0.06914022524230738
+        },
+        "thresholds": {
+          "min_lineage_n": 25,
+          "min_calibration_n": 77,
+          "tier_insufficient_fraction": 0.5498932182788849,
+          "tier_fraction_threshold": 0.5067502458579838,
+          "strong_dependency_cutoff": -0.7558221211656928,
+          "pan_essential_fraction_threshold": 0.898973222002387
+        },
+        "mean_rbo_at_10": 0.6150950453517856
+      },
+      {
+        "weights": {
+          "rna": 0.0909902742485996,
+          "protein": 0.20525790548193892,
+          "fusion": 0.2805864867705899,
+          "copy_number": 0.16658885434661472,
+          "mutation": 0.18743625390994947,
+          "dependency": 0.06914022524230738
+        },
+        "thresholds": {
+          "min_lineage_n": 25,
+          "min_calibration_n": 77,
+          "tier_insufficient_fraction": 0.5498932182788849,
+          "tier_fraction_threshold": 0.5067502458579838,
+          "strong_dependency_cutoff": -0.9601377313956618,
+          "pan_essential_fraction_threshold": 0.9793156713992357
+        },
+        "mean_rbo_at_10": 0.6150950453517856
+      },
+      {
+        "weights": {
+          "rna": 0.0909902742485996,
+          "protein": 0.20525790548193892,
+          "fusion": 0.2805864867705899,
+          "copy_number": 0.16658885434661472,
+          "mutation": 0.18743625390994947,
+          "dependency": 0.06914022524230738
+        },
+        "thresholds": {
+          "min_lineage_n": 25,
+          "min_calibration_n": 77,
+          "tier_insufficient_fraction": 0.5498932182788849,
+          "tier_fraction_threshold": 0.5067502458579838,
+          "strong_dependency_cutoff": -0.9601377313956618,
+          "pan_essential_fraction_threshold": 0.898973222002387
+        },
+        "mean_rbo_at_10": 0.6150950453517856
+      }
+    ],
+    "indices": {
+      "names": [
+        "weight_rna",
+        "weight_protein",
+        "weight_fusion",
+        "weight_copy_number",
+        "weight_mutation",
+        "weight_dependency",
+        "min_lineage_n",
+        "min_calibration_n",
+        "tier_insufficient_fraction",
+        "tier_fraction_threshold",
+        "strong_dependency_cutoff",
+        "pan_essential_fraction_threshold"
+      ],
+      "S1": [
+        0.26797016800171164,
+        0.11570208781278411,
+        0.49982722113854333,
+        0.16290965020466355,
+        -0.281283850372079,
+        1.2920011425407805,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "ST": [
+        0.020019206200325816,
+        0.03201183546244472,
+        0.164349695549338,
+        0.0163262872229391,
+        0.02208870392465151,
+        0.5208340926051491,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  },
+  "layer_count_grid": [
+    {
+      "high_min_layers": 2,
+      "moderate_min_layers": 1,
+      "per_query": [
+        {
+          "rbo_at_10": 0.09828424343571429,
+          "kendall_tau": 1.0,
+          "top10_changed": true,
+          "top10_n_diff": 18
+        },
+        {
+          "rbo_at_10": 0.2702842434357142,
+          "kendall_tau": 0.9999999999999999,
+          "top10_changed": true,
+          "top10_n_diff": 18
+        },
+        {
+          "rbo_at_10": 0.0,
+          "kendall_tau": 1.0,
+          "top10_changed": true,
+          "top10_n_diff": 20
+        },
+        {
+          "rbo_at_10": 0.0,
+          "kendall_tau": 0.9999999999999999,
+          "top10_changed": true,
+          "top10_n_diff": 20
+        }
+      ]
+    },
+    {
+      "high_min_layers": 3,
+      "moderate_min_layers": 1,
+      "per_query": [
+        {
+          "rbo_at_10": 0.09828424343571429,
+          "kendall_tau": 1.0,
+          "top10_changed": true,
+          "top10_n_diff": 18
+        },
+        {
+          "rbo_at_10": 0.2702842434357142,
+          "kendall_tau": 0.9999999999999999,
+          "top10_changed": true,
+          "top10_n_diff": 18
+        },
+        {
+          "rbo_at_10": 0.0,
+          "kendall_tau": 1.0,
+          "top10_changed": true,
+          "top10_n_diff": 20
+        },
+        {
+          "rbo_at_10": 0.0,
+          "kendall_tau": 0.9999999999999999,
+          "top10_changed": true,
+          "top10_n_diff": 20
+        }
+      ]
+    },
+    {
+      "high_min_layers": 3,
+      "moderate_min_layers": 2,
+      "per_query": [
+        {
+          "rbo_at_10": 1.0,
+          "kendall_tau": 1.0,
+          "top10_changed": false,
+          "top10_n_diff": 0
+        },
+        {
+          "rbo_at_10": 1.0,
+          "kendall_tau": 0.9999999999999999,
+          "top10_changed": false,
+          "top10_n_diff": 0
+        },
+        {
+          "rbo_at_10": 1.0,
+          "kendall_tau": 1.0,
+          "top10_changed": false,
+          "top10_n_diff": 0
+        },
+        {
+          "rbo_at_10": 1.0,
+          "kendall_tau": 0.9999999999999999,
+          "top10_changed": false,
+          "top10_n_diff": 0
+        }
+      ]
+    },
+    {
+      "high_min_layers": 4,
+      "moderate_min_layers": 2,
+      "per_query": [
+        {
+          "rbo_at_10": 1.0,
+          "kendall_tau": 1.0,
+          "top10_changed": false,
+          "top10_n_diff": 0
+        },
+        {
+          "rbo_at_10": 1.0,
+          "kendall_tau": 0.9999999999999999,
+          "top10_changed": false,
+          "top10_n_diff": 0
+        },
+        {
+          "rbo_at_10": 1.0,
+          "kendall_tau": 1.0,
+          "top10_changed": false,
+          "top10_n_diff": 0
+        },
+        {
+          "rbo_at_10": 1.0,
+          "kendall_tau": 0.9999999999999999,
+          "top10_changed": false,
+          "top10_n_diff": 0
+        }
+      ]
+    },
+    {
+      "high_min_layers": 4,
+      "moderate_min_layers": 3,
+      "per_query": [
+        {
+          "rbo_at_10": 0.5594315131285714,
+          "kendall_tau": 1.0,
+          "top10_changed": true,
+          "top10_n_diff": 4
+        },
+        {
+          "rbo_at_10": 0.5388527303071428,
+          "kendall_tau": 0.9999999999999999,
+          "top10_changed": true,
+          "top10_n_diff": 14
+        },
+        {
+          "rbo_at_10": 0.6192534952285713,
+          "kendall_tau": 1.0,
+          "top10_changed": true,
+          "top10_n_diff": 6
+        },
+        {
+          "rbo_at_10": 0.18886653938571432,
+          "kendall_tau": 0.9999999999999999,
+          "top10_changed": true,
+          "top10_n_diff": 12
+        }
+      ]
+    }
+  ],
+  "_sync_note_batch_27": "Batch 27 sync marker"
+}

@@ -1,0 +1,288 @@
+{
+  "battery_size": 4,
+  "known_negative_pairs": {
+    "query_name": "stress_egfr_kras_joint_inclusion",
+    "total_candidates": 2130,
+    "tier_counts": {
+      "Moderate": 320,
+      "High": 1314,
+      "Insufficient": 135,
+      "Low": 361
+    },
+    "n_confident": 1634,
+    "confident_fraction": 0.7671361502347418,
+    "non_insufficient_count": 1995,
+    "veto_summary": {
+      "KRAS": 11,
+      "EGFR": 20
+    },
+    "veto_fraction_of_non_insufficient": 0.015538847117794486,
+    "pass": false
+  },
+  "known_negative_pairs_lung": {
+    "query_name": "stress_egfr_kras_joint_inclusion_lung",
+    "total_candidates": 274,
+    "tier_counts": {
+      "Moderate": 39,
+      "High": 180,
+      "Insufficient": 11,
+      "Low": 44
+    },
+    "n_confident": 219,
+    "confident_fraction": 0.7992700729927007,
+    "non_insufficient_count": 263,
+    "veto_summary": {
+      "KRAS": 2,
+      "EGFR": 1
+    },
+    "veto_fraction_of_non_insufficient": 0.011406844106463879,
+    "pass": false
+  },
+  "random_gene_lists": {
+    "n_shadow_queries": 20,
+    "tier_counts": {
+      "Moderate": 10718,
+      "High": 271,
+      "Insufficient": 6789,
+      "Low": 5322
+    },
+    "total_scored": 23100,
+    "low_insufficient_collapse_fraction": 0.5242857142857142,
+    "D_summary": {
+      "n": 17025,
+      "mean": 0.09078829068201319,
+      "median": 0.0,
+      "fraction_d_ge_0_7": 0.02907488986784141
+    },
+    "real_tier_counts": {
+      "Moderate": 819,
+      "High": 2732,
+      "Insufficient": 298,
+      "Low": 771
+    },
+    "real_total_scored": 4620,
+    "real_D_summary": {
+      "n": 4322,
+      "mean": 0.5330855332580097,
+      "median": 0.4927937631212522,
+      "fraction_d_ge_0_7": 0.18209162424803332
+    },
+    "pass": true
+  },
+  "shuffled_lineage_null": {
+    "informative_queries": [
+      "single_inclusion_egfr_lung",
+      "single_inclusion_myc_breast"
+    ],
+    "per_query": [
+      {
+        "query_name": "single_inclusion_egfr_lung",
+        "k_draws": 20,
+        "rbo_at_10_per_draw": [
+          0.8450687386642857,
+          0.7951162839785713,
+          0.9041622076642857,
+          0.85266075295,
+          0.8459889189142856,
+          0.7692882243785715,
+          0.8459889189142856,
+          0.7876419189142857,
+          0.7635064785142855,
+          0.8459889189142856,
+          0.8459889189142856,
+          0.8400102076642857,
+          0.8134699785142856,
+          0.8063266897642858,
+          0.8096071897642856,
+          0.7305461754785714,
+          0.8269120095142857,
+          0.8885937565642856,
+          0.8400102076642857,
+          0.8400102076642857
+        ],
+        "mean_rbo_at_10": 0.8248443351657142,
+        "membership_change_per_draw": [
+          4,
+          6,
+          4,
+          4,
+          4,
+          4,
+          4,
+          4,
+          6,
+          4,
+          4,
+          4,
+          6,
+          6,
+          6,
+          6,
+          6,
+          2,
+          4,
+          4
+        ],
+        "rho_bar_invariant": true,
+        "m_eff_invariant": true,
+        "pass": true
+      },
+      {
+        "query_name": "single_inclusion_myc_breast",
+        "k_draws": 20,
+        "rbo_at_10_per_draw": [
+          0.7606371897642856,
+          0.9015870620285715,
+          0.8934005274142857,
+          0.682719269692857,
+          0.6898931754785713,
+          0.7747157565642857,
+          0.8568107875642856,
+          0.7198278364928572,
+          0.6793266897642857,
+          0.6946565131285715,
+          0.8019242708500001,
+          0.6763028185928571,
+          0.7151931933785713,
+          0.8161450310285714,
+          0.7556352243785714,
+          0.7305895167428571,
+          0.7642534952285713,
+          0.6922296933785714,
+          0.7754290584142858,
+          0.8058779642285714
+        ],
+        "mean_rbo_at_10": 0.7593577537057142,
+        "membership_change_per_draw": [
+          6,
+          2,
+          4,
+          6,
+          6,
+          2,
+          2,
+          2,
+          6,
+          4,
+          2,
+          4,
+          4,
+          2,
+          4,
+          2,
+          6,
+          4,
+          4,
+          6
+        ],
+        "rho_bar_invariant": true,
+        "m_eff_invariant": true,
+        "pass": true
+      }
+    ],
+    "n_informative": 2,
+    "n_passed": 2,
+    "pass": true
+  },
+  "leave_one_lineage_out": {
+    "holdout_lineages": [
+      "lung",
+      "blood",
+      "skin",
+      "lymphocyte",
+      "central_nervous_system"
+    ],
+    "per_lineage": {
+      "lung": {
+        "panel_5gene": {
+          "rbo_at_10": 1.0,
+          "membership_change": 0
+        },
+        "single_inclusion_myc_breast": {
+          "rbo_at_10": 1.0,
+          "membership_change": 0
+        },
+        "stress_egfr_kras_joint_inclusion": {
+          "rbo_at_10": 1.0,
+          "membership_change": 0
+        }
+      },
+      "blood": {
+        "single_inclusion_egfr_lung": {
+          "rbo_at_10": 1.0,
+          "membership_change": 0
+        },
+        "panel_5gene": {
+          "rbo_at_10": 1.0,
+          "membership_change": 0
+        },
+        "single_inclusion_myc_breast": {
+          "rbo_at_10": 1.0,
+          "membership_change": 0
+        },
+        "stress_egfr_kras_joint_inclusion": {
+          "rbo_at_10": 1.0,
+          "membership_change": 0
+        }
+      },
+      "skin": {
+        "single_inclusion_egfr_lung": {
+          "rbo_at_10": 1.0,
+          "membership_change": 0
+        },
+        "panel_5gene": {
+          "rbo_at_10": 1.0,
+          "membership_change": 0
+        },
+        "single_inclusion_myc_breast": {
+          "rbo_at_10": 1.0,
+          "membership_change": 0
+        },
+        "stress_egfr_kras_joint_inclusion": {
+          "rbo_at_10": 1.0,
+          "membership_change": 0
+        }
+      },
+      "lymphocyte": {
+        "single_inclusion_egfr_lung": {
+          "rbo_at_10": 1.0,
+          "membership_change": 0
+        },
+        "panel_5gene": {
+          "rbo_at_10": 1.0,
+          "membership_change": 0
+        },
+        "single_inclusion_myc_breast": {
+          "rbo_at_10": 1.0,
+          "membership_change": 0
+        },
+        "stress_egfr_kras_joint_inclusion": {
+          "rbo_at_10": 1.0,
+          "membership_change": 0
+        }
+      },
+      "central_nervous_system": {
+        "single_inclusion_egfr_lung": {
+          "rbo_at_10": 1.0,
+          "membership_change": 0
+        },
+        "panel_5gene": {
+          "rbo_at_10": 1.0,
+          "membership_change": 0
+        },
+        "single_inclusion_myc_breast": {
+          "rbo_at_10": 1.0,
+          "membership_change": 0
+        },
+        "stress_egfr_kras_joint_inclusion": {
+          "rbo_at_10": 1.0,
+          "membership_change": 0
+        }
+      }
+    },
+    "median_membership_change": 0.0,
+    "pass": true
+  },
+  "any_control_passed": true,
+  "_sync_note_batch_26": "Batch 26 sync marker"
+}

@@ -1,0 +1,289 @@
+{
+  "version": "1.0.0",
+  "generated": "2026-08-10",
+  "source": "docs/plan/EXECUTE.md V6-3, docs/plan/PARAMETERS.md \u00a711 -- \u226520 queries, written down before the sweep runs, per the 'not after' rule",
+  "method": "24 real queries, every required category (single inclusion gene; inclusion+exclusion; 5-10 gene panels; a lineage-filtered query; a query containing a pan-essential gene; a query where most candidates abstain) covered at least twice. Every gene symbol verified via score.resolve_genes against gene_reference.csv (no ambiguous-symbol collisions). lineage values are cell_lines.csv's lowercase convention (e.g. 'lung', not 'Lung' -- both casings exist in the data from different source files; the lowercase group is the larger, primary one).",
+  "queries": [
+    {
+      "name": "single_inclusion_egfr_lung",
+      "category": "single inclusion + lineage",
+      "inclusion": [
+        "EGFR"
+      ],
+      "exclusion": [],
+      "lineage": "lung",
+      "note": "scoring/tests/test_biological_spotcheck.py"
+    },
+    {
+      "name": "single_inclusion_egfr",
+      "category": "single inclusion",
+      "inclusion": [
+        "EGFR"
+      ],
+      "exclusion": [],
+      "lineage": null
+    },
+    {
+      "name": "single_inclusion_kras",
+      "category": "single inclusion",
+      "inclusion": [
+        "KRAS"
+      ],
+      "exclusion": [],
+      "lineage": null
+    },
+    {
+      "name": "single_inclusion_tp53",
+      "category": "single inclusion",
+      "inclusion": [
+        "TP53"
+      ],
+      "exclusion": [],
+      "lineage": null,
+      "note": "tumour suppressor -- mutation/copy_number currently abstain (S2 interim, gene_class unknown)"
+    },
+    {
+      "name": "single_inclusion_myc",
+      "category": "single inclusion",
+      "inclusion": [
+        "MYC"
+      ],
+      "exclusion": [],
+      "lineage": null
+    },
+    {
+      "name": "flagship_egfr_kras_lung",
+      "category": "inclusion+exclusion",
+      "inclusion": [
+        "EGFR"
+      ],
+      "exclusion": [
+        "KRAS"
+      ],
+      "lineage": "lung",
+      "note": "the flagship veto query, scoring/tests/test_veto.py (real model ACH-000444 is in this panel)"
+    },
+    {
+      "name": "braf_nras_exclusion",
+      "category": "inclusion+exclusion",
+      "inclusion": [
+        "BRAF"
+      ],
+      "exclusion": [
+        "NRAS"
+      ],
+      "lineage": null,
+      "note": "biologically near-mutually-exclusive drivers"
+    },
+    {
+      "name": "erbb2_egfr_exclusion",
+      "category": "inclusion+exclusion",
+      "inclusion": [
+        "ERBB2"
+      ],
+      "exclusion": [
+        "EGFR"
+      ],
+      "lineage": null
+    },
+    {
+      "name": "pik3ca_pten_exclusion",
+      "category": "inclusion+exclusion",
+      "inclusion": [
+        "PIK3CA"
+      ],
+      "exclusion": [
+        "PTEN"
+      ],
+      "lineage": null,
+      "note": "pathway antagonists"
+    },
+    {
+      "name": "panel_5gene",
+      "category": "5-10 gene panel",
+      "inclusion": [
+        "EGFR",
+        "KRAS",
+        "BRAF",
+        "PIK3CA",
+        "MET"
+      ],
+      "exclusion": [],
+      "lineage": null
+    },
+    {
+      "name": "panel_6gene_lung",
+      "category": "5-10 gene panel + lineage",
+      "inclusion": [
+        "TP53",
+        "RB1",
+        "STK11",
+        "KEAP1",
+        "EGFR",
+        "ALK"
+      ],
+      "exclusion": [],
+      "lineage": "lung"
+    },
+    {
+      "name": "panel_8gene_breast_ddr",
+      "category": "5-10 gene panel + lineage",
+      "inclusion": [
+        "BRCA1",
+        "BRCA2",
+        "ATM",
+        "CHEK2",
+        "PALB2",
+        "RAD51C",
+        "TP53",
+        "PTEN"
+      ],
+      "exclusion": [],
+      "lineage": "breast",
+      "note": "DNA-repair panel"
+    },
+    {
+      "name": "panel_10gene",
+      "category": "5-10 gene panel",
+      "inclusion": [
+        "TP53",
+        "KRAS",
+        "EGFR",
+        "PIK3CA",
+        "PTEN",
+        "BRAF",
+        "MYC",
+        "RB1",
+        "APC",
+        "SMAD4"
+      ],
+      "exclusion": [],
+      "lineage": null
+    },
+    {
+      "name": "pan_essential_inclusion_psma6",
+      "category": "pan-essential gene",
+      "inclusion": [
+        "PSMA6"
+      ],
+      "exclusion": [],
+      "lineage": null,
+      "note": "flagged pan-essential in scoring/resources/common_essential_genes.json"
+    },
+    {
+      "name": "pan_essential_in_panel_rpl5",
+      "category": "pan-essential gene",
+      "inclusion": [
+        "EGFR",
+        "RPL5"
+      ],
+      "exclusion": [],
+      "lineage": null,
+      "note": "pan-essential gene alongside a normal one -- interaction check"
+    },
+    {
+      "name": "most_abstain_or1i1",
+      "category": "most candidates abstain",
+      "inclusion": [
+        "OR1I1"
+      ],
+      "exclusion": [],
+      "lineage": null,
+      "note": "confirmed absent from RNA calibration (preprocessing/resources/desirability_constants.json's global dict)"
+    },
+    {
+      "name": "most_abstain_or12d3_skin",
+      "category": "most candidates abstain + lineage",
+      "inclusion": [
+        "OR12D3"
+      ],
+      "exclusion": [],
+      "lineage": "skin"
+    },
+    {
+      "name": "single_inclusion_myc_breast",
+      "category": "single inclusion + lineage",
+      "inclusion": [
+        "MYC"
+      ],
+      "exclusion": [],
+      "lineage": "breast"
+    },
+    {
+      "name": "single_inclusion_bcl2_blood",
+      "category": "single inclusion + lineage",
+      "inclusion": [
+        "BCL2"
+      ],
+      "exclusion": [],
+      "lineage": "blood"
+    },
+    {
+      "name": "multi_exclusion_egfr_vs_tp53_kras",
+      "category": "multi-exclusion",
+      "inclusion": [
+        "EGFR"
+      ],
+      "exclusion": [
+        "TP53",
+        "KRAS"
+      ],
+      "lineage": null,
+      "note": "1 inclusion, 2 exclusion genes"
+    },
+    {
+      "name": "panel_5gene_fusion_lung",
+      "category": "5-10 gene panel + lineage",
+      "inclusion": [
+        "MET",
+        "ALK",
+        "ROS1",
+        "RET",
+        "NTRK1"
+      ],
+      "exclusion": [],
+      "lineage": "lung",
+      "note": "fusion-relevant panel -- exercises the fusion layer/weight under the sweep"
+    },
+    {
+      "name": "pan_essential_as_exclusion_rpl3",
+      "category": "pan-essential gene",
+      "inclusion": [
+        "EGFR"
+      ],
+      "exclusion": [
+        "RPL3"
+      ],
+      "lineage": null,
+      "note": "pan-essential gene tested as an exclusion role"
+    },
+    {
+      "name": "panel_7gene_ddr",
+      "category": "5-10 gene panel",
+      "inclusion": [
+        "ATM",
+        "ATR",
+        "CHEK1",
+        "CHEK2",
+        "BRCA1",
+        "BRCA2",
+        "TP53BP1"
+      ],
+      "exclusion": [],
+      "lineage": null,
+      "note": "DNA-damage-response panel"
+    },
+    {
+      "name": "stress_egfr_kras_joint_inclusion",
+      "category": "biological stress test",
+      "inclusion": [
+        "EGFR",
+        "KRAS"
+      ],
+      "exclusion": [],
+      "lineage": null,
+      "note": "both canonical oncogenes as joint inclusion"
+    }
+  ],
+  "_sync_note_batch_26": "Batch 26 sync marker"
+}
