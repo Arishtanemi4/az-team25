@@ -176,3 +176,7 @@ def build_sobol_problem():
     names = [f"weight_{layer}" for layer in LAYER_ORDER] + list(THRESHOLD_BOUNDS.keys())
     bounds = [[0.0, 1.0]] * len(LAYER_ORDER) + list(THRESHOLD_BOUNDS.values())
     return {"num_vars": len(names), "names": names, "bounds": bounds}
+
+
+def sample_sobol(problem, n):
+    return sobol_sample.sample(problem, n)
