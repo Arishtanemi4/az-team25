@@ -220,3 +220,13 @@ def tier_params_from_thresholds(thresholds, high_min_layers=3, moderate_min_laye
 def load_battery(path=f"{RESOURCES_DIR}/sensitivity_battery.json"):
     with open(path) as f:
         return json.load(f)["queries"]
+
+
+def resolve_battery_genes(battery, gene_reference_df):
+    all_tokens = sorted({t for q in battery for t in q["inclusion"] + q["exclusion"]})
+    resolved, ambiguous, unresolved = score.resolve_genes(all_tokens, gene_reference_df)
+    if ambiguous or unresolved:
+        raise ValueError(
+            f"battery gene resolution failed: ambiguous={ambiguous} unresolved={unresolved}"
+        )
+    return set(resolved.values())
