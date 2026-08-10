@@ -86,3 +86,8 @@ def essentiality_for_sample(gene_codes, scores, cutoff, fraction_threshold, min_
     frac = np.divide(n_strong, n_total, out=np.zeros(n_genes), where=n_total > 0)
     flagged = np.nonzero((n_total >= min_n) & (frac >= fraction_threshold))[0]
     return {"pan_essential": {str(gene_categories[i]): float(frac[i]) for i in flagged}}
+
+
+def _load_json(path):
+    with open(path) as f:
+        return json.load(f)
