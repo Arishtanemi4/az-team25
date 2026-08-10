@@ -381,3 +381,26 @@ def run_loo_control(battery, holdout_lineages, gene_reference_df, cell_lines_df,
         "median_membership_change": median_diff,
         "pass": passed,
     }
+
+
+def _run_real_battery_baseline(battery, gene_reference_df, cell_lines_df, coverage_df,
+                                data_dir=DATA_DIR, layer_frames=None):
+    if layer_frames is None:
+        battery_genes = sensitivity.resolve_battery_genes(battery, gene_reference_df)
+        layer_frames = sensitivity.load_layer_frames(battery_genes, data_dir)
+    weights, thresholds = sensitivity.default_sample()
+    tier_params = sensitivity.tier_params_from_thresholds(thresholds)
+
+    all_results = []
+    for query in battery:
+        query_cache = sensitivity.build_query_cache(
+            query, gene_reference_df, cell_lines_df, coverage_df, layer_frames, data_dir
+        )
+        tables = dict(query_cache["tables"])
+        for model_id in query_cache["model_ids"]:
+            all_results.append(score.score_one_line(
+                model_id, query_cache["inclusion_genes"], query_cache["exclusion_genes"],
+                tables, query_cache["correlation_weights"], query_cache["cell_lines_by_id"][model_id],
+                layer_weights=weights, tier_params=tier_params, build_narrative=False,
+            ))
+    return all_results
