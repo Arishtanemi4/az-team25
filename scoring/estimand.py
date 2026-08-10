@@ -207,3 +207,16 @@ def find_override_informative_queries(battery, rna_constants, gene_reference_df)
         if any(eid in override_genes for eid in resolved.values()):
             informative.append(query["name"])
     return informative
+
+
+def shuffle_lineage_labels(cell_lines_by_id, seed):
+    rng = random.Random(seed)
+    model_ids = list(cell_lines_by_id.keys())
+    lineages = [cell_lines_by_id[m].get("lineage") for m in model_ids]
+    rng.shuffle(lineages)
+    shuffled = {}
+    for model_id, lineage in zip(model_ids, lineages):
+        row = dict(cell_lines_by_id[model_id])
+        row["lineage"] = lineage
+        shuffled[model_id] = row
+    return shuffled
