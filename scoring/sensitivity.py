@@ -245,3 +245,26 @@ def load_layer_frames(battery_genes, data_dir=DATA_DIR):
             df["ensembl_id"] = df["ensembl_id"].astype("category")
         frames[name] = df
     return frames
+
+
+def correlation_weights_from_frame(ensembl_ids, expression_frame):
+    m = len(ensembl_ids)
+    if m == 1:
+        gene = ensembl_ids[0]
+        return {
+            "weights": {gene: 1.0}, "rho_bar": {gene: None}, "m_eff": 1.0,
+            "note": "m=1: no correlation discount is possible, none was applied.",
+        }
+
+    subset = expression_frame[expression_frame["ensembl_id"].isin(ensembl_ids)]
+    long = subset.groupby(["ModelID", "ensembl_id"], as_index=False, observed=True)["log2tpm1"].mean()
+    wide = long.pivot(index="ModelID", columns="ensembl_id", values="log2tpm1")
+    corr_matrix = correlation.compute_pairwise_spearman(wide)
+    rho_bar = correlation.compute_rho_bar(corr_matrix)
+    weights, m_eff = correlation.compute_weights(rho_bar, m)
+    for gene in ensembl_ids:
+        if gene not in weights:
+            weights[gene] = 1.0
+            rho_bar[gene] = None
+            m_eff += 1.0
+    return {"weights": weights, "rho_bar": rho_bar, "m_eff": m_eff, "note": correlation.SMALL_QUERY_CAVEAT}
