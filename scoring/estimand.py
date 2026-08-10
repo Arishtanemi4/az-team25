@@ -220,3 +220,51 @@ def shuffle_lineage_labels(cell_lines_by_id, seed):
         row["lineage"] = lineage
         shuffled[model_id] = row
     return shuffled
+
+
+def run_lineage_shuffle_control(query_cache, full_cell_lines_by_id, K=SHUFFLE_DRAWS,
+                                 seed_base=SHUFFLE_SEED_BASE, top_n=10):
+    weights, thresholds = sensitivity.default_sample()
+    tier_params = sensitivity.tier_params_from_thresholds(thresholds)
+    rna_constants = query_cache["tables"]["rna_constants"]
+    extended_constants = query_cache["tables"]["extended_constants"]
+    essentiality_constants = query_cache["tables"]["essentiality_constants"]
+
+    real_top10, _real_full = sensitivity.run_query_under_sample(
+        query_cache, weights, tier_params, rna_constants, extended_constants,
+        essentiality_constants, top_n=top_n,
+    )
+    real_rho_bar = query_cache["correlation_weights"]["rho_bar"]
+    real_m_eff = query_cache["correlation_weights"]["m_eff"]
+
+    rbo_draws, membership_draws = [], []
+    rho_bar_invariant, m_eff_invariant = True, True
+    for i in range(K):
+        shuffled_full = shuffle_lineage_labels(full_cell_lines_by_id, seed_base + i)
+        shuffled = {m: shuffled_full[m] for m in query_cache["model_ids"]}
+        top10, _full = sensitivity.run_query_under_sample(
+            query_cache, weights, tier_params, rna_constants, extended_constants,
+            essentiality_constants, top_n=top_n, cell_lines_by_id_override=shuffled,
+        )
+        rbo_draws.append(sensitivity.rbo_at_10(real_top10, top10))
+        _changed, n_diff = sensitivity.top10_membership_change(real_top10, top10)
+        membership_draws.append(n_diff)
+        if query_cache["correlation_weights"]["rho_bar"] != real_rho_bar:
+            rho_bar_invariant = False
+        if query_cache["correlation_weights"]["m_eff"] != real_m_eff:
+            m_eff_invariant = False
+
+    valid_rbo = [r for r in rbo_draws if r is not None]
+    mean_rbo = float(np.mean(valid_rbo)) if valid_rbo else None
+    passed = mean_rbo is not None and mean_rbo <= SHUFFLE_RBO_CEILING
+
+    return {
+        "query_name": query_cache["name"],
+        "k_draws": K,
+        "rbo_at_10_per_draw": rbo_draws,
+        "mean_rbo_at_10": mean_rbo,
+        "membership_change_per_draw": membership_draws,
+        "rho_bar_invariant": rho_bar_invariant,
+        "m_eff_invariant": m_eff_invariant,
+        "pass": passed,
+    }
