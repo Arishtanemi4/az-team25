@@ -128,3 +128,60 @@ def _d_summary(values):
         "median": float(np.median(arr)),
         "fraction_d_ge_0_7": float((arr >= D_HIGH_THRESHOLD).mean()),
     }
+
+
+def run_random_control(shadow_battery, real_baseline_results, gene_reference_df, cell_lines_df,
+                        coverage_df, data_dir=DATA_DIR):
+    battery_genes = sensitivity.resolve_battery_genes(shadow_battery, gene_reference_df)
+    layer_frames = sensitivity.load_layer_frames(battery_genes, data_dir)
+    weights, thresholds = sensitivity.default_sample()
+    tier_params = sensitivity.tier_params_from_thresholds(thresholds)
+
+    tier_counts = {}
+    d_values = []
+    for query in shadow_battery:
+        query_cache = sensitivity.build_query_cache(
+            query, gene_reference_df, cell_lines_df, coverage_df, layer_frames, data_dir
+        )
+        tables = dict(query_cache["tables"])
+        for model_id in query_cache["model_ids"]:
+            result = score.score_one_line(
+                model_id, query_cache["inclusion_genes"], query_cache["exclusion_genes"],
+                tables, query_cache["correlation_weights"], query_cache["cell_lines_by_id"][model_id],
+                layer_weights=weights, tier_params=tier_params, build_narrative=False,
+            )
+            tier_counts[result["confidence_tier"]] = tier_counts.get(result["confidence_tier"], 0) + 1
+            if result["D"] is not None:
+                d_values.append(result["D"])
+
+    total = sum(tier_counts.values())
+    collapse_fraction = (
+        (tier_counts.get("Low", 0) + tier_counts.get("Insufficient", 0)) / total if total else 0.0
+    )
+
+    real_tier_counts = {}
+    real_d_values = []
+    for r in real_baseline_results:
+        real_tier_counts[r["confidence_tier"]] = real_tier_counts.get(r["confidence_tier"], 0) + 1
+        if r["D"] is not None:
+            real_d_values.append(r["D"])
+
+    d_summary = _d_summary(d_values)
+    real_d_summary = _d_summary(real_d_values)
+    passed = (
+        d_summary["median"] is not None and d_summary["median"] <= RANDOM_MEDIAN_D_CEILING
+        and real_d_summary["mean"] is not None
+        and d_summary["mean"] < RANDOM_MEAN_D_RATIO_CEILING * real_d_summary["mean"]
+    )
+
+    return {
+        "n_shadow_queries": len(shadow_battery),
+        "tier_counts": tier_counts,
+        "total_scored": total,
+        "low_insufficient_collapse_fraction": collapse_fraction,
+        "D_summary": d_summary,
+        "real_tier_counts": real_tier_counts,
+        "real_total_scored": sum(real_tier_counts.values()),
+        "real_D_summary": real_d_summary,
+        "pass": passed,
+    }
