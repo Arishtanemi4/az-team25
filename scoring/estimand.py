@@ -116,3 +116,15 @@ def build_shadow_battery(real_battery, gene_reference_df, exclude=None,
                 "rep": rep,
             })
     return shadow_queries
+
+
+def _d_summary(values):
+    if not values:
+        return {"n": 0, "mean": None, "median": None, "fraction_d_ge_0_7": None}
+    arr = np.array(values)
+    return {
+        "n": len(arr),
+        "mean": float(arr.mean()),
+        "median": float(np.median(arr)),
+        "fraction_d_ge_0_7": float((arr >= D_HIGH_THRESHOLD).mean()),
+    }
