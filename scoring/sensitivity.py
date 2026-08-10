@@ -301,3 +301,30 @@ def build_query_cache(query, gene_reference_df, cell_lines_df, coverage_df, laye
         "model_ids": model_ids, "tables": tables, "correlation_weights": correlation_weights,
         "cell_lines_by_id": cell_lines_by_id,
     }
+
+
+def run_query_under_sample(query_cache, layer_weights, tier_params, rna_constants,
+                            extended_constants, essentiality_constants, top_n=10,
+                            cell_lines_by_id_override=None):
+    tables = dict(query_cache["tables"])
+    tables["rna_constants"] = rna_constants
+    tables["extended_constants"] = extended_constants
+    tables["essentiality_constants"] = essentiality_constants
+    cell_lines_by_id = cell_lines_by_id_override or query_cache["cell_lines_by_id"]
+
+    results = [
+        score.score_one_line(
+            model_id, query_cache["inclusion_genes"], query_cache["exclusion_genes"],
+            tables, query_cache["correlation_weights"], cell_lines_by_id[model_id],
+            layer_weights=layer_weights, tier_params=tier_params, build_narrative=False,
+        )
+        for model_id in query_cache["model_ids"]
+    ]
+
+    outcome = score.rank_and_diagnose(results, top_n=top_n)
+    top10 = [r["model_id"] for r in outcome["ranked"][:top_n]]
+    scored_full = sorted(
+        (r for r in results if r["D"] is not None), key=lambda r: (-r["D"], r["model_id"])
+    )
+    full_ranked = [r["model_id"] for r in scored_full]
+    return top10, full_ranked
