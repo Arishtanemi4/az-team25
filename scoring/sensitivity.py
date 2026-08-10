@@ -148,3 +148,17 @@ def build_extended_constants_at_threshold(extended_floor, min_calibration_n, pro
         "dependency": {"global": dep_kept},
         "copy_number": {"global": cn_kept},
     }
+
+
+def build_constants_for_thresholds(thresholds, rna_floor, extended_floor, protein_global,
+                                    dep_gene_codes, dep_scores, dep_gene_categories):
+    rna_constants = build_rna_constants_at_threshold(rna_floor, thresholds["min_lineage_n"])
+    extended_constants = build_extended_constants_at_threshold(
+        extended_floor, thresholds["min_calibration_n"], protein_global,
+    )
+    essentiality_constants = essentiality_for_sample(
+        dep_gene_codes, dep_scores, thresholds["strong_dependency_cutoff"],
+        thresholds["pan_essential_fraction_threshold"], thresholds["min_calibration_n"],
+        dep_gene_categories,
+    )
+    return rna_constants, extended_constants, essentiality_constants
