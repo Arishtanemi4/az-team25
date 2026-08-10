@@ -109,3 +109,13 @@ def restrict_rna_floor_to_genes(rna_floor, genes):
         "per_lineage": per_lineage,
         "lineage_gene_counts": lineage_gene_counts,
     }
+
+
+def restrict_extended_floor_to_genes(extended_floor, genes):
+    genes = set(genes)
+    return {
+        "dependency": {"global": {g: lt for g, lt in extended_floor["dependency"]["global"].items() if g in genes}},
+        "copy_number": {"global": {g: lt for g, lt in extended_floor["copy_number"]["global"].items() if g in genes}},
+        "dependency_gene_counts": {g: n for g, n in extended_floor["dependency_gene_counts"].items() if g in genes},
+        "copy_number_gene_counts": {g: n for g, n in extended_floor["copy_number_gene_counts"].items() if g in genes},
+    }
