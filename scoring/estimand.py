@@ -77,3 +77,42 @@ def run_known_negative_pair_control(query, gene_reference_df, cell_lines_df, cov
         "veto_fraction_of_non_insufficient": veto_fraction,
         "pass": passed,
     }
+
+
+RANDOM_BATTERY_SEED = 20260812  # disclosed, fixed -- PARAMETERS.md
+RANDOM_BATTERY_REPS = 5
+D_HIGH_THRESHOLD = 0.7
+
+RANDOM_MEDIAN_D_CEILING = 0.2  # disclosed heuristic: shadow median D must sit near the floor
+RANDOM_MEAN_D_RATIO_CEILING = 0.5  # shadow mean D must be < half the real battery's own mean D
+
+
+def build_shadow_battery(real_battery, gene_reference_df, exclude=None,
+                          n_reps=RANDOM_BATTERY_REPS, seed=RANDOM_BATTERY_SEED):
+    exclude = set(exclude or [])
+    symbol_counts = gene_reference_df["symbol"].value_counts()
+    unique_symbols = set(symbol_counts[symbol_counts == 1].index)
+    pool_df = gene_reference_df[
+        gene_reference_df["symbol"].isin(unique_symbols)
+        & ~gene_reference_df["ensembl_id"].isin(exclude)
+    ]
+    pool = pool_df["symbol"].dropna().tolist()
+
+    rng = random.Random(seed)
+    shadow_queries = []
+    for query in real_battery:
+        n_inclusion = len(query["inclusion"])
+        n_exclusion = len(query["exclusion"])
+        n_needed = n_inclusion + n_exclusion
+        for rep in range(n_reps):
+            draw = rng.sample(pool, n_needed)
+            shadow_queries.append({
+                "name": f"shadow__{query['name']}__rep{rep}",
+                "category": "random_gene_list_control",
+                "inclusion": draw[:n_inclusion],
+                "exclusion": draw[n_inclusion:],
+                "lineage": query.get("lineage"),
+                "source_query": query["name"],
+                "rep": rep,
+            })
+    return shadow_queries
