@@ -329,3 +329,55 @@ def recompute_global_rna_constants(expression_rna_frame, exclude_lineage, cell_l
         gene: {"L": round(float(row["L"]), 4), "T": round(float(row["T"]), 4)}
         for gene, row in kept.iterrows()
     }
+
+
+def run_loo_control(battery, holdout_lineages, gene_reference_df, cell_lines_df, coverage_df,
+                     data_dir=DATA_DIR, top_n=10, layer_frames=None):
+    if layer_frames is None:
+        battery_genes = sensitivity.resolve_battery_genes(battery, gene_reference_df)
+        layer_frames = sensitivity.load_layer_frames(battery_genes, data_dir)
+    expression_rna_frame = layer_frames["expression_rna"]
+
+    weights, thresholds = sensitivity.default_sample()
+    tier_params = sensitivity.tier_params_from_thresholds(thresholds)
+
+    per_lineage_results = {}
+    for held_out in holdout_lineages:
+        test_queries = [q for q in battery if q.get("lineage") != held_out]
+        modified_global = recompute_global_rna_constants(expression_rna_frame, held_out, cell_lines_df)
+
+        per_query = {}
+        for query in test_queries:
+            query_cache = sensitivity.build_query_cache(
+                query, gene_reference_df, cell_lines_df, coverage_df, layer_frames, data_dir
+            )
+            baseline_rna = query_cache["tables"]["rna_constants"]
+            extended_constants = query_cache["tables"]["extended_constants"]
+            essentiality_constants = query_cache["tables"]["essentiality_constants"]
+
+            baseline_top10, _baseline_full = sensitivity.run_query_under_sample(
+                query_cache, weights, tier_params, baseline_rna, extended_constants,
+                essentiality_constants, top_n=top_n,
+            )
+            loo_rna = {"global": modified_global, "per_lineage": baseline_rna["per_lineage"]}
+            loo_top10, _loo_full = sensitivity.run_query_under_sample(
+                query_cache, weights, tier_params, loo_rna, extended_constants,
+                essentiality_constants, top_n=top_n,
+            )
+            rbo = sensitivity.rbo_at_10(baseline_top10, loo_top10)
+            _changed, n_diff = sensitivity.top10_membership_change(baseline_top10, loo_top10)
+            per_query[query["name"]] = {"rbo_at_10": rbo, "membership_change": n_diff}
+        per_lineage_results[held_out] = per_query
+
+    all_diffs = [
+        v["membership_change"] for per_query in per_lineage_results.values() for v in per_query.values()
+    ]
+    median_diff = float(np.median(all_diffs)) if all_diffs else None
+    passed = median_diff is not None and median_diff <= LOO_MEMBERSHIP_CEILING
+
+    return {
+        "holdout_lineages": holdout_lineages,
+        "per_lineage": per_lineage_results,
+        "median_membership_change": median_diff,
+        "pass": passed,
+    }
