@@ -1,0 +1,1250 @@
+model_id,celligner_lineage,celligner_subtype,celligner_undifferentiated_cluster,matched_in_cell_lines_csv,our_lineage,lineage_agrees
+ACH-001097,lymphocyte,t-cell,False,True,lymphocyte,True
+ACH-001804,soft_tissue,wd/ddlps,True,True,soft_tissue,True
+ACH-000534,lymphocyte,diffuse large b-cell lymphoma,False,True,lymphocyte,True
+ACH-000742,fibroblast,lung,False,True,fibroblast,True
+ACH-000836,upper_aerodigestive,"squamous cell carcinoma, tongue",False,True,upper_aerodigestive,True
+ACH-000545,urinary_tract,transitional cell carcinoma,False,True,urinary_tract,True
+ACH-001850,bile_duct,adenocarcinoma,True,True,bile_duct,True
+ACH-000470,colorectal,adenocarcinoma,False,True,colorectal,True
+ACH-001959,bile_duct,"cholangiocarcinoma, intrahepatic",False,True,bile_duct,True
+ACH-000079,fibroblast,soft tissue,False,True,fibroblast,True
+ACH-000762,upper_aerodigestive,squamous cell carcinoma,False,True,upper_aerodigestive,True
+ACH-000495,kidney,renal cell carcinoma,False,True,kidney,True
+ACH-000834,urinary_tract,transitional cell carcinoma,False,True,urinary_tract,True
+ACH-000981,blood,"acute lymphoblastic leukemia, t-cell",False,True,blood,True
+ACH-001642,lymphocyte,"b-cell, non-hodgkins",False,True,lymphocyte,True
+ACH-001020,soft_tissue,atypical teratoid rhabdoid tumor,False,True,soft_tissue,True
+ACH-001799,soft_tissue,ddlps,True,True,soft_tissue,True
+ACH-001425,soft_tissue,undifferentiated,False,False,,
+ACH-001100,lymphocyte,,False,True,lymphocyte,True
+ACH-000652,pancreas,"ductal adenocarcinoma, exocrine",True,True,pancreas,True
+ACH-001400,cervix,squamous cell carcinoma,False,True,cervix,True
+ACH-001119,lymphocyte,t-cell,False,True,lymphocyte,True
+ACH-001450,lymphocyte,"b-cell, non-hodgkins, burkitts",False,True,lymphocyte,True
+ACH-001849,bile_duct,"cholangiocarcinoma, intrahepatic",False,True,bile_duct,True
+ACH-001033,bone,Ewing sarcoma,False,True,central_nervous_system,False
+ACH-000660,lymphocyte,diffuse large b-cell lymphoma,False,True,lymphocyte,True
+ACH-000813,lung,"non-small cell lung cancer, large cell carcinoma",False,True,lung,True
+ACH-001143,lymphocyte,,False,True,lymphocyte,True
+ACH-001411,urinary_tract,squamous cell carcinoma,False,True,urinary_tract,True
+ACH-001196,soft_tissue,"rhabdomyosarcoma, embryonal",False,True,soft_tissue,True
+ACH-001239,skin,transitory,False,True,skin,True
+ACH-000741,urinary_tract,transitional cell carcinoma,False,True,urinary_tract,True
+ACH-001068,lymphocyte,t-cell,False,True,lymphocyte,True
+ACH-000723,upper_aerodigestive,"squamous cell carcinoma, tongue",False,True,upper_aerodigestive,True
+ACH-001634,blood,"chronic lymphoblastic leukemia, b-cell",False,True,blood,True
+ACH-001028,soft_tissue,atypical teratoid rhabdoid tumor,False,True,soft_tissue,True
+ACH-001791,soft_tissue,,True,True,soft_tissue,True
+ACH-001184,soft_tissue,rhabdomyosarcoma,False,True,soft_tissue,True
+ACH-001485,blood,"b-cell, unspecified",False,True,blood,True
+ACH-000608,ovary,"adenocarcinoma, mucinous",False,True,ovary,True
+ACH-001702,soft_tissue,epithelioid,False,True,soft_tissue,True
+ACH-001563,skin,"melanoma, amelanotic",True,True,skin,True
+ACH-000529,fibroblast,bone,False,True,fibroblast,True
+ACH-001560,lung,mesothelioma,False,True,lung,True
+ACH-001050,soft_tissue,"rhabdomyosarcoma, alveolar",True,True,soft_tissue,True
+ACH-001431,bone,Ewing sarcoma,False,True,bone,True
+ACH-000958,colorectal,adenocarcinoma,False,True,colorectal,True
+ACH-001392,breast,luminal,False,True,breast,True
+ACH-000772,soft_tissue,rhabdomyosarcoma,False,True,soft_tissue,True
+ACH-001163,kidney,renal medullary carcinoma,False,True,kidney,True
+ACH-001664,gastric,adenocarcinoma,True,True,gastric,True
+ACH-001060,lymphocyte,t-cell,False,True,lymphocyte,True
+ACH-001316,kidney,renal medullary carcinoma,False,False,,
+ACH-001054,central_nervous_system,medulloblastoma,False,True,central_nervous_system,True
+ACH-001638,lymphocyte,b-cell,False,True,lymphocyte,True
+ACH-000318,esophagus,squamous cell carcinoma,False,True,esophagus,True
+ACH-000820,colorectal,adenocarcinoma,False,True,colorectal,True
+ACH-000686,liver,hepatocellular carcinoma,False,True,liver,True
+ACH-001497,esophagus,adenocarcinoma,False,True,esophagus,True
+ACH-001844,bile_duct,"cholangiocarcinoma, intrahepatic",False,True,bile_duct,True
+ACH-001735,blood,"acute lymphoblastic leukemia, b-cell",False,True,blood,True
+ACH-001300,peripheral_nervous_system,,False,True,peripheral_nervous_system,True
+ACH-001147,lymphocyte,t-cell,False,True,lymphocyte,True
+ACH-000899,skin,transitory,False,True,skin,True
+ACH-001790,soft_tissue,"rhabdomyosarcoma, embryonal",False,False,,
+ACH-000437,central_nervous_system,astrocytoma,True,True,central_nervous_system,True
+ACH-001416,urinary_tract,transitional cell carcinoma,False,True,urinary_tract,True
+ACH-001653,gastric,adenocarcinoma,False,True,gastric,True
+ACH-001835,bile_duct,"cholangiocarcinoma, intrahepatic",False,True,bile_duct,True
+ACH-001396,breast,luminal,False,True,breast,True
+ACH-001430,bone,Ewing sarcoma,False,True,bone,True
+ACH-001677,lymphocyte,b-cell,False,True,lymphocyte,True
+ACH-001232,central_nervous_system,medulloblastoma,True,True,central_nervous_system,True
+ACH-000716,thyroid,"carcinoma, follicular",True,True,thyroid,True
+ACH-001751,soft_tissue,"rhabdomyosarcoma, embryonal",False,True,soft_tissue,True
+ACH-001555,lung,mesothelioma,False,True,lung,True
+ACH-001818,bone,osteosarcoma,False,True,bone,True
+ACH-000502,pancreas,"ductal adenocarcinoma, exocrine",False,True,pancreas,True
+ACH-001540,soft_tissue,,True,True,soft_tissue,True
+ACH-001607,bile_duct,adenocarcinoma,True,True,bile_duct,True
+ACH-000677,lung,"non-small cell lung cancer, adenocarcinoma",True,True,lung,True
+ACH-001414,urinary_tract,transitional cell carcinoma,False,True,urinary_tract,True
+ACH-000469,central_nervous_system,glioblastoma,True,True,central_nervous_system,True
+ACH-001031,soft_tissue,atypical teratoid rhabdoid tumor,False,True,soft_tissue,True
+ACH-001057,lymphocyte,t-cell,False,True,lymphocyte,True
+ACH-001134,lymphocyte,t-cell,False,True,lymphocyte,True
+ACH-001391,breast,basal B,True,True,breast,True
+ACH-001407,urinary_tract,transitional cell carcinoma,True,True,urinary_tract,True
+ACH-000991,colorectal,adenocarcinoma,False,True,colorectal,True
+ACH-001736,blood,"acute lymphoblastic leukemia, b-cell",False,True,blood,True
+ACH-002011,eye,uveal melanoma,False,True,eye,True
+ACH-001041,lung,"non-small cell lung cancer, adenocarcinoma",False,True,skin,False
+ACH-001628,ovary,cystadenocarcinoma,False,True,ovary,True
+ACH-001433,soft_tissue,epithelioid,False,True,soft_tissue,True
+ACH-001061,colorectal,adenocarcinoma,False,True,colorectal,True
+ACH-001328,skin,squamous cell carcinoma,False,True,skin,True
+ACH-001344,peripheral_nervous_system,,True,True,peripheral_nervous_system,True
+ACH-001530,uterus,choriocarcinoma,False,True,uterus,True
+ACH-001128,soft_tissue,malignant rhabdoid tumor,False,True,soft_tissue,True
+ACH-001335,cervix,carcinoma,False,True,cervix,True
+ACH-000567,lymphocyte,"b-cell, non-hodgkins, burkitts",False,True,lymphocyte,True
+ACH-001301,peripheral_nervous_system,MYCN amp,False,True,peripheral_nervous_system,True
+ACH-001030,bone,Ewing sarcoma,False,True,bone,True
+ACH-001857,bile_duct,"cholangiocarcinoma, intrahepatic",True,True,bile_duct,True
+ACH-001402,cervix,squamous cell carcinoma,True,True,cervix,True
+ACH-001459,colorectal,adenocarcinoma,False,True,colorectal,True
+ACH-001557,lung,mesothelioma,False,True,lung,True
+ACH-001278,ovary,small cell carcinoma of the ovary hypercalcemic type,False,True,ovary,True
+ACH-001856,bile_duct,"cholangiocarcinoma, intrahepatic",False,True,bile_duct,True
+ACH-001484,blood,"b-cell, unspecified",False,True,blood,True
+ACH-001510,upper_aerodigestive,"squamous cell carcinoma, oral",False,True,upper_aerodigestive,True
+ACH-001650,cervix,cervical adenocarcinoma,False,True,cervix,True
+ACH-001067,central_nervous_system,meningioma,False,True,central_nervous_system,True
+ACH-001322,soft_tissue,synovial,False,True,soft_tissue,True
+ACH-000484,kidney,renal cell carcinoma,False,True,kidney,True
+ACH-000516,bone,chondrosarcoma,True,True,bone,True
+ACH-001302,peripheral_nervous_system,MYCN amp,False,True,peripheral_nervous_system,True
+ACH-001106,blood,"acute lymphoblastic leukemia, b-cell",False,True,blood,True
+ACH-001275,soft_tissue,synovial,False,True,soft_tissue,True
+ACH-000726,esophagus,squamous cell carcinoma,False,True,esophagus,True
+ACH-001277,soft_tissue,synovial,False,True,soft_tissue,True
+ACH-000949,gastric,adenocarcinoma,False,True,gastric,True
+ACH-001279,ovary,small cell carcinoma of the ovary hypercalcemic type,False,True,ovary,True
+ACH-001645,skin,melanoma,False,True,skin,True
+ACH-001624,central_nervous_system,glioblastoma,True,True,central_nervous_system,True
+ACH-001303,peripheral_nervous_system,MYCN amp,False,True,peripheral_nervous_system,True
+ACH-001568,skin,melanoma,False,True,skin,True
+ACH-001750,soft_tissue,"rhabdomyosarcoma, embryonal",True,True,soft_tissue,True
+ACH-000439,blood,acute myeloid leukemia,False,True,blood,True
+ACH-002016,eye,uveal melanoma,False,True,eye,True
+ACH-000206,lymphocyte,atl,False,True,lymphocyte,True
+ACH-001283,bone,Ewing sarcoma,False,True,bone,True
+ACH-002001,skin,melanoma,False,True,skin,True
+ACH-001270,soft_tissue,synovial,False,True,soft_tissue,True
+ACH-001183,urinary_tract,carcinoma,False,True,urinary_tract,True
+ACH-001336,cervix,squamous cell carcinoma,False,True,cervix,True
+ACH-002005,skin,melanoma,False,True,skin,True
+ACH-001458,colorectal,adenocarcinoma,False,True,colorectal,True
+ACH-000917,esophagus,squamous cell carcinoma,False,True,esophagus,True
+ACH-001651,uterus,endometrial squamous cell carcinoma,True,True,uterus,True
+ACH-000489,colorectal,adenocarcinoma,False,True,colorectal,True
+ACH-001559,lung,mesothelioma,False,True,lung,True
+ACH-001280,soft_tissue,synovial,False,True,soft_tissue,True
+ACH-001556,lung,mesothelioma,False,True,lung,True
+ACH-000002,blood,acute myeloid leukemia,False,True,blood,True
+ACH-001132,lymphocyte,t-cell,False,True,lymphocyte,True
+ACH-001034,bone,Ewing sarcoma,False,True,bone,True
+ACH-000230,fibroblast,breast,False,True,fibroblast,True
+ACH-001715,bone,osteosarcoma,True,True,bone,True
+ACH-000197,blood,"acute lymphoblastic leukemia, t-cell",False,True,blood,True
+ACH-001521,skin,squamous cell carcinoma,False,True,skin,True
+ACH-000649,kidney,"renal carcinoma, clear cell",False,True,kidney,True
+ACH-001554,eye,uveal melanoma,False,True,eye,True
+ACH-000970,colorectal,adenocarcinoma,False,True,colorectal,True
+ACH-001494,bile_duct,"cholangiocarcinoma, extrahepatic",False,True,bile_duct,True
+ACH-001538,bile_duct,"cholangiocarcinoma, intrahepatic",False,True,bile_duct,True
+ACH-000626,plasma_cell,"multiple myeloma, plasmacytoma",False,True,plasma_cell,True
+ACH-000125,fibroblast,lymphoma,False,True,fibroblast,True
+ACH-001109,soft_tissue,malignant rhabdoid tumor,False,True,soft_tissue,True
+ACH-001111,lymphocyte,t-cell,False,True,lymphocyte,True
+ACH-000271,lymphocyte,diffuse large b-cell lymphoma,False,True,lymphocyte,True
+ACH-001289,soft_tissue,atypical teratoid rhabdoid tumor,False,True,soft_tissue,True
+ACH-001567,skin,melanoma,False,True,skin,True
+ACH-001536,bile_duct,"cholangiocarcinoma, extrahepatic",True,True,bile_duct,True
+ACH-000765,skin,transitory,False,True,skin,True
+ACH-001368,esophagus,adenocarcinoma,False,True,esophagus,True
+ACH-001038,bone,Ewing sarcoma,False,True,bone,True
+ACH-001380,pancreas,"ductal adenocarcinoma, exocrine",False,True,pancreas,True
+ACH-001353,pancreas,"ductal adenocarcinoma, exocrine",False,True,pancreas,True
+ACH-002004,skin,melanoma,False,True,skin,True
+ACH-001345,colorectal,adenocarcinoma,False,True,colorectal,True
+ACH-001295,eye,retinoblastoma,False,True,eye,True
+ACH-001562,lung,mesothelioma,False,True,lung,True
+ACH-001819,breast,luminal,False,True,breast,True
+ACH-001796,soft_tissue,wdlps,True,True,soft_tissue,True
+ACH-001711,central_nervous_system,primitive neuroectodermal tumor,False,True,central_nervous_system,True
+ACH-000568,breast,luminal,False,True,breast,True
+ACH-000719,ovary,"adenocarcinoma, clear cell",False,True,ovary,True
+ACH-001674,peripheral_nervous_system,,False,True,peripheral_nervous_system,True
+ACH-001524,skin,squamous cell carcinoma,False,True,skin,True
+ACH-000778,upper_aerodigestive,squamous cell carcinoma,False,True,upper_aerodigestive,True
+ACH-001848,bile_duct,"cholangiocarcinoma, intrahepatic",False,True,bile_duct,True
+ACH-001096,soft_tissue,rhabdomyosarcoma,False,True,soft_tissue,True
+ACH-001360,cervix,squamous cell carcinoma,False,True,cervix,True
+ACH-001375,pancreas,"ductal adenocarcinoma, exocrine",False,True,pancreas,True
+ACH-001228,upper_aerodigestive,"squamous cell carcinoma, oral",False,True,upper_aerodigestive,True
+ACH-001845,bile_duct,"cholangiocarcinoma, intrahepatic",False,True,bile_duct,True
+ACH-001001,bone,osteosarcoma,True,True,bone,True
+ACH-001456,colorectal,adenocarcinoma,False,True,colorectal,True
+ACH-001197,lymphocyte,,False,True,lymphocyte,True
+ACH-000611,lymphocyte,diffuse large b-cell lymphoma,False,True,lymphocyte,True
+ACH-000910,breast,HER2 amp,False,True,breast,True
+ACH-001210,soft_tissue,malignant rhabdoid tumor,False,True,soft_tissue,True
+ACH-000134,fibroblast,breast,False,True,fibroblast,True
+ACH-001200,soft_tissue,malignant rhabdoid tumor,False,True,soft_tissue,True
+ACH-001619,bile_duct,adenocarcinoma,True,True,bile_duct,True
+ACH-000645,lung,mesothelioma,False,True,lung,True
+ACH-000688,ovary,"adenocarcinoma, mixed",True,True,ovary,True
+ACH-001618,blood,acute myeloid leukemia,False,True,blood,True
+ACH-000452,esophagus,squamous cell carcinoma,True,True,esophagus,True
+ACH-001558,lung,mesothelioma,False,True,lung,True
+ACH-001329,central_nervous_system,glioblastoma,True,True,central_nervous_system,True
+ACH-000097,breast,luminal,False,True,breast,True
+ACH-001274,soft_tissue,synovial,True,True,soft_tissue,True
+ACH-001378,pancreas,"ductal adenocarcinoma, exocrine",False,True,pancreas,True
+ACH-001410,urinary_tract,transitional cell carcinoma,False,True,urinary_tract,True
+ACH-000704,ovary,carcinoma,False,True,ovary,True
+ACH-001377,pancreas,"ductal adenocarcinoma, exocrine",False,True,pancreas,True
+ACH-001654,esophagus,adenocarcinoma,False,True,esophagus,True
+ACH-002015,eye,uveal melanoma,True,True,eye,True
+ACH-001099,soft_tissue,malignant rhabdoid tumor,False,True,soft_tissue,True
+ACH-001382,pancreas,"ductal adenocarcinoma, exocrine",False,True,pancreas,True
+ACH-000583,lymphocyte,"b-cell, non-hodgkins",False,True,lymphocyte,True
+ACH-001390,breast,basal B,False,True,breast,True
+ACH-000160,soft_tissue,atypical teratoid rhabdoid tumor,False,True,soft_tissue,True
+ACH-000709,kidney,"renal carcinoma, clear cell",False,True,kidney,True
+ACH-000935,colorectal,adenocarcinoma,True,True,colorectal,True
+ACH-000332,pancreas,"ductal adenocarcinoma, exocrine",False,True,pancreas,True
+ACH-000976,bile_duct,"cholangiocarcinoma, intrahepatic",False,True,bile_duct,True
+ACH-000428,kidney,renal cell carcinoma,False,True,kidney,True
+ACH-001548,peripheral_nervous_system,,False,True,peripheral_nervous_system,True
+ACH-001356,thyroid,"carcinoma, anaplastic",True,True,thyroid,True
+ACH-001509,upper_aerodigestive,"squamous cell carcinoma, tongue",False,True,upper_aerodigestive,True
+ACH-001032,bone,Ewing sarcoma,False,True,bone,True
+ACH-001413,urinary_tract,transitional cell carcinoma,True,True,urinary_tract,True
+ACH-000692,upper_aerodigestive,"squamous cell carcinoma, laryngeal",False,True,upper_aerodigestive,True
+ACH-001379,pancreas,"ductal adenocarcinoma, exocrine",False,True,pancreas,True
+ACH-001193,bone,Ewing sarcoma,False,True,bone,True
+ACH-000485,gastric,adenocarcinoma,False,True,gastric,True
+ACH-000034,blood,acute myeloid leukemia,False,True,blood,True
+ACH-001341,cervix,cervical adenocarcinoma,False,True,cervix,True
+ACH-000362,blood,acute myeloid leukemia,False,True,blood,True
+ACH-001511,upper_aerodigestive,"squamous cell carcinoma, buccal mucosa",False,True,upper_aerodigestive,True
+ACH-001376,pancreas,"ductal adenocarcinoma, exocrine",False,True,pancreas,True
+ACH-001212,soft_tissue,malignant rhabdoid tumor,False,True,soft_tissue,True
+ACH-001460,colorectal,adenocarcinoma,False,True,colorectal,True
+ACH-000915,skin,melanocytic,False,True,skin,True
+ACH-001374,ovary,,False,True,ovary,True
+ACH-000948,gastric,adenocarcinoma,False,True,gastric,True
+ACH-001647,blood,acute myeloid leukemia,False,True,blood,True
+ACH-000796,ovary,"cystadenocarcinoma, mucinous",False,True,ovary,True
+ACH-000371,lymphocyte,"b-cell, non-hodgkins",False,True,lymphocyte,True
+ACH-001035,bone,Ewing sarcoma,False,True,bone,True
+ACH-001566,skin,melanoma,False,True,skin,True
+ACH-000459,kidney,renal cell carcinoma,False,True,kidney,True
+ACH-001858,bile_duct,"cholangiocarcinoma, intrahepatic",True,True,bile_duct,True
+ACH-000739,liver,hepatocellular carcinoma,False,True,liver,True
+ACH-000421,colorectal,adenocarcinoma,False,True,colorectal,True
+ACH-000714,plasma_cell,multiple myeloma,False,True,plasma_cell,True
+ACH-001333,cervix,carcinoma,False,True,cervix,True
+ACH-001412,urinary_tract,transitional cell carcinoma,False,True,urinary_tract,True
+ACH-000244,central_nervous_system,glioblastoma,False,True,central_nervous_system,True
+ACH-000542,ovary,"adenocarcinoma, low grade serous",True,True,ovary,True
+ACH-001409,urinary_tract,transitional cell carcinoma,False,True,urinary_tract,True
+ACH-001543,upper_aerodigestive,"squamous cell carcinoma, oral",False,True,upper_aerodigestive,True
+ACH-001794,soft_tissue,wdlps,True,True,soft_tissue,True
+ACH-000874,blood,"acute lymphoblastic leukemia, b-cell",False,True,blood,True
+ACH-001673,bile_duct,"cholangiocarcinoma, extrahepatic",False,True,bile_duct,True
+ACH-000684,kidney,"renal carcinoma, clear cell",False,True,kidney,True
+ACH-001048,ovary,"adenocarcinoma, high grade serous",True,True,ovary,True
+ACH-000858,lung,"non-small cell lung cancer, squamous cell carcinoma",False,True,lung,True
+ACH-001332,upper_aerodigestive,"squamous cell carcinoma, oral",False,True,upper_aerodigestive,True
+ACH-001765,soft_tissue,"rhabdomyosarcoma, alveolar",False,True,soft_tissue,True
+ACH-000365,lymphocyte,diffuse large b-cell lymphoma,False,True,lymphocyte,True
+ACH-000272,kidney,renal cell carcinoma,False,True,kidney,True
+ACH-000284,fibroblast,upper aerodigestive,False,True,fibroblast,True
+ACH-000896,urinary_tract,carcinoma,False,True,urinary_tract,True
+ACH-001561,lung,mesothelioma,False,True,lung,True
+ACH-000449,soft_tissue,uterine sarcoma,False,True,soft_tissue,True
+ACH-001529,uterus,choriocarcinoma,False,True,uterus,True
+ACH-000283,central_nervous_system,glioblastoma,True,True,central_nervous_system,True
+ACH-000769,lung,"non-small cell lung cancer, squamous cell carcinoma",False,True,lung,True
+ACH-001500,esophagus,adenocarcinoma,False,True,esophagus,True
+ACH-001656,blood,acute myeloid leukemia,False,True,blood,True
+ACH-000667,lung,"non-small cell lung cancer, adenocarcinoma",True,True,lung,True
+ACH-000793,gastric,"adenocarcinoma, signet ring cell",False,True,gastric,True
+ACH-000084,blood,acute myeloid leukemia,False,True,blood,True
+ACH-000809,esophagus,squamous cell carcinoma,False,True,esophagus,True
+ACH-000863,central_nervous_system,glioblastoma,True,True,central_nervous_system,True
+ACH-000334,lymphocyte,diffuse large b-cell lymphoma,False,True,lymphocyte,True
+ACH-001207,fibroblast,lung,False,True,fibroblast,True
+ACH-001401,adrenal_cortex,carcinoma,False,True,adrenal_cortex,True
+ACH-000905,urinary_tract,,False,True,urinary_tract,True
+ACH-001550,skin,merkel cell carcinoma,True,True,skin,True
+ACH-000088,fibroblast,bladder,False,True,fibroblast,True
+ACH-000855,esophagus,squamous cell carcinoma,False,True,esophagus,True
+ACH-000681,lung,"non-small cell lung cancer, adenocarcinoma",True,True,lung,True
+ACH-000674,gastric,adenocarcinoma,False,True,gastric,True
+ACH-000575,lung,"non-small cell lung cancer, adenocarcinoma",True,True,lung,True
+ACH-001205,bone,Ewing sarcoma,False,True,bone,True
+ACH-000335,lung,mesothelioma,True,True,lung,True
+ACH-000760,central_nervous_system,glioblastoma,True,True,central_nervous_system,True
+ACH-000631,central_nervous_system,astrocytoma,True,True,central_nervous_system,True
+ACH-000943,colorectal,adenocarcinoma,True,True,colorectal,True
+ACH-001532,kidney,malignant rhabdoid tumor,False,True,kidney,True
+ACH-001454,colorectal,adenocarcinoma,False,True,colorectal,True
+ACH-000306,fibroblast,skin,False,True,fibroblast,True
+ACH-000336,blood,acute myeloid leukemia,False,True,blood,True
+ACH-001399,colorectal,,False,True,colorectal,True
+ACH-001496,esophagus,adenocarcinoma,False,True,esophagus,True
+ACH-000184,fibroblast,breast,False,True,fibroblast,True
+ACH-000959,colorectal,adenocarcinoma,False,True,colorectal,True
+ACH-000806,lymphocyte,"b-cell, hodgkins",False,True,lymphocyte,True
+ACH-000432,blood,"chronic myelogenous leukemia, blast crisis",False,True,blood,True
+ACH-000299,blood,acute myeloid leukemia,False,True,blood,True
+ACH-001415,urinary_tract,transitional cell carcinoma,False,True,urinary_tract,True
+ACH-000552,colorectal,adenocarcinoma,False,True,colorectal,True
+ACH-000750,skin,undifferentiated,True,True,skin,True
+ACH-000601,pancreas,"ductal adenocarcinoma, exocrine",False,True,pancreas,True
+ACH-000629,central_nervous_system,meningioma,True,True,central_nervous_system,True
+ACH-000406,blood,acute myeloid leukemia,False,True,blood,True
+ACH-001148,lymphocyte,t-cell,False,True,lymphocyte,True
+ACH-000997,colorectal,adenocarcinoma,False,True,colorectal,True
+ACH-001523,skin,squamous cell carcinoma,False,True,skin,True
+ACH-000854,plasma_cell,multiple myeloma,False,True,plasma_cell,True
+ACH-000576,plasma_cell,multiple myeloma,False,True,plasma_cell,True
+ACH-000711,breast,basal A,False,True,breast,True
+ACH-000656,lymphocyte,diffuse large b-cell lymphoma,False,True,lymphocyte,True
+ACH-000411,kidney,"renal carcinoma, clear cell",False,True,kidney,True
+ACH-000721,breast,basal B,False,True,breast,True
+ACH-001086,cervix,carcinoma,True,True,cervix,True
+ACH-000566,urinary_tract,transitional cell carcinoma,False,True,urinary_tract,True
+ACH-000105,blood,"acute lymphoblastic leukemia, t-cell",False,True,blood,True
+ACH-000633,gastric,adenocarcinoma,False,True,gastric,True
+ACH-000185,fibroblast,bone,False,True,fibroblast,True
+ACH-000749,lung,small cell lung cancer,False,True,lung,True
+ACH-000361,liver,hepatocellular carcinoma,True,True,liver,True
+ACH-000119,fibroblast,bone,False,True,fibroblast,True
+ACH-001421,eye,retinoblastoma,False,True,eye,True
+ACH-000528,lung,"non-small cell lung cancer, adenocarcinoma",False,True,lung,True
+ACH-000827,skin,neural crest-like,False,True,skin,True
+ACH-000604,blood,"chronic myelogenous leukemia, blast crisis",False,True,blood,True
+ACH-000241,blood,"chronic myelogenous leukemia, blast crisis",False,True,blood,True
+ACH-000878,lung,"non-small cell lung cancer, squamous cell carcinoma",True,True,lung,True
+ACH-000213,pancreas,"ductal adenocarcinoma, exocrine",False,True,pancreas,True
+ACH-000773,lymphocyte,"t-cell, non-hodgkins, anaplastic large cell",False,True,lymphocyte,True
+ACH-002002,skin,melanoma,True,True,skin,True
+ACH-000754,lymphocyte,"b-cell, hodgkins",False,True,lymphocyte,True
+ACH-000971,colorectal,adenocarcinoma,True,True,colorectal,True
+ACH-000224,fibroblast,bone,False,True,fibroblast,True
+ACH-000148,breast,basal B,False,True,breast,True
+ACH-000564,plasma_cell,multiple myeloma,False,True,plasma_cell,True
+ACH-001522,skin,melanoma,False,True,skin,True
+ACH-000367,lung,"non-small cell lung cancer, squamous cell carcinoma",False,True,lung,True
+ACH-000180,fibroblast,skin,False,True,fibroblast,True
+ACH-000722,colorectal,adenocarcinoma,False,True,colorectal,True
+ACH-000388,lymphocyte,diffuse large b-cell lymphoma,False,True,lymphocyte,True
+ACH-000797,fibroblast,lung,False,True,fibroblast,True
+ACH-000650,skin,melanocytic,False,True,skin,True
+ACH-000450,skin,melanocytic,False,True,skin,True
+ACH-000630,upper_aerodigestive,"squamous cell carcinoma, tongue",True,True,upper_aerodigestive,True
+ACH-000170,engineered_prostate,,False,True,prostate,False
+ACH-001838,bile_duct,"cholangiocarcinoma, intrahepatic",False,True,bile_duct,True
+ACH-001960,bile_duct,"cholangiocarcinoma, intrahepatic",False,True,bile_duct,True
+ACH-000384,urinary_tract,transitional cell carcinoma,False,True,urinary_tract,True
+ACH-000307,pancreas,"ductal adenocarcinoma, exocrine",False,True,pancreas,True
+ACH-000212,breast,basal B,True,True,breast,True
+ACH-000569,lung,mesothelioma,False,True,lung,True
+ACH-000581,gastric,adenocarcinoma,False,True,gastric,True
+ACH-000417,pancreas,"ductal adenocarcinoma, exocrine",False,True,pancreas,True
+ACH-000658,plasma_cell,multiple myeloma,False,True,plasma_cell,True
+ACH-000680,colorectal,adenocarcinoma,False,True,colorectal,True
+ACH-001192,bone,Ewing sarcoma,False,True,bone,True
+ACH-001354,peripheral_nervous_system,MYCN amp,False,True,peripheral_nervous_system,True
+ACH-000599,pancreas,"ductal adenocarcinoma, exocrine",False,True,pancreas,True
+ACH-000005,blood,acute myeloid leukemia,False,True,blood,True
+ACH-000046,kidney,renal cell carcinoma,False,True,kidney,True
+ACH-000539,fibroblast,lung,False,True,fibroblast,True
+ACH-000533,soft_tissue,malignant rhabdoid tumor,False,True,soft_tissue,True
+ACH-000979,prostate,adenocarcinoma,True,True,prostate,True
+ACH-000753,urinary_tract,carcinoma,True,True,urinary_tract,True
+ACH-000764,gastric,"adenocarcinoma, mucinous",True,True,gastric,True
+ACH-000728,blood,"acute lymphoblastic leukemia, b-cell",False,True,blood,True
+ACH-000602,blood,acute myeloid leukemia,False,True,blood,True
+ACH-000653,plasma_cell,multiple myeloma,False,True,plasma_cell,True
+ACH-001737,blood,"acute lymphoblastic leukemia, t-cell",False,True,blood,True
+ACH-000646,ovary,"adenocarcinoma, clear cell",False,True,ovary,True
+ACH-000263,blood,acute myeloid leukemia,False,True,blood,True
+ACH-000511,lung,"non-small cell lung cancer, squamous cell carcinoma",True,True,lung,True
+ACH-000938,blood,"acute lymphoblastic leukemia, b-cell",False,True,blood,True
+ACH-000572,skin,melanocytic,False,True,skin,True
+ACH-000850,fibroblast,colorectal,False,True,fibroblast,True
+ACH-000547,urinary_tract,carcinoma,False,True,urinary_tract,True
+ACH-000914,lymphocyte,"b-cell, non-hodgkins",False,True,lymphocyte,True
+ACH-001861,bile_duct,adenocarcinoma,False,True,bile_duct,True
+ACH-000171,kidney,renal cell carcinoma,False,True,kidney,True
+ACH-001610,central_nervous_system,glioblastoma,True,True,central_nervous_system,True
+ACH-001526,bone,osteosarcoma,False,True,bone,True
+ACH-001745,soft_tissue,"rhabdomyosarcoma, alveolar",False,True,soft_tissue,True
+ACH-001346,upper_aerodigestive,"squamous cell carcinoma, buccal mucosa",False,True,upper_aerodigestive,True
+ACH-000311,lung,"non-small cell lung cancer, adenocarcinoma",False,True,lung,True
+ACH-000597,soft_tissue,malignant rhabdoid tumor,False,True,soft_tissue,True
+ACH-001814,bone,osteosarcoma,True,True,bone,True
+ACH-000909,uterus,endometrial adenocarcinoma,False,True,uterus,True
+ACH-000983,blood,"chronic myelogenous leukemia, blast crisis",False,True,blood,True
+ACH-000045,blood,acute myeloid leukemia,False,True,blood,True
+ACH-000731,lung,"non-small cell lung cancer, adenocarcinoma",True,True,lung,True
+ACH-001864,bile_duct,"cholangiocarcinoma, intrahepatic",False,True,bile_duct,True
+ACH-000023,pancreas,"ductal adenocarcinoma, exocrine",True,True,pancreas,True
+ACH-000165,fibroblast,lymphoma,False,True,fibroblast,True
+ACH-000707,lymphocyte,"b-cell, non-hodgkins, burkitts",False,True,lymphocyte,True
+ACH-000779,lung,"non-small cell lung cancer, adenocarcinoma",False,True,lung,True
+ACH-000755,breast,HER2 amp,False,True,breast,True
+ACH-000194,fibroblast,skin,False,True,fibroblast,True
+ACH-000768,breast,basal B,True,True,breast,True
+ACH-000208,central_nervous_system,glioblastoma,True,True,central_nervous_system,True
+ACH-000887,central_nervous_system,glioblastoma,False,True,central_nervous_system,True
+ACH-001307,thyroid,carcinoma,True,True,thyroid,True
+ACH-000738,central_nervous_system,glioblastoma,True,True,central_nervous_system,True
+ACH-000083,fibroblast,breast,False,True,fibroblast,True
+ACH-000413,fibroblast,breast,False,True,fibroblast,True
+ACH-000952,prostate,adenocarcinoma,False,True,prostate,True
+ACH-000433,kidney,"renal carcinoma, clear cell",False,True,kidney,True
+ACH-001211,soft_tissue,malignant rhabdoid tumor,False,True,soft_tissue,True
+ACH-000275,fibroblast,skin,False,True,fibroblast,True
+ACH-000752,lung,small cell lung cancer,True,True,lung,True
+ACH-000380,plasma_cell,multiple myeloma,False,True,plasma_cell,True
+ACH-000398,lymphocyte,"b-cell, non-hodgkins",False,True,lymphocyte,True
+ACH-000540,fibroblast,breast,False,True,fibroblast,True
+ACH-001129,blood,acute myeloid leukemia,False,True,blood,True
+ACH-000751,blood,acute myeloid leukemia,False,True,blood,True
+ACH-000881,skin,transitory,False,True,skin,True
+ACH-000987,skin,melanocytic,False,True,skin,True
+ACH-000430,ovary,"adenocarcinoma, high grade serous",True,True,ovary,True
+ACH-000953,blood,"acute lymphoblastic leukemia, t-cell",False,True,blood,True
+ACH-001836,bile_duct,"cholangiocarcinoma, intrahepatic",False,True,bile_duct,True
+ACH-000833,soft_tissue,"rhabdomyosarcoma, alveolar",False,True,soft_tissue,True
+ACH-000402,lymphocyte,"b-cell, non-hodgkins, burkitts",False,True,lymphocyte,True
+ACH-000061,lymphocyte,"t-cell, non-hodgkins, cutaneous",False,True,lymphocyte,True
+ACH-000053,lymphocyte,"t-cell, non-hodgkins, anaplastic large cell",False,True,lymphocyte,True
+ACH-000405,blood,"chronic lymphoblastic leukemia, b-cell",False,True,blood,True
+ACH-001570,skin,melanoma,False,True,skin,True
+ACH-000842,colorectal,adenocarcinoma,True,True,colorectal,True
+ACH-000153,lung,mesothelioma,True,True,lung,True
+ACH-000832,upper_aerodigestive,squamous cell carcinoma,False,True,upper_aerodigestive,True
+ACH-000120,peripheral_nervous_system,MYCN amp,False,True,peripheral_nervous_system,True
+ACH-000331,lung,mesothelioma,False,True,lung,True
+ACH-000481,lung,"non-small cell lung cancer, squamous cell carcinoma",False,True,lung,True
+ACH-000668,breast,basal A,False,True,breast,True
+ACH-000262,kidney,renal cell carcinoma,False,True,kidney,True
+ACH-000851,lung,"non-small cell lung cancer, adenocarcinoma",False,True,lung,True
+ACH-001310,engineered_kidney,,True,True,kidney,False
+ACH-001743,soft_tissue,"rhabdomyosarcoma, alveolar",False,True,soft_tissue,True
+ACH-000664,lymphocyte,"t-cell, non-hodgkins, anaplastic large cell",False,True,lymphocyte,True
+ACH-000255,gastric,adenocarcinoma,True,True,gastric,True
+ACH-001741,soft_tissue,"rhabdomyosarcoma, alveolar",False,False,,
+ACH-001394,breast,basal,False,True,breast,True
+ACH-000049,engineered_kidney,,True,True,kidney,False
+ACH-000403,colorectal,adenocarcinoma,False,True,colorectal,True
+ACH-000438,lung,"non-small cell lung cancer, large cell carcinoma",False,True,lung,True
+ACH-000906,ovary,"adenocarcinoma, clear cell",True,True,ovary,True
+ACH-000240,fibroblast,skin,False,True,fibroblast,True
+ACH-000763,plasma_cell,multiple myeloma,False,True,plasma_cell,True
+ACH-000112,blood,acute myeloid leukemia,False,True,blood,True
+ACH-001842,bile_duct,"cholangiocarcinoma, intrahepatic",False,True,bile_duct,True
+ACH-001795,soft_tissue,wdlps,True,True,soft_tissue,True
+ACH-000872,lung,"non-small cell lung cancer, adenocarcinoma",True,True,lung,True
+ACH-000732,upper_aerodigestive,"squamous cell carcinoma, oral",False,True,upper_aerodigestive,True
+ACH-000926,colorectal,adenocarcinoma,False,True,colorectal,True
+ACH-000673,central_nervous_system,glioblastoma,True,True,central_nervous_system,True
+ACH-000156,blood,"acute lymphoblastic leukemia, b-cell",False,True,blood,True
+ACH-000201,soft_tissue,malignant rhabdoid tumor,False,True,soft_tissue,True
+ACH-001369,ovary,"adenocarcinoma, clear cell",False,True,ovary,True
+ACH-000214,fibroblast,colorectal,False,True,fibroblast,True
+ACH-000113,blood,acute myeloid leukemia,False,True,blood,True
+ACH-000708,colorectal,adenocarcinoma,False,True,colorectal,True
+ACH-000124,lymphocyte,diffuse large b-cell lymphoma,False,True,lymphocyte,True
+ACH-000096,kidney,malignant rhabdoid tumor,False,True,kidney,True
+ACH-001408,urinary_tract,transitional cell carcinoma,False,True,urinary_tract,True
+ACH-000059,blood,"acute lymphoblastic leukemia, b-cell",False,True,blood,True
+ACH-000526,fibroblast,bone,False,True,fibroblast,True
+ACH-000496,lung,"non-small cell lung cancer, adenocarcinoma",True,True,lung,True
+ACH-000713,ovary,"adenocarcinoma, high grade serous",False,True,ovary,True
+ACH-000663,ovary,"adenocarcinoma, clear cell",False,True,ovary,True
+ACH-001863,bile_duct,"cholangiocarcinoma, intrahepatic",False,True,bile_duct,True
+ACH-000678,gastric,"adenocarcinoma, tubular",False,True,gastric,True
+ACH-000229,fibroblast,bone,False,True,fibroblast,True
+ACH-000315,lymphocyte,diffuse large b-cell lymphoma,False,True,lymphocyte,True
+ACH-000080,blood,acute myeloid leukemia,False,True,blood,True
+ACH-000222,pancreas,"ductal adenocarcinoma, exocrine",False,True,pancreas,True
+ACH-000605,esophagus,squamous cell carcinoma,False,True,esophagus,True
+ACH-000122,blood,"acute lymphoblastic leukemia, t-cell",False,True,blood,True
+ACH-000654,lymphocyte,"b-cell, non-hodgkins, burkitts",False,True,lymphocyte,True
+ACH-000245,lymphocyte,"b-cell, non-hodgkins, burkitts",False,True,lymphocyte,True
+ACH-000988,uterus,,False,True,uterus,True
+ACH-000932,gastric,adenocarcinoma,False,True,gastric,True
+ACH-000190,lymphocyte,"b-cell, hodgkins",True,True,unknown,False
+ACH-000339,lung,"non-small cell lung cancer, adenocarcinoma",True,True,lung,True
+ACH-000557,blood,acute myeloid leukemia,False,True,blood,True
+ACH-000288,breast,basal B,True,True,breast,True
+ACH-001611,central_nervous_system,glioblastoma,True,True,central_nervous_system,True
+ACH-001793,soft_tissue,,True,True,soft_tissue,True
+ACH-000172,soft_tissue,malignant rhabdoid tumor,False,True,soft_tissue,True
+ACH-000063,fibroblast,lymphoma,False,True,fibroblast,True
+ACH-000794,upper_aerodigestive,"squamous cell carcinoma, oral",False,True,upper_aerodigestive,True
+ACH-000176,lung,"non-small cell lung cancer, squamous cell carcinoma",True,True,lung,True
+ACH-000326,blood,"chronic myelogenous leukemia, blast crisis",False,True,blood,True
+ACH-001740,soft_tissue,"rhabdomyosarcoma, alveolar",False,True,soft_tissue,True
+ACH-000829,plasma_cell,multiple myeloma,False,True,plasma_cell,True
+ACH-000018,urinary_tract,carcinoma,True,True,urinary_tract,True
+ACH-000251,lung,"non-small cell lung cancer, unspecified",True,True,lung,True
+ACH-001551,skin,merkel cell carcinoma,True,True,skin,True
+ACH-001142,engineered_central_nervous_system,,False,True,central_nervous_system,False
+ACH-000218,blood,acute myeloid leukemia,False,True,blood,True
+ACH-001306,thyroid,carcinoma,True,True,thyroid,True
+ACH-000488,esophagus,squamous cell carcinoma,False,True,esophagus,True
+ACH-000596,lung,"non-small cell lung cancer, large cell carcinoma",False,True,lung,True
+ACH-000232,central_nervous_system,astrocytoma,True,True,central_nervous_system,True
+ACH-000606,upper_aerodigestive,"squamous cell carcinoma, basaloid",False,True,upper_aerodigestive,True
+ACH-001053,central_nervous_system,medulloblastoma,False,True,central_nervous_system,True
+ACH-000036,central_nervous_system,glioblastoma,True,True,central_nervous_system,True
+ACH-000828,breast,HER2 amp,False,True,breast,True
+ACH-000294,blood,acute myeloid leukemia,False,True,blood,True
+ACH-000463,lung,"non-small cell lung cancer, large cell carcinoma",True,True,lung,True
+ACH-000320,pancreas,"ductal adenocarcinoma, exocrine",True,True,pancreas,True
+ACH-000295,blood,"chronic myelogenous leukemia, blast crisis",False,True,blood,True
+ACH-000852,lung,"non-small cell lung cancer, adenocarcinoma",False,True,lung,True
+ACH-000400,colorectal,adenocarcinoma,False,True,colorectal,True
+ACH-000934,breast,HER2 amp,False,True,breast,True
+ACH-000960,blood,"acute lymphoblastic leukemia, b-cell",False,True,blood,True
+ACH-000531,fibroblast,lung,False,True,fibroblast,True
+ACH-000807,central_nervous_system,oligodendroglioma,True,True,central_nervous_system,True
+ACH-000591,central_nervous_system,astrocytoma,True,True,central_nervous_system,True
+ACH-000558,central_nervous_system,glioblastoma,True,True,central_nervous_system,True
+ACH-000804,peripheral_nervous_system,MYCN amp,False,True,peripheral_nervous_system,True
+ACH-000968,skin,melanocytic,False,True,skin,True
+ACH-000187,lung,small cell lung cancer,False,True,lung,True
+ACH-000880,gastric,adenocarcinoma,False,True,gastric,True
+ACH-000386,blood,acute myeloid leukemia,False,True,blood,True
+ACH-000592,central_nervous_system,glioma,True,True,central_nervous_system,True
+ACH-000471,liver,,False,True,liver,True
+ACH-000139,pancreas,"ductal adenocarcinoma, exocrine",False,True,pancreas,True
+ACH-000825,lung,"non-small cell lung cancer, unspecified",True,True,lung,True
+ACH-000609,central_nervous_system,astrocytoma,True,True,central_nervous_system,True
+ACH-000301,blood,"chronic myelogenous leukemia, blast crisis",False,True,blood,True
+ACH-000993,uterus,endometrial adenocarcinoma,False,True,uterus,True
+ACH-000090,prostate,adenocarcinoma,True,True,prostate,True
+ACH-000625,liver,hepatocellular carcinoma,False,True,liver,True
+ACH-000338,lymphocyte,"t-cell, non-hodgkins, anaplastic large cell",False,True,lymphocyte,True
+ACH-000174,thyroid,"carcinoma, anaplastic",True,True,thyroid,True
+ACH-000330,breast,luminal,False,True,breast,True
+ACH-000239,gastric,"adenocarcinoma, tubular",False,True,gastric,True
+ACH-000853,lung,"non-small cell lung cancer, large cell carcinoma",False,True,lung,True
+ACH-000154,fibroblast,bone,False,True,fibroblast,True
+ACH-000166,blood,acute myeloid leukemia,False,True,blood,True
+ACH-000444,lung,"non-small cell lung cancer, large cell carcinoma",True,True,lung,True
+ACH-000188,upper_aerodigestive,squamous cell carcinoma,False,True,upper_aerodigestive,True
+ACH-000323,central_nervous_system,astrocytoma,True,True,central_nervous_system,True
+ACH-000847,gastric,adenocarcinoma,False,True,gastric,True
+ACH-000535,pancreas,"ductal adenocarcinoma, exocrine",False,True,pancreas,True
+ACH-000810,skin,melanocytic,False,True,skin,True
+ACH-000007,colorectal,adenocarcinoma,False,True,colorectal,True
+ACH-000919,gastric,adenocarcinoma,False,True,gastric,True
+ACH-000344,gastric,adenocarcinoma,True,True,gastric,True
+ACH-000383,esophagus,adenocarcinoma,False,True,esophagus,True
+ACH-000672,lung,"non-small cell lung cancer, large cell carcinoma",True,True,lung,True
+ACH-000544,esophagus,squamous cell carcinoma,False,True,esophagus,True
+ACH-000317,kidney,renal cell carcinoma,False,True,kidney,True
+ACH-000478,liver,hepatocellular carcinoma,True,True,liver,True
+ACH-000571,central_nervous_system,glioblastoma,True,True,central_nervous_system,True
+ACH-000108,pancreas,"ductal adenosquamous carcinoma, exocrine",True,True,pancreas,True
+ACH-000448,lung,"non-small cell lung cancer, adenocarcinoma",False,True,lung,True
+ACH-000246,kidney,renal cell carcinoma,False,True,kidney,True
+ACH-000178,pancreas,"ductal adenocarcinoma, exocrine",True,True,pancreas,True
+ACH-000989,colorectal,"adenocarcinoma, mucinous",False,True,colorectal,True
+ACH-000155,pancreas,"ductal adenocarcinoma, exocrine",True,True,pancreas,True
+ACH-000927,breast,HER2 amp,False,True,breast,True
+ACH-001340,ovary,carcinoma,False,True,ovary,True
+ACH-001164,soft_tissue,undifferentiated,False,True,soft_tissue,True
+ACH-000512,plasma_cell,multiple myeloma,False,True,plasma_cell,True
+ACH-000106,lymphocyte,"b-cell, non-hodgkins, mantle cell",False,True,lymphocyte,True
+ACH-000657,ovary,"adenocarcinoma, endometrioid",False,True,ovary,True
+ACH-000127,kidney,renal cell carcinoma,True,True,urinary_tract,False
+ACH-000957,colorectal,adenocarcinoma,False,True,colorectal,True
+ACH-000289,central_nervous_system,glioblastoma,False,True,central_nervous_system,True
+ACH-000104,blood,"acute lymphoblastic leukemia, t-cell",False,True,blood,True
+ACH-000824,esophagus,squamous cell carcinoma,False,True,esophagus,True
+ACH-000798,colorectal,adenocarcinoma,False,True,colorectal,True
+ACH-000047,gastric,adenocarcinoma,False,True,gastric,True
+ACH-000242,urinary_tract,transitional cell carcinoma,False,True,urinary_tract,True
+ACH-000123,ovary,"adenocarcinoma, endometrioid",False,True,ovary,True
+ACH-001668,embryo,testicular,False,True,embryo,True
+ACH-000865,esophagus,squamous cell carcinoma,False,True,esophagus,True
+ACH-000131,fibroblast,lung,False,True,fibroblast,True
+ACH-000167,gastric,"adenocarcinoma, mucinous",False,True,plasma_cell,False
+ACH-000522,urinary_tract,transitional cell carcinoma,True,True,urinary_tract,True
+ACH-000216,esophagus,adenocarcinoma,False,True,esophagus,True
+ACH-000340,fibroblast,bone,False,True,fibroblast,True
+ACH-000555,kidney,renal cell carcinoma,False,True,kidney,True
+ACH-000135,fibroblast,skin,False,True,fibroblast,True
+ACH-000324,ovary,"adenocarcinoma, clear cell",False,True,ovary,True
+ACH-001367,peripheral_nervous_system,MYCN amp,False,True,peripheral_nervous_system,True
+ACH-000086,lung,mesothelioma,True,True,lung,True
+ACH-000746,gastric,adenocarcinoma,False,True,gastric,True
+ACH-000487,blood,acute myeloid leukemia,False,True,blood,True
+ACH-000553,lung,"non-small cell lung cancer, squamous cell carcinoma",False,True,lung,True
+ACH-001373,ovary,adenocarcinoma,False,True,ovary,True
+ACH-000577,liver,hepatocellular carcinoma,True,True,liver,True
+ACH-000748,bone,osteosarcoma,True,True,bone,True
+ACH-000329,central_nervous_system,astrocytoma,True,True,central_nervous_system,True
+ACH-001552,skin,merkel cell carcinoma,True,True,skin,True
+ACH-000859,breast,basal A,False,True,breast,True
+ACH-000693,esophagus,squamous cell carcinoma,False,True,esophagus,True
+ACH-000889,plasma_cell,multiple myeloma,False,True,plasma_cell,True
+ACH-000043,fibroblast,skin,False,True,fibroblast,True
+ACH-000696,ovary,"adenocarcinoma, high grade serous",True,True,ovary,True
+ACH-000396,urinary_tract,transitional cell carcinoma,True,True,urinary_tract,True
+ACH-000074,blood,"chronic myelogenous leukemia, blast crisis",False,True,blood,True
+ACH-000757,lung,"non-small cell lung cancer, adenocarcinoma",False,True,lung,True
+ACH-000259,peripheral_nervous_system,MYCN amp,False,True,peripheral_nervous_system,True
+ACH-000801,skin,melanocytic,False,True,skin,True
+ACH-000494,engineered_ovary,,True,True,ovary,False
+ACH-000620,liver,hepatocellular carcinoma,False,True,liver,True
+ACH-000913,uterus,endometrial stromal sarcoma,True,True,uterus,True
+ACH-000310,peripheral_nervous_system,MYCN amp,False,True,peripheral_nervous_system,True
+ACH-000215,central_nervous_system,glioblastoma,True,True,central_nervous_system,True
+ACH-000701,ovary,"cystadenocarcinoma, mucinous",False,True,ovary,True
+ACH-000655,central_nervous_system,glioma,True,True,central_nervous_system,True
+ACH-001145,ovary,"adenocarcinoma, serous",True,True,ovary,True
+ACH-000911,gastric,adenocarcinoma,False,True,gastric,True
+ACH-000424,bone,Ewing sarcoma,False,True,bone,True
+ACH-000226,lymphocyte,"t-cell, non-hodgkins, anaplastic large cell",False,True,lymphocyte,True
+ACH-000029,lung,"non-small cell lung cancer, adenocarcinoma",False,True,lung,True
+ACH-000356,gastric,adenocarcinoma,False,True,gastric,True
+ACH-000006,blood,acute myeloid leukemia,False,True,blood,True
+ACH-000782,blood,"acute lymphoblastic leukemia, b-cell",False,True,blood,True
+ACH-000507,gastric,adenocarcinoma,False,True,gastric,True
+ACH-001078,lung,"non-small cell lung cancer, squamous cell carcinoma",False,True,lung,True
+ACH-000009,colorectal,adenocarcinoma,False,True,colorectal,True
+ACH-000200,central_nervous_system,glioblastoma,True,True,central_nervous_system,True
+ACH-000064,engineered_lung,,False,True,lung,False
+ACH-000337,lung,"non-small cell lung cancer, adenocarcinoma",False,True,lung,True
+ACH-000580,skin,transitory,False,True,skin,True
+ACH-000195,blood,acute myeloid leukemia,False,True,blood,True
+ACH-000515,lung,small cell lung cancer,False,True,lung,True
+ACH-000588,plasma_cell,multiple myeloma,False,True,plasma_cell,True
+ACH-000397,uterus,clear cell carcinoma,False,True,uterus,True
+ACH-001403,ovary,cystadenocarcinoma,False,True,ovary,True
+ACH-000270,pancreas,"ductal adenocarcinoma, exocrine",False,True,pancreas,True
+ACH-000734,liver,hepatocellular carcinoma,False,True,liver,True
+ACH-000152,central_nervous_system,glioblastoma,True,True,central_nervous_system,True
+ACH-000505,soft_tissue,leiomyosarcoma,True,True,soft_tissue,True
+ACH-000838,plasma_cell,"multiple myeloma, plasmacytoma",False,True,plasma_cell,True
+ACH-000808,bile_duct,"cholangiocarcinoma, intrahepatic",True,True,bile_duct,True
+ACH-000973,urinary_tract,transitional cell carcinoma,True,True,urinary_tract,True
+ACH-001386,lung,small cell lung cancer,False,True,lung,True
+ACH-000287,lymphocyte,diffuse large b-cell lymphoma,False,True,lymphocyte,True
+ACH-000359,bone,osteosarcoma,True,True,bone,True
+ACH-000614,skin,,False,True,skin,True
+ACH-000479,central_nervous_system,glioblastoma,True,True,central_nervous_system,True
+ACH-001173,central_nervous_system,medulloblastoma,True,False,,
+ACH-000846,upper_aerodigestive,squamous cell carcinoma,False,True,upper_aerodigestive,True
+ACH-000472,upper_aerodigestive,squamous cell carcinoma,False,True,upper_aerodigestive,True
+ACH-000204,plasma_cell,multiple myeloma,False,True,plasma_cell,True
+ACH-000700,lung,"non-small cell lung cancer, squamous cell carcinoma",True,True,lung,True
+ACH-000556,cervix,carcinoma,True,True,cervix,True
+ACH-000676,central_nervous_system,glioblastoma,False,True,central_nervous_system,True
+ACH-001022,bone,Ewing sarcoma,False,True,bone,True
+ACH-000861,lung,"non-small cell lung cancer, adenocarcinoma",True,True,lung,True
+ACH-000419,plasma_cell,multiple myeloma,False,True,plasma_cell,True
+ACH-000710,lung,"non-small cell lung cancer, adenocarcinoma",False,True,lung,True
+ACH-000579,skin,melanocytic,False,True,skin,True
+ACH-000974,uterus,endometrial adenocarcinoma,False,True,uterus,True
+ACH-000589,lung,"non-small cell lung cancer, adenocarcinoma",False,True,lung,True
+ACH-000092,lung,mesothelioma,False,True,lung,True
+ACH-000491,colorectal,adenocarcinoma,False,True,colorectal,True
+ACH-000436,plasma_cell,multiple myeloma,False,True,plasma_cell,True
+ACH-000473,urinary_tract,transitional cell carcinoma,False,True,urinary_tract,True
+ACH-000931,skin,melanoma,False,True,skin,True
+ACH-000894,lung,"non-small cell lung cancer, squamous cell carcinoma",False,True,lung,True
+ACH-000258,breast,luminal HER2 amp,False,True,breast,True
+ACH-000963,colorectal,adenocarcinoma,False,True,colorectal,True
+ACH-000247,gastric,adenocarcinoma,False,True,gastric,True
+ACH-000418,bone,chondrosarcoma,True,True,bone,True
+ACH-000070,blood,"acute lymphoblastic leukemia, b-cell",False,True,blood,True
+ACH-000554,breast,HER2 amp,False,True,breast,True
+ACH-000057,plasma_cell,multiple myeloma,False,True,plasma_cell,True
+ACH-000357,lymphocyte,"b-cell, non-hodgkins, mantle cell",False,True,lymphocyte,True
+ACH-000849,breast,basal A,False,True,breast,True
+ACH-000499,bone,Ewing sarcoma,False,True,bone,True
+ACH-000520,ovary,"adenocarcinoma, high grade serous",True,True,ovary,True
+ACH-000788,skin,transitory,False,True,skin,True
+ACH-000541,plasma_cell,multiple myeloma,False,True,plasma_cell,True
+ACH-000303,gastric,adenocarcinoma,False,True,gastric,True
+ACH-000220,lymphocyte,"b-cell, non-hodgkins, mantle cell",False,True,lymphocyte,True
+ACH-000250,kidney,renal cell carcinoma,False,True,kidney,True
+ACH-000492,blood,"acute lymphoblastic leukemia, b-cell",False,True,blood,True
+ACH-001059,soft_tissue,malignant rhabdoid tumor,False,True,soft_tissue,True
+ACH-000314,lung,"non-small cell lung cancer, adenocarcinoma",True,True,lung,True
+ACH-000687,lymphocyte,"b-cell, non-hodgkins",False,True,lymphocyte,True
+ACH-000404,skin,melanocytic,False,True,skin,True
+ACH-000706,lung,"non-small cell lung cancer, adenocarcinoma",True,True,lung,True
+ACH-000634,central_nervous_system,glioblastoma,True,True,central_nervous_system,True
+ACH-000510,lung,"non-small cell lung cancer, large cell carcinoma",True,True,lung,True
+ACH-000972,uterus,endometrial adenocarcinoma,False,True,uterus,True
+ACH-000986,colorectal,adenocarcinoma,False,True,colorectal,True
+ACH-000936,ovary,"adenocarcinoma, endometrioid",True,True,ovary,True
+ACH-000607,soft_tissue,malignant rhabdoid tumor,False,True,soft_tissue,True
+ACH-000277,breast,HER2 amp,False,True,breast,True
+ACH-000355,lung,small cell lung cancer,False,True,lung,True
+ACH-000519,blood,"acute lymphoblastic leukemia, t-cell",False,True,blood,True
+ACH-000281,pancreas,"ductal adenocarcinoma, exocrine",False,True,pancreas,True
+ACH-000368,central_nervous_system,glioblastoma,True,True,central_nervous_system,True
+ACH-000730,skin,melanocytic,False,True,skin,True
+ACH-000163,thyroid,squamous cell carcinoma,True,True,thyroid,True
+ACH-000506,lung,small cell lung cancer,False,True,lung,True
+ACH-000883,central_nervous_system,astrocytoma,True,True,central_nervous_system,True
+ACH-000966,ovary,"adenocarcinoma, mixed",False,True,ovary,True
+ACH-000004,blood,acute myeloid leukemia,False,True,blood,True
+ACH-000425,skin,transitory,False,True,skin,True
+ACH-000612,lymphocyte,t-cell,False,True,lymphocyte,True
+ACH-000304,skin,,False,True,skin,True
+ACH-000415,upper_aerodigestive,"squamous cell carcinoma, oral",False,True,upper_aerodigestive,True
+ACH-000956,prostate,adenocarcinoma,False,True,prostate,True
+ACH-000600,kidney,renal cell carcinoma,False,True,kidney,True
+ACH-000199,fibroblast,colorectal,False,True,fibroblast,True
+ACH-000345,peripheral_nervous_system,MYCN amp,False,True,peripheral_nervous_system,True
+ACH-000069,lymphocyte,"b-cell, hodgkins",False,True,lymphocyte,True
+ACH-000848,liver,hepatocellular carcinoma,False,True,liver,True
+ACH-000060,pancreas,"ductal adenocarcinoma, exocrine",False,True,pancreas,True
+ACH-000574,ovary,"adenocarcinoma, high grade serous",False,True,ovary,True
+ACH-000736,gastric,"adenocarcinoma, signet ring cell",False,True,gastric,True
+ACH-000011,urinary_tract,carcinoma,False,True,urinary_tract,True
+ACH-000843,lung,"non-small cell lung cancer, squamous cell carcinoma",False,True,lung,True
+ACH-000236,colorectal,adenocarcinoma,False,True,colorectal,True
+ACH-000072,blood,chronic myelogenous leukemia,False,True,blood,True
+ACH-000147,breast,luminal,False,True,breast,True
+ACH-000164,pancreas,"ductal adenocarcinoma, exocrine",True,True,pancreas,True
+ACH-000030,lung,"non-small cell lung cancer, adenocarcinoma",False,True,lung,True
+ACH-000815,lymphocyte,"b-cell, hodgkins",False,True,lymphocyte,True
+ACH-000839,urinary_tract,squamous cell carcinoma,False,True,urinary_tract,True
+ACH-000908,gastric,adenocarcinoma,False,True,gastric,True
+ACH-000390,lung,"non-small cell lung cancer, squamous cell carcinoma",False,True,lung,True
+ACH-000817,plasma_cell,"multiple myeloma, plasmacytoma",False,True,plasma_cell,True
+ACH-000617,ovary,"adenocarcinoma, high grade serous",False,True,ovary,True
+ACH-000691,breast,basal A,False,True,breast,True
+ACH-000207,upper_aerodigestive,"squamous cell carcinoma, pharynx",False,True,upper_aerodigestive,True
+ACH-000498,blood,acute myeloid leukemia,False,True,blood,True
+ACH-000198,blood,acute myeloid leukemia,False,True,blood,True
+ACH-000162,lymphocyte,"b-cell, non-hodgkins, burkitts",False,True,lymphocyte,True
+ACH-000724,urinary_tract,carcinoma,False,True,urinary_tract,True
+ACH-000771,upper_aerodigestive,"squamous cell carcinoma, oral",False,True,upper_aerodigestive,True
+ACH-000985,colorectal,adenocarcinoma,False,True,colorectal,True
+ACH-000886,lung,"non-small cell lung cancer, adenocarcinoma",False,True,lung,True
+ACH-000285,lymphocyte,diffuse large b-cell lymphoma,False,True,lymphocyte,True
+ACH-000321,blood,"chronic myelogenous leukemia, blast crisis",False,True,blood,True
+ACH-000477,skin,melanocytic,False,True,skin,True
+ACH-000725,breast,HER2 amp,False,True,breast,True
+ACH-000019,breast,luminal,False,True,breast,True
+ACH-000322,skin,transitory,False,True,skin,True
+ACH-000462,blood,"chronic myelogenous leukemia, blast crisis",False,True,blood,True
+ACH-000821,plasma_cell,multiple myeloma,False,True,plasma_cell,True
+ACH-000343,lung,"non-small cell lung cancer, adenocarcinoma",False,True,lung,True
+ACH-000756,central_nervous_system,glioblastoma,True,True,central_nervous_system,True
+ACH-000593,urinary_tract,transitional cell carcinoma,False,True,urinary_tract,True
+ACH-000513,kidney,"renal carcinoma, clear cell",False,True,kidney,True
+ACH-000551,blood,"chronic myelogenous leukemia, blast crisis",False,True,blood,True
+ACH-000524,ovary,"adenocarcinoma, high grade serous",False,True,ovary,True
+ACH-000183,plasma_cell,multiple myeloma,False,True,plasma_cell,True
+ACH-000862,urinary_tract,carcinoma,False,True,urinary_tract,True
+ACH-000377,bile_duct,"cholangiocarcinoma, extrahepatic",False,True,bile_duct,True
+ACH-000407,uterus,malignant mixed mullerian tumor,True,True,uterus,True
+ACH-000020,blood,"acute lymphoblastic leukemia, b-cell",False,True,blood,True
+ACH-000493,liver,hepatocellular carcinoma,True,True,liver,True
+ACH-000193,plasma_cell,multiple myeloma,False,True,plasma_cell,True
+ACH-000509,lymphocyte,"t-cell, non-hodgkins, cutaneous",False,True,lymphocyte,True
+ACH-000944,lymphocyte,"b-cell, non-hodgkins, burkitts",False,True,lymphocyte,True
+ACH-000651,colorectal,adenocarcinoma,False,True,colorectal,True
+ACH-000857,breast,basal A,False,True,breast,True
+ACH-000267,lymphocyte,"b-cell, hodgkins",False,True,lymphocyte,True
+ACH-000025,central_nervous_system,meningioma,True,True,central_nervous_system,True
+ACH-000727,lung,small cell lung cancer,False,True,lung,True
+ACH-000128,central_nervous_system,astrocytoma,True,True,central_nervous_system,True
+ACH-000393,liver,hepatocellular carcinoma,True,True,liver,True
+ACH-000464,central_nervous_system,glioblastoma,True,True,central_nervous_system,True
+ACH-000082,bone,osteosarcoma,True,True,bone,True
+ACH-000784,esophagus,squamous cell carcinoma,False,True,esophagus,True
+ACH-000325,gastric,adenocarcinoma,False,True,gastric,True
+ACH-000048,ovary,"adenocarcinoma, endometrioid",False,True,ovary,True
+ACH-000017,breast,HER2 amp,False,True,breast,True
+ACH-000946,uterus,endometrial adenocarcinoma,False,True,uterus,True
+ACH-000094,pancreas,"ductal adenocarcinoma, exocrine",False,True,pancreas,True
+ACH-000219,skin,neural crest-like,False,True,skin,True
+ACH-000525,lung,small cell lung cancer,False,True,lung,True
+ACH-000595,central_nervous_system,glioblastoma,False,True,central_nervous_system,True
+ACH-000010,lung,"non-small cell lung cancer, adenocarcinoma",False,False,,
+ACH-000826,lung,"non-small cell lung cancer, unspecified",False,True,lung,True
+ACH-000363,plasma_cell,multiple myeloma,False,True,plasma_cell,True
+ACH-000028,breast,luminal,False,True,breast,True
+ACH-000530,lung,small cell lung cancer,False,True,lung,True
+ACH-000130,blood,"acute lymphoblastic leukemia, b-cell",False,True,blood,True
+ACH-000975,lung,"non-small cell lung cancer, squamous cell carcinoma",True,True,lung,True
+ACH-000758,gastric,adenocarcinoma,False,True,gastric,True
+ACH-000918,blood,"acute lymphoblastic leukemia, t-cell",False,True,blood,True
+ACH-000856,breast,basal B,False,True,breast,True
+ACH-000376,central_nervous_system,glioblastoma,True,True,central_nervous_system,True
+ACH-000235,pancreas,"ductal adenocarcinoma, exocrine",False,True,pancreas,True
+ACH-000869,lung,"non-small cell lung cancer, adenocarcinoma",False,True,lung,True
+ACH-000695,lung,small cell lung cancer,False,True,lung,True
+ACH-000679,esophagus,squamous cell carcinoma,False,True,esophagus,True
+ACH-000075,central_nervous_system,astrocytoma,True,True,central_nervous_system,True
+ACH-000661,skin,transitory,False,True,skin,True
+ACH-000065,blood,acute myeloid leukemia,False,True,blood,True
+ACH-000622,central_nervous_system,glioblastoma,False,True,central_nervous_system,True
+ACH-000387,blood,acute myeloid leukemia,False,True,blood,True
+ACH-000613,bone,osteosarcoma,True,True,bone,True
+ACH-000248,breast,HER2 amp,False,True,breast,True
+ACH-000538,gastric,duodenal adenocarcinoma,False,True,gastric,True
+ACH-000126,central_nervous_system,oligodendroglioma,True,True,central_nervous_system,True
+ACH-000016,kidney,renal cell carcinoma,False,True,kidney,True
+ACH-000375,soft_tissue,renal leiomyoblastoma,False,True,kidney,False
+ACH-000051,soft_tissue,rhabdomyosarcoma,False,True,soft_tissue,True
+ACH-000145,soft_tissue,leiomyosarcoma,True,True,soft_tissue,True
+ACH-000033,lung,"non-small cell lung cancer, adenocarcinoma",False,True,lung,True
+ACH-000582,skin,melanocytic,False,True,skin,True
+ACH-000587,lung,"non-small cell lung cancer, adenocarcinoma",True,True,lung,True
+ACH-000951,lung,"non-small cell lung cancer, adenocarcinoma",False,True,lung,True
+ACH-000616,gastric,adenocarcinoma,True,True,gastric,True
+ACH-000662,lung,"non-small cell lung cancer, large cell carcinoma",False,True,lung,True
+ACH-000369,blood,acute myeloid leukemia,False,True,blood,True
+ACH-000933,pancreas,"ductal adenocarcinoma, exocrine",False,True,pancreas,True
+ACH-000648,lung,mesothelioma,False,True,lung,True
+ACH-000360,colorectal,caecum adenocarcinoma,False,True,colorectal,True
+ACH-000353,esophagus,squamous cell carcinoma,False,True,esophagus,True
+ACH-000812,skin,melanoma,False,True,skin,True
+ACH-000026,urinary_tract,carcinoma,False,True,urinary_tract,True
+ACH-000892,lung,"non-small cell lung cancer, adenocarcinoma",False,True,lung,True
+ACH-000995,blood,"acute lymphoblastic leukemia, t-cell",False,True,blood,True
+ACH-000243,pancreas,"ductal adenocarcinoma, exocrine",False,True,pancreas,True
+ACH-000273,central_nervous_system,glioma,True,True,central_nervous_system,True
+ACH-000454,lung,"non-small cell lung cancer, squamous cell carcinoma",False,True,lung,True
+ACH-000268,bile_duct,"cholangiocarcinoma, extrahepatic",False,True,bile_duct,True
+ACH-000639,lung,small cell lung cancer,False,True,lung,True
+ACH-000893,lung,"non-small cell lung cancer, adenocarcinoma",True,True,lung,True
+ACH-000435,uterus,endometrial adenocarcinoma,False,True,uterus,True
+ACH-000803,lung,small cell lung cancer,False,True,lung,True
+ACH-000922,blood,"acute lymphoblastic leukemia, b-cell",False,True,blood,True
+ACH-000056,lymphocyte,diffuse large b-cell lymphoma,False,True,lymphocyte,True
+ACH-000819,central_nervous_system,glioblastoma,True,True,central_nervous_system,True
+ACH-000811,ovary,"cystadenocarcinoma, endometrioid",False,True,ovary,True
+ACH-000151,blood,"acute lymphoblastic leukemia, b-cell",False,True,blood,True
+ACH-000467,colorectal,adenocarcinoma,False,True,colorectal,True
+ACH-000138,pancreas,"ductal adenocarcinoma, exocrine",False,True,pancreas,True
+ACH-000101,blood,"acute lymphoblastic leukemia, t-cell",False,True,blood,True
+ACH-000379,lung,"non-small cell lung cancer, adenocarcinoma",False,True,lung,True
+ACH-000954,uterus,endometrial adenocarcinoma,False,True,uterus,True
+ACH-000227,peripheral_nervous_system,MYCN amp,False,True,peripheral_nervous_system,True
+ACH-000875,lung,"non-small cell lung cancer, adenocarcinoma",False,True,lung,True
+ACH-000882,skin,melanocytic,False,True,skin,True
+ACH-000333,ovary,"adenocarcinoma, mucinous",False,True,ovary,True
+ACH-000490,central_nervous_system,astrocytoma,False,True,cervix,False
+ACH-000374,breast,basal A,False,True,breast,True
+ACH-000032,blood,"acute lymphoblastic leukemia, b-cell",False,True,blood,True
+ACH-000501,colorectal,adenocarcinoma,False,True,colorectal,True
+ACH-000532,colorectal,adenocarcinoma,False,True,colorectal,True
+ACH-000278,ovary,"adenocarcinoma, high grade serous",False,True,ovary,True
+ACH-000898,gastric,"adenocarcinoma, tubular",False,True,gastric,True
+ACH-000735,upper_aerodigestive,"squamous cell carcinoma, oral",False,True,upper_aerodigestive,True
+ACH-000627,lung,"non-small cell lung cancer, large cell carcinoma",True,True,lung,True
+ACH-000767,lung,small cell lung cancer,False,True,lung,True
+ACH-000902,breast,luminal HER2 amp,False,True,breast,True
+ACH-000143,lung,"non-small cell lung cancer, unspecified",False,True,lung,True
+ACH-000879,uterus,endometrial adenocarcinoma,False,True,uterus,True
+ACH-000977,prostate,adenocarcinoma,False,True,prostate,True
+ACH-000777,esophagus,squamous cell carcinoma,False,True,esophagus,True
+ACH-000078,peripheral_nervous_system,MYCN amp,False,True,peripheral_nervous_system,True
+ACH-000690,lung,"non-small cell lung cancer, squamous cell carcinoma",False,True,lung,True
+ACH-000293,uterus,endometrial adenocarcinoma,False,True,uterus,True
+ACH-000022,pancreas,"ductal adenocarcinoma, exocrine",False,True,pancreas,True
+ACH-000740,upper_aerodigestive,"squamous cell carcinoma, salivary gland",False,True,upper_aerodigestive,True
+ACH-000705,lung,"non-small cell lung cancer, squamous cell carcinoma",False,True,lung,True
+ACH-001366,peripheral_nervous_system,MYCN amp,False,True,peripheral_nervous_system,True
+ACH-000712,lung,"non-small cell lung cancer, adenocarcinoma",False,True,lung,True
+ACH-000912,lung,small cell lung cancer,True,True,lung,True
+ACH-000642,engineered_breast,,False,True,breast,False
+ACH-000001,ovary,"adenocarcinoma, high grade serous",False,True,ovary,True
+ACH-000431,lung,small cell lung cancer,False,True,lung,True
+ACH-000823,esophagus,squamous cell carcinoma,False,True,esophagus,True
+ACH-000965,uterus,endometrial adenosquamous carcinoma,False,True,uterus,True
+ACH-000168,blood,acute myeloid leukemia,False,True,blood,True
+ACH-000570,central_nervous_system,glioblastoma,True,True,central_nervous_system,True
+ACH-000947,ovary,"adenocarcinoma, endometrioid",False,True,ovary,True
+ACH-000877,lymphocyte,"b-cell, non-hodgkins, burkitts",False,True,lymphocyte,True
+ACH-000175,fibroblast,soft tissue,False,True,fibroblast,True
+ACH-000054,soft_tissue,fibrosarcoma,True,True,soft_tissue,True
+ACH-000562,lung,"non-small cell lung cancer, adenocarcinoma",False,True,lung,True
+ACH-000003,colorectal,adenocarcinoma,False,True,colorectal,True
+ACH-000347,pancreas,somatostatinoma,False,True,pancreas,True
+ACH-000129,lung,small cell lung cancer,False,True,lung,True
+ACH-000964,blood,"acute lymphoblastic leukemia, t-cell",False,True,blood,True
+ACH-000313,kidney,"renal carcinoma, clear cell",False,True,kidney,True
+ACH-000279,bone,Ewing sarcoma,False,True,bone,True
+ACH-000024,plasma_cell,multiple myeloma,False,True,plasma_cell,True
+ACH-000076,blood,chronic myelogenous leukemia,False,True,blood,True
+ACH-000873,esophagus,squamous cell carcinoma,False,True,esophagus,True
+ACH-000745,plasma_cell,multiple myeloma,False,True,plasma_cell,True
+ACH-000559,lung,small cell lung cancer,False,True,lung,True
+ACH-000800,lung,small cell lung cancer,False,True,lung,True
+ACH-000409,ovary,"adenocarcinoma, high grade serous",False,True,ovary,True
+ACH-000885,ovary,"adenocarcinoma, clear cell",False,True,ovary,True
+ACH-000561,esophagus,squamous cell carcinoma,False,True,esophagus,True
+ACH-000441,skin,melanocytic,False,True,skin,True
+ACH-000385,kidney,renal cell carcinoma,False,True,kidney,True
+ACH-000118,pancreas,"ductal adenocarcinoma, exocrine",False,True,pancreas,True
+ACH-000831,uterus,endometrial adenocarcinoma,True,True,uterus,True
+ACH-000476,liver,hepatocellular carcinoma,True,True,liver,True
+ACH-000132,ovary,"adenocarcinoma, high grade serous",False,True,ovary,True
+ACH-000891,lung,"non-small cell lung cancer, large cell carcinoma",True,True,lung,True
+ACH-000814,skin,melanoma,False,True,skin,True
+ACH-000573,breast,basal B,True,True,breast,True
+ACH-000598,plasma_cell,multiple myeloma,False,True,plasma_cell,True
+ACH-000217,liver,hepatocellular carcinoma,True,True,liver,True
+ACH-000420,liver,hepatocellular carcinoma,True,True,liver,True
+ACH-000998,colorectal,adenocarcinoma,False,True,colorectal,True
+ACH-000149,peripheral_nervous_system,,False,True,peripheral_nervous_system,True
+ACH-000346,blood,"chronic lymphoblastic leukemia, b-cell",False,True,blood,True
+ACH-000984,uterus,endometrial adenocarcinoma,True,True,uterus,True
+ACH-000280,ovary,"carcinoma, brenner",False,True,ovary,True
+ACH-000486,urinary_tract,transitional cell carcinoma,True,True,urinary_tract,True
+ACH-000982,colorectal,adenocarcinoma,False,True,colorectal,True
+ACH-000903,thyroid,"carcinoma, anaplastic",True,True,thyroid,True
+ACH-000747,lung,"non-small cell lung cancer, squamous cell carcinoma",False,True,lung,True
+ACH-000929,lung,"non-small cell lung cancer, unspecified",False,True,lung,True
+ACH-000095,central_nervous_system,medulloblastoma,False,True,central_nervous_system,True
+ACH-000759,breast,HER2 amp,False,True,breast,True
+ACH-000461,bile_duct,"cholangiocarcinoma, extrahepatic",False,True,bile_duct,True
+ACH-000770,blood,acute myeloid leukemia,False,True,blood,True
+ACH-000465,skin,,False,True,skin,True
+ACH-000146,blood,acute myeloid leukemia,False,True,blood,True
+ACH-000830,lung,small cell lung cancer,False,True,lung,True
+ACH-000615,skin,melanocytic,False,True,skin,True
+ACH-000211,central_nervous_system,medulloblastoma,True,True,central_nervous_system,True
+ACH-000618,upper_aerodigestive,"squamous cell carcinoma, hypopharyngeal",False,True,upper_aerodigestive,True
+ACH-000729,lung,small cell lung cancer,False,True,lung,True
+ACH-000543,central_nervous_system,glioblastoma,True,True,central_nervous_system,True
+ACH-000316,liver,hepatocellular carcinoma,True,True,liver,True
+ACH-000585,lung,"non-small cell lung cancer, squamous cell carcinoma",False,True,lung,True
+ACH-000274,skin,,False,True,skin,True
+ACH-000265,pancreas,"ductal adenocarcinoma, exocrine",False,True,pancreas,True
+ACH-000816,lung,small cell lung cancer,False,True,lung,True
+ACH-000517,pancreas,"ductal adenocarcinoma, exocrine",True,True,pancreas,True
+ACH-000876,breast,HER2 amp,False,True,breast,True
+ACH-000698,lung,small cell lung cancer,False,True,lung,True
+ACH-000035,lung,"non-small cell lung cancer, adenocarcinoma",False,True,lung,True
+ACH-000300,kidney,renal cell carcinoma,True,True,kidney,True
+ACH-000942,blood,"acute lymphoblastic leukemia, t-cell",False,True,blood,True
+ACH-000373,blood,acute myeloid leukemia,False,True,blood,True
+ACH-000563,lung,"non-small cell lung cancer, squamous cell carcinoma",False,True,lung,True
+ACH-001318,liver,hepatocellular carcinoma,False,True,liver,True
+ACH-000999,colorectal,adenocarcinoma,False,True,colorectal,True
+ACH-000392,lung,"non-small cell lung cancer, adenocarcinoma",False,True,lung,True
+ACH-000647,esophagus,squamous cell carcinoma,False,True,esophagus,True
+ACH-000252,colorectal,adenocarcinoma,False,True,colorectal,True
+ACH-000071,fibroblast,bone,False,True,fibroblast,True
+ACH-000945,lung,"non-small cell lung cancer, adenocarcinoma",True,True,lung,True
+ACH-000410,bone,osteosarcoma,True,True,bone,True
+ACH-000233,lymphocyte,"t-cell, non-hodgkins, anaplastic large cell",False,True,lymphocyte,True
+ACH-000550,skin,undifferentiated,True,True,skin,True
+ACH-000102,central_nervous_system,glioblastoma,True,True,central_nervous_system,True
+ACH-000508,lung,small cell lung cancer,False,True,lung,True
+ACH-000845,lung,"non-small cell lung cancer, adenocarcinoma",False,True,lung,True
+ACH-000636,blood,"acute lymphoblastic leukemia, t-cell",False,True,blood,True
+ACH-000482,lung,"non-small cell lung cancer, adenocarcinoma",False,True,lung,True
+ACH-000140,lymphocyte,diffuse large b-cell lymphoma,False,True,lymphocyte,True
+ACH-000527,ovary,"adenocarcinoma, clear cell",False,True,ovary,True
+ACH-000884,skin,"melanoma, amelanotic",False,True,skin,True
+ACH-000637,esophagus,squamous cell carcinoma,False,True,esophagus,True
+ACH-000115,prostate,adenocarcinoma,False,True,prostate,True
+ACH-000158,lymphocyte,diffuse large b-cell lymphoma,False,True,lymphocyte,True
+ACH-000328,central_nervous_system,glioblastoma,True,True,central_nervous_system,True
+ACH-000900,lung,"non-small cell lung cancer, adenocarcinoma",True,True,lung,True
+ACH-000098,central_nervous_system,glioblastoma,True,True,central_nervous_system,True
+ACH-000802,urinary_tract,transitional cell carcinoma,False,True,urinary_tract,True
+ACH-000805,skin,melanoma,False,True,skin,True
+ACH-000619,upper_aerodigestive,"squamous cell carcinoma, oral",False,True,upper_aerodigestive,True
+ACH-000671,liver,hepatoblastoma,False,True,liver,True
+ACH-000638,lung,"non-small cell lung cancer, adenocarcinoma",False,True,lung,True
+ACH-000015,lung,"non-small cell lung cancer, large cell carcinoma",False,True,lung,True
+ACH-000996,uterus,endometrial adenocarcinoma,False,True,uterus,True
+ACH-000416,lung,"non-small cell lung cancer, adenocarcinoma",True,True,lung,True
+ACH-000381,colorectal,adenocarcinoma,False,True,colorectal,True
+ACH-000012,lung,"non-small cell lung cancer, adenocarcinoma",False,True,lung,True
+ACH-000969,colorectal,adenocarcinoma,False,True,colorectal,True
+ACH-000179,lung,small cell lung cancer,False,True,lung,True
+ACH-000291,ovary,"adenocarcinoma, high grade serous",False,True,ovary,True
+ACH-000761,gastric,adenocarcinoma,False,True,gastric,True
+ACH-000468,pancreas,"ductal adenocarcinoma, exocrine",True,True,pancreas,True
+ACH-000792,kidney,"renal carcinoma, transitional cell",True,True,kidney,True
+ACH-000840,lung,"non-small cell lung cancer, adenosquamous carcinoma",True,True,lung,True
+ACH-000466,gastric,"adenocarcinoma, tubular",False,True,gastric,True
+ACH-000962,ovary,"cystadenocarcinoma, clear cell",True,True,ovary,True
+ACH-000776,central_nervous_system,medulloblastoma,True,True,central_nervous_system,True
+ACH-000068,lymphocyte,"b-cell, non-hodgkins, mantle cell",False,True,lymphocyte,True
+ACH-000720,urinary_tract,transitional cell carcinoma,True,True,urinary_tract,True
+ACH-000715,upper_aerodigestive,"squamous cell carcinoma, laryngeal",False,True,upper_aerodigestive,True
+ACH-000890,lung,small cell lung cancer,True,True,lung,True
+ACH-000423,skin,melanocytic,False,True,skin,True
+ACH-000930,breast,basal A,False,True,breast,True
+ACH-000994,uterus,endometrial adenocarcinoma,False,True,uterus,True
+ACH-000401,skin,transitory,False,True,skin,True
+ACH-000822,skin,neural crest-like,False,True,skin,True
+ACH-000081,blood,acute myeloid leukemia,False,True,blood,True
+ACH-000623,central_nervous_system,glioblastoma,True,True,central_nervous_system,True
+ACH-000327,lung,"non-small cell lung cancer, adenocarcinoma",False,True,lung,True
+ACH-000475,liver,"hepatocellular carcinoma, hbs-antigen carrier",False,True,liver,True
+ACH-000445,central_nervous_system,glioblastoma,True,True,central_nervous_system,True
+ACH-000231,central_nervous_system,glioblastoma,True,True,central_nervous_system,True
+ACH-000670,lung,small cell lung cancer,False,True,lung,True
+ACH-001029,bone,Ewing sarcoma,False,True,bone,True
+ACH-000037,soft_tissue,thyroid sarcoma,True,True,soft_tissue,True
+ACH-000257,lung,small cell lung cancer,False,True,lung,True
+ACH-000150,lung,"non-small cell lung cancer, adenocarcinoma",False,True,lung,True
+ACH-000253,colorectal,adenocarcinoma,False,True,colorectal,True
+ACH-000940,uterus,endometrial adenocarcinoma,False,True,uterus,True
+ACH-000266,pancreas,"ductal adenocarcinoma, exocrine",False,True,pancreas,True
+ACH-000372,blood,"acute lymphoblastic leukemia, t-cell",False,True,blood,True
+ACH-000210,bone,Ewing sarcoma,False,True,bone,True
+ACH-000718,lung,"non-small cell lung cancer, adenocarcinoma",False,True,lung,True
+ACH-000077,lymphocyte,"t-cell, non-hodgkins, cutaneous",False,True,lymphocyte,True
+ACH-000584,ovary,"adenocarcinoma, high grade serous",False,True,ovary,True
+ACH-000458,skin,undifferentiated,False,True,skin,True
+ACH-000787,lung,"non-small cell lung cancer, adenocarcinoma",True,True,lung,True
+ACH-001075,lung,"non-small cell lung cancer, mucoepidermoid carcinoma",False,True,lung,True
+ACH-000632,skin,,False,True,skin,True
+ACH-000665,lung,"non-small cell lung cancer, squamous cell carcinoma",True,True,lung,True
+ACH-000955,colorectal,adenocarcinoma,False,True,colorectal,True
+ACH-000907,kidney,"renal carcinoma, clear cell",False,True,kidney,True
+ACH-000841,lung,"non-small cell lung cancer, adenocarcinoma",False,True,lung,True
+ACH-000008,skin,,False,True,skin,True
+ACH-000085,pancreas,"ductal adenocarcinoma, exocrine",False,True,pancreas,True
+ACH-000549,upper_aerodigestive,"squamous cell carcinoma, laryngeal",False,True,upper_aerodigestive,True
+ACH-000868,lung,"non-small cell lung cancer, adenosquamous carcinoma",False,True,lung,True
+ACH-000066,lung,"non-small cell lung cancer, adenocarcinoma",False,True,lung,True
+ACH-000073,lymphocyte,"b-cell, non-hodgkins, mantle cell",False,True,lymphocyte,True
+ACH-000699,breast,basal B,True,True,breast,True
+ACH-000643,breast,basal A,False,True,breast,True
+ACH-000921,lung,small cell lung cancer,True,True,lung,True
+ACH-000298,lung,small cell lung cancer,False,True,lung,True
+ACH-000378,lung,"non-small cell lung cancer, adenosquamous carcinoma",True,True,lung,True
+ACH-000950,colorectal,adenocarcinoma,False,True,colorectal,True
+ACH-000460,ovary,"adenocarcinoma, high grade serous",False,True,ovary,True
+ACH-000837,lung,"non-small cell lung cancer, adenocarcinoma",False,True,lung,True
+ACH-000480,liver,hepatocellular carcinoma,False,True,liver,True
+ACH-000426,plasma_cell,multiple myeloma,False,True,plasma_cell,True
+ACH-000455,central_nervous_system,glioblastoma,True,True,central_nervous_system,True
+ACH-000182,bile_duct,"cholangiocarcinoma, extrahepatic",False,True,bile_duct,True
+ACH-000703,lung,small cell lung cancer,False,True,lung,True
+ACH-000941,uterus,endometrial adenocarcinoma,False,True,uterus,True
+ACH-000897,thyroid,"carcinoma, follicular",True,True,thyroid,True
+ACH-000586,lung,small cell lung cancer,False,True,lung,True
+ACH-000594,lung,small cell lung cancer,False,True,lung,True
+ACH-000290,lung,small cell lung cancer,False,True,lung,True
+ACH-000350,colorectal,adenocarcinoma,False,True,colorectal,True
+ACH-000457,kidney,renal cell carcinoma,False,True,kidney,True
+ACH-000523,lung,small cell lung cancer,False,True,lung,True
+ACH-000641,blood,acute myeloid leukemia,False,True,blood,True
+ACH-000939,soft_tissue,leiomyosarcoma,False,True,soft_tissue,True
+ACH-000980,lung,"non-small cell lung cancer, large cell carcinoma",False,True,lung,True
+ACH-000447,lung,"non-small cell lung cancer, adenocarcinoma",False,True,lung,True
+ACH-000925,lung,"non-small cell lung cancer, adenocarcinoma",False,True,lung,True
+ACH-000521,lung,"non-small cell lung cancer, adenocarcinoma",True,True,lung,True
+ACH-000382,lung,small cell lung cancer,False,True,lung,True
+ACH-000844,lung,small cell lung cancer,False,True,lung,True
+ACH-000093,pancreas,"ductal adenocarcinoma, exocrine",False,True,pancreas,True
+ACH-000358,lung,small cell lung cancer,False,True,lung,True
+ACH-000923,lymphocyte,"b-cell, non-hodgkins",False,True,lymphocyte,True
+ACH-000237,ovary,"adenocarcinoma, mucinous",True,True,ovary,True
+ACH-000590,lung,"non-small cell lung cancer, adenocarcinoma",True,True,lung,True
+ACH-000446,peripheral_nervous_system,,False,True,peripheral_nervous_system,True
+ACH-000309,lung,"non-small cell lung cancer, adenocarcinoma",True,True,lung,True
+ACH-000774,lung,"non-small cell lung cancer, adenocarcinoma",False,True,lung,True
+ACH-000297,lung,small cell lung cancer,False,True,lung,True
+ACH-000504,central_nervous_system,glioma,True,True,central_nervous_system,True
+ACH-000536,breast,basal A,False,True,breast,True
+ACH-000901,lung,"non-small cell lung cancer, large cell carcinoma",True,True,lung,True
+ACH-000783,breast,luminal,False,True,breast,True
+ACH-000099,peripheral_nervous_system,,False,True,peripheral_nervous_system,True
+ACH-000348,skin,undifferentiated,True,True,skin,True
+ACH-000669,lung,"non-small cell lung cancer, squamous cell carcinoma",False,True,lung,True
+ACH-000537,liver,hepatocellular carcinoma,False,True,liver,True
+ACH-000408,esophagus,squamous cell carcinoma,False,True,esophagus,True
+ACH-000818,breast,luminal,False,True,breast,True
+ACH-000644,skin,transitory,False,True,skin,True
+ACH-000503,upper_aerodigestive,"squamous cell carcinoma, oral",False,True,upper_aerodigestive,True
+ACH-000697,lymphocyte,diffuse large b-cell lymphoma,False,True,lymphocyte,True
+ACH-000133,fibroblast,soft tissue,True,True,soft_tissue,False
+ACH-000249,colorectal,adenocarcinoma,False,True,colorectal,True
+ACH-000429,kidney,renal cell carcinoma,False,True,kidney,True
+ACH-000366,peripheral_nervous_system,MYCN amp,False,True,peripheral_nervous_system,True
+ACH-000924,lung,"non-small cell lung cancer, unspecified",True,True,lung,True
+ACH-000091,ovary,"adenocarcinoma, serous",False,True,ovary,True
+ACH-000961,uterus,endometrial adenocarcinoma,False,True,uterus,True
+ACH-000937,blood,"acute lymphoblastic leukemia, t-cell",False,True,blood,True
+ACH-000052,bone,Ewing sarcoma,False,True,bone,True
+ACH-000089,colorectal,adenocarcinoma,False,True,colorectal,True
+ACH-000442,lung,"non-small cell lung cancer, squamous cell carcinoma",True,True,lung,True
+ACH-000780,lung,small cell lung cancer,False,True,lung,True
+ACH-000044,breast,luminal,False,True,breast,True
+ACH-000866,lung,small cell lung cancer,False,True,lung,True
+ACH-000256,ovary,"adenocarcinoma, high grade serous",False,True,ovary,True
+ACH-000191,thyroid,"carcinoma, papillary",True,True,thyroid,True
+ACH-000100,soft_tissue,"rhabdomyosarcoma, alveolar",False,True,soft_tissue,True
+ACH-000189,kidney,renal cell carcinoma,False,True,kidney,True
+ACH-000260,peripheral_nervous_system,,False,True,peripheral_nervous_system,True
+ACH-000399,lung,small cell lung cancer,False,True,lung,True
+ACH-000040,central_nervous_system,astrocytoma,True,True,central_nervous_system,True
+ACH-000014,skin,neural crest-like,False,True,skin,True
+ACH-000610,lung,small cell lung cancer,False,True,lung,True
+ACH-000685,pancreas,ductal adenosquamous carcinoma,False,True,pancreas,True
+ACH-000733,lung,"non-small cell lung cancer, adenocarcinoma",False,True,lung,True
+ACH-000440,lymphocyte,"b-cell, non-hodgkins, burkitts",False,True,lymphocyte,True
+ACH-001190,skin,melanocytic,False,True,skin,True
+ACH-000370,central_nervous_system,glioblastoma,True,True,central_nervous_system,True
+ACH-000391,bone,Ewing sarcoma,False,True,bone,True
+ACH-000666,lung,"non-small cell lung cancer, adenocarcinoma",True,True,lung,True
+ACH-000683,colorectal,adenocarcinoma,False,True,colorectal,True
+ACH-000039,bone,Ewing sarcoma,False,True,bone,True
+ACH-000453,plasma_cell,multiple myeloma,False,True,plasma_cell,True
+ACH-000312,peripheral_nervous_system,MYCN amp,False,True,peripheral_nervous_system,True
+ACH-000223,breast,basal A,False,True,breast,True
+ACH-000443,ovary,"adenocarcinoma, high grade serous",False,True,ovary,True
+ACH-000786,lymphocyte,"b-cell, non-hodgkins, burkitts",False,True,lymphocyte,True
+ACH-000870,lung,small cell lung cancer,False,True,lung,True
+ACH-000136,peripheral_nervous_system,MYCN amp,False,True,peripheral_nervous_system,True
+ACH-000142,urinary_tract,transitional cell carcinoma,False,True,urinary_tract,True
+ACH-000107,pancreas,"ductal adenocarcinoma, exocrine",False,True,pancreas,True
+ACH-000689,soft_tissue,rhabdomyosarcoma,True,True,soft_tissue,True
+ACH-000518,upper_aerodigestive,"squamous cell carcinoma, oral",False,True,upper_aerodigestive,True
+ACH-000269,central_nervous_system,glioblastoma,True,True,central_nervous_system,True
+ACH-000264,lung,"non-small cell lung cancer, unspecified",True,True,lung,True
+ACH-000286,colorectal,adenocarcinoma,False,True,colorectal,True
+ACH-000835,soft_tissue,pleomorphic sarcoma,True,True,soft_tissue,True
+ACH-000702,lymphocyte,"b-cell, hodgkins",False,True,lymphocyte,True
+ACH-000990,uterus,endometrial adenocarcinoma,False,True,uterus,True
+ACH-000282,lung,"non-small cell lung cancer, adenocarcinoma",True,True,lung,True
+ACH-001321,thyroid,squamous cell carcinoma,False,True,thyroid,True
+ACH-000546,upper_aerodigestive,squamous cell carcinoma,False,True,upper_aerodigestive,True
+ACH-000422,liver,hepatocellular carcinoma,True,True,liver,True
+ACH-000067,central_nervous_system,oligodendroglioma,True,True,central_nervous_system,True
+ACH-000928,uterus,endometrial adenocarcinoma,False,True,uterus,True
+ACH-000234,kidney,"renal carcinoma, clear cell",False,True,kidney,True
+ACH-000117,breast,HER2 amp,False,True,breast,True
+ACH-000628,lung,"non-small cell lung cancer, adenosquamous carcinoma",False,True,lung,True
+ACH-000412,colorectal,adenocarcinoma,False,True,colorectal,True
+ACH-000221,liver,hepatocellular carcinoma,False,True,liver,True
+ACH-000790,lung,small cell lung cancer,False,True,lung,True
+ACH-000451,lung,"non-small cell lung cancer, adenocarcinoma",False,True,lung,True
+ACH-000202,colorectal,adenocarcinoma,False,True,colorectal,True
+ACH-000292,lung,small cell lung cancer,False,True,lung,True
+ACH-000867,lung,"non-small cell lung cancer, unspecified",False,True,lung,True
+ACH-000087,bone,Ewing sarcoma,False,True,bone,True
+ACH-000177,prostate,small cell carcinoma,False,True,prostate,True
+ACH-000173,uterus,endometrial adenocarcinoma,False,True,uterus,True
+ACH-000159,kidney,renal cell carcinoma,False,True,kidney,True
+ACH-000062,lung,"non-small cell lung cancer, adenocarcinoma",True,True,lung,True
+ACH-000342,colorectal,adenocarcinoma,False,True,colorectal,True
+ACH-000276,breast,basal A,False,True,breast,True
+ACH-000055,central_nervous_system,medulloblastoma,False,True,central_nervous_system,True
+ACH-000781,lung,"non-small cell lung cancer, adenocarcinoma",True,True,lung,True
+ACH-000111,breast,basal A,False,True,breast,True
+ACH-000799,skin,"melanoma, amelanotic",False,True,skin,True
+ACH-000203,peripheral_nervous_system,MYCN amp,False,True,peripheral_nervous_system,True
+ACH-000228,upper_aerodigestive,"squamous cell carcinoma, oral",False,True,upper_aerodigestive,True
+ACH-000888,lung,"non-small cell lung cancer, adenocarcinoma",True,True,lung,True
+ACH-000121,lung,"non-small cell lung cancer, adenocarcinoma",True,True,lung,True
+ACH-000027,central_nervous_system,glioblastoma,True,True,central_nervous_system,True
+ACH-000791,lung,"non-small cell lung cancer, adenocarcinoma",False,True,lung,True
+ACH-000483,liver,hepatocellular carcinoma,False,True,liver,True
+ACH-000871,lung,small cell lung cancer,False,True,lung,True
+ACH-000717,esophagus,squamous cell carcinoma,False,True,esophagus,True
+ACH-000109,lung,"non-small cell lung cancer, adenocarcinoma",False,True,lung,True
+ACH-000565,colorectal,adenocarcinoma,False,True,colorectal,True
+ACH-000186,lung,"non-small cell lung cancer, unspecified",False,True,lung,True
+ACH-000192,uterus,endometrial adenocarcinoma,False,True,uterus,True
+ACH-000895,colorectal,adenocarcinoma,False,True,colorectal,True
+ACH-000041,bone,Ewing sarcoma,False,True,bone,True
+ACH-000042,pancreas,"ductal adenocarcinoma, exocrine",False,True,pancreas,True
+ACH-000789,lung,"non-small cell lung cancer, large cell carcinoma",False,True,lung,True
+ACH-000050,plasma_cell,"multiple myeloma, plasmacytoma",False,True,plasma_cell,True
+ACH-000785,lung,"non-small cell lung cancer, adenocarcinoma",False,True,lung,True
+ACH-000354,pancreas,"ductal adenocarcinoma, exocrine",False,True,pancreas,True
+ACH-000196,breast,basal A,False,True,breast,True
+ACH-000254,upper_aerodigestive,squamous cell carcinoma,False,True,upper_aerodigestive,True
+ACH-000395,lung,"non-small cell lung cancer, squamous cell carcinoma",False,True,lung,True
+ACH-000737,lung,"non-small cell lung cancer, squamous cell carcinoma",False,True,lung,True
+ACH-000116,ovary,"adenocarcinoma, high grade serous",False,True,ovary,True
+ACH-000141,bile_duct,adenocarcinoma,False,True,bile_duct,True
+ACH-000209,bile_duct,"cholangiocarcinoma, intrahepatic",False,True,bile_duct,True
+ACH-000157,lymphocyte,diffuse large b-cell lymphoma,False,True,lymphocyte,True
+ACH-000659,lung,small cell lung cancer,False,True,lung,True
+ACH-000205,pancreas,"ductal adenocarcinoma, exocrine",False,True,pancreas,True
+ACH-000621,breast,basal B,True,True,breast,True
+ACH-000308,ovary,"adenocarcinoma, clear cell",False,True,ovary,True
+ACH-000694,esophagus,squamous cell carcinoma,False,True,esophagus,True
+ACH-000635,ovary,"cystadenocarcinoma, high grade serous",False,True,ovary,True
+ACH-000992,upper_aerodigestive,squamous cell carcinoma,False,True,upper_aerodigestive,True
+ACH-000038,lymphocyte,b-cell,False,True,lymphocyte,True
+ACH-000169,soft_tissue,"rhabdomyosarcoma, embryonal",False,True,soft_tissue,True
+ACH-000743,lung,small cell lung cancer,False,True,lung,True
+ACH-000500,upper_aerodigestive,"squamous cell carcinoma, laryngeal",True,True,upper_aerodigestive,True
+ACH-000427,gastric,"adenocarcinoma, tubular",False,True,gastric,True
+ACH-000238,upper_aerodigestive,"squamous cell carcinoma, oral",False,True,upper_aerodigestive,True
+ACH-000640,skin,transitory,False,True,skin,True
+ACH-000302,uterus,mullerian carcinoma,False,True,uterus,True
+ACH-000967,colorectal,adenocarcinoma,False,True,colorectal,True
+ACH-000548,upper_aerodigestive,"squamous cell carcinoma, oral",False,True,upper_aerodigestive,True
+ACH-000161,lung,"non-small cell lung cancer, adenocarcinoma",True,True,lung,True
+ACH-000860,lung,"non-small cell lung cancer, adenocarcinoma",False,True,lung,True
+ACH-000560,gastric,small cell carcinoma,False,True,gastric,True
+ACH-000434,lung,"non-small cell lung cancer, large cell carcinoma",True,True,lung,True
+ACH-000456,thyroid,"carcinoma, papillary",True,True,thyroid,True
+ACH-000341,peripheral_nervous_system,,False,True,peripheral_nervous_system,True
+ACH-000021,lung,"non-small cell lung cancer, adenocarcinoma",True,True,lung,True
+ACH-000225,gastric,small cell carcinoma,False,True,gastric,True
+ACH-000058,thyroid,"carcinoma, follicular",True,True,thyroid,True
+ACH-000775,lung,carcinoid,False,True,lung,True
+ACH-000364,bone,osteosarcoma,True,True,bone,True
+ACH-000624,breast,basal A,False,True,breast,True
+ACH-000414,lung,"non-small cell lung cancer, adenocarcinoma",False,True,lung,True
+ACH-000352,breast,luminal,False,True,breast,True
+ACH-000349,breast,luminal,False,True,breast,True
+ACH-000319,lung,mesothelioma,False,True,lung,True
+ACH-000181,upper_aerodigestive,squamous cell carcinoma,False,True,upper_aerodigestive,True
+ACH-000137,central_nervous_system,astrocytoma,True,True,central_nervous_system,True
+ACH-000013,ovary,"adenocarcinoma, high grade serous",False,True,ovary,True
+ACH-000766,lung,"non-small cell lung cancer, adenocarcinoma",False,True,lung,True
+ACH-000675,lung,"non-small cell lung cancer, adenocarcinoma",False,True,lung,True
+ACH-000389,central_nervous_system,glioma,True,True,central_nervous_system,True
+ACH-000920,blood,"chronic myelogenous leukemia, blast crisis",False,True,blood,True
+ACH-000351,gastric,adenocarcinoma,True,True,gastric,True
+ACH-000394,lung,small cell lung cancer,False,True,lung,True
+ACH-000744,lung,"non-small cell lung cancer, adenocarcinoma",False,True,lung,True
+ACH-000114,pancreas,"ductal adenocarcinoma, exocrine",False,True,pancreas,True
+ACH-000795,blood,"acute lymphoblastic leukemia, t-cell",False,True,blood,True
+ACH-000103,ovary,"adenocarcinoma, high grade serous",False,True,ovary,True
+ACH-000144,gastric,adenocarcinoma,False,True,gastric,True
+ACH-000578,lung,"non-small cell lung cancer, adenocarcinoma",False,True,lung,True
+ACH-000514,lung,small cell lung cancer,False,True,lung,True
+ACH-000864,uterus,endometrial adenocarcinoma,False,True,uterus,True
+ACH-000305,esophagus,squamous cell carcinoma,False,True,esophagus,True
+ACH-000603,lung,"non-small cell lung cancer, unspecified",False,True,lung,True
+ACH-000916,lung,"non-small cell lung cancer, adenocarcinoma",False,True,lung,True
+ACH-000296,colorectal,adenocarcinoma,False,True,colorectal,True
+ACH-000978,uterus,endometrial adenocarcinoma,False,True,uterus,True
+ACH-000904,lung,"non-small cell lung cancer, large cell carcinoma",False,True,lung,True
+ACH-000110,gastric,adenocarcinoma,False,True,gastric,True
+ACH-000261,lung,"non-small cell lung cancer, squamous cell carcinoma",True,True,lung,True
+ACH-000031,pancreas,"ductal adenocarcinoma, exocrine",False,True,pancreas,True
+ACH-000682,upper_aerodigestive,squamous cell carcinoma,False,True,upper_aerodigestive,True
