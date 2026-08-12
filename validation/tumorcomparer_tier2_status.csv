@@ -1,0 +1,7 @@
+file,parsed,rows,columns,reason
+mtc_results_20200331.rds,True,589.0,26.0,"parsed, but only genome-wide similarity columns -- no pathway/geneset-restricted column, so it cannot answer the RTK-RAS/WNT-restricted question Figure 4 asks"
+mtc_results_20200331_no_factors.rds,True,589.0,26.0,"parsed, but only genome-wide similarity columns -- no pathway/geneset-restricted column, so it cannot answer the RTK-RAS/WNT-restricted question Figure 4 asks"
+precomputed_comparisons.rds,False,,,"pyreadr returned no extractable data.frame -- likely a nested R list (e.g. a per-geneset lookup), needs R itself to unpack"
+precomputed_comparisons_20211019.rds,False,,,"pyreadr returned no extractable data.frame -- likely a nested R list (e.g. a per-geneset lookup), needs R itself to unpack"
+selected_geneset_comparisons.rds,False,,,"pyreadr returned no extractable data.frame -- likely a nested R list (e.g. a per-geneset lookup), needs R itself to unpack"
+selected_geneset_comparisons_20211019.rds,False,,,"pyreadr returned no extractable data.frame -- likely a nested R list (e.g. a per-geneset lookup), needs R itself to unpack"
