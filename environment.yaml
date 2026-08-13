@@ -1,0 +1,43 @@
+name: az
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  - python=3.14
+  - pandas
+  - jupyter
+  - matplotlib
+  - matplotlib-venn
+  - openpyxl
+  - seaborn
+  - scipy
+  - scikit-learn
+  - plotly
+  - pyyaml
+  - pyarrow
+  - pypdf
+  - requests
+  - pytest          # V6-10 -- declared for the first time; the test runner every scoring/tests/ and
+                    # backend/*/tests file already depends on, found missing from this env at V6-10
+  - salib
+  - networkx
+  - pydantic        # V6-8 -- schema validation for the narrator's constrained output (rag/narrator.py)
+  - python-dotenv   # V6-8 -- loads NVIDIA_API_KEY from a gitignored .env, docs/plan/CONSTRAINTS.md R6
+  - rank-bm25       # V6-8 -- BM25 sparse retrieval, RAG_ARCHITECTURE.md SS3
+  - faiss-cpu       # V6-8 -- flat vector index for C1/C4, RAG_ARCHITECTURE.md SS3
+  - biopython       # V6-8 -- PubMed/PMC access (Bio.Entrez) for the literature agent (C4)
+  - fastapi
+  - uvicorn
+  - pydantic
+  - pip
+  - pip:
+      - pyreadr    # V7 -- validation/validate.py's TumorComparer Tier 2: best-effort parsing of
+                   # tumorcomparer_precomputed/*.rds. No conda-forge build. Pure Python, no R
+                   # needed, but narrower coverage of R object types than R's own readRDS -- some
+                   # of the 6 .rds files parse to zero extractable objects (nested R lists),
+                   # disclosed in validation/tumorcomparer_tier2_status.csv, not worked around.
+      - openai               # V6-8 -- OpenAI-compatible client rag/provider.py wraps for NVIDIA
+                              # NIM (CONSTRAINTS.md R6). No conda-forge build.
+      - sentence-transformers # V6-8 -- BGE (C1) / MedCPT (C4) dense encoders and cross-encoder
+                              # rerankers, RAG_ARCHITECTURE.md SS3. No conda-forge build; brings
+                              # in torch/transformers as transitive deps.
