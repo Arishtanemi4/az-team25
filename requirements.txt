@@ -1,0 +1,43 @@
+# python=3.14
+pandas
+jupyter
+matplotlib
+matplotlib-venn
+openpyxl
+seaborn
+scipy
+scikit-learn
+plotly
+pyyaml
+pyarrow
+pypdf
+requests
+pytest   # declared for the first time at V6-10 -- the test runner every scoring/tests/ and
+         # backend/*/tests file already depends on, found missing from this env during V6-10
+SALib   # sensitivity sweep (V6-3, docs/plan/EXECUTE.md) -- Sobol sampling/analysis
+networkx   # knowledge-graph traversal (V6-7, docs/plan/EXECUTE.md) -- explanation-only graph queries
+gseapy   # optional — only needed for scoring/methods/offline_batch.py (ssGSEA/GSVA). No conda-forge
+         # build exists (bioconda + PyPI only); install via pip inside the `az` env when needed.
+pyreadr  # V7 -- validation/validate.py's TumorComparer Tier 2: best-effort parsing of
+         # tumorcomparer_precomputed/*.rds. No conda-forge build, pure Python (no R needed), but
+         # narrower coverage of R object types than R's own readRDS -- some of the 6 .rds files
+         # parse to zero extractable objects (nested R lists), disclosed in
+         # validation/tumorcomparer_tier2_status.csv, not worked around.
+
+# V6-8 (RAG layer, docs/plan/RAG_ARCHITECTURE.md) — no conda-forge build, pip inside the `az` env.
+openai                 # OpenAI-compatible client -- the transport rag/provider.py wraps for NVIDIA
+                        # NIM. This is the only file allowed to import it (CONSTRAINTS.md R6).
+sentence-transformers   # BGE (C1) / MedCPT (C4) dense encoders and cross-encoder rerankers, RAG_ARCHITECTURE.md SS3.
+                        # Brings in torch/transformers as transitive deps.
+# ragas -- evaluated and dropped for this environment. ragas>=0.3 hard-depends on scikit-network,
+# whose Windows wheel needs Microsoft C++ Build Tools (not present here, and not something to
+# install unattended); ragas==0.2.15 (the last version without that dependency) fails to import
+# under Python 3.14 (nest_asyncio.apply() assumes an event loop pattern this Python version
+# removed) and then hits a stale langchain_community.chat_models.vertexai import even after that
+# is worked around. rag/evaluate.py implements RAGAS's own published algorithm (statement
+# decomposition + per-statement verification against retrieved context, Es et al. 2023) by hand
+# instead -- disclosed in docs/plan/STATUS.md, not silently substituted.
+
+fastapi
+uvicorn
+pydantic
