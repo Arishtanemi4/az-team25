@@ -1,0 +1,402 @@
+[
+  {
+    "id": "gold-001",
+    "question": "What is the exact value of R_EXPONENT (r) in the desirability transform, and what is its status?",
+    "answer": "r = 1 (linear). Status: cited — Derringer & Suich's shape exponent; r=1 is the least-assumption choice, fixed, never user-exposed.",
+    "source": "docs/plan/PARAMETERS.md row 1",
+    "category": "parameter",
+    "contains_number": true
+  },
+  {
+    "id": "gold-002",
+    "question": "How are RNA's per-gene desirability floor (L) and target (T) defined?",
+    "answer": "Per gene, as the 10th and 90th percentile of log2(TPM+1) across every measured line in expression_rna.csv. Status: derived; the 10/90 choice itself has no cited source.",
+    "source": "docs/plan/PARAMETERS.md row 2",
+    "category": "parameter",
+    "contains_number": true
+  },
+  {
+    "id": "gold-003",
+    "question": "What is min_lineage_n, what does it gate, and what is its status?",
+    "answer": "15 — below this count of measured lines in a lineage, RNA calibration falls back to the global L/T pair rather than a per-lineage override. Status: EDA-inherited.",
+    "source": "docs/plan/PARAMETERS.md row 4",
+    "category": "parameter",
+    "contains_number": true
+  },
+  {
+    "id": "gold-004",
+    "question": "How many genes survive the RNA gene filter (keep where T > L), and how many were there before filtering?",
+    "answer": "53,539 genes before filtering, 38,367 genes after (kept where T > L).",
+    "source": "docs/plan/PARAMETERS.md row 5",
+    "category": "parameter",
+    "contains_number": true
+  },
+  {
+    "id": "gold-005",
+    "question": "What are protein's pooled L and T values, and why is protein's calibration pooled rather than per-gene?",
+    "answer": "L = -1.0315, T = 0.9608, one pooled pair for all genes (10th/90th percentile over 3,259,807 detected=True z-scores). Pooled rather than per-gene because protein values arrive already per-protein standardised upstream, which would make a per-gene pair near-circular.",
+    "source": "docs/plan/PARAMETERS.md row 6",
+    "category": "parameter",
+    "contains_number": true
+  },
+  {
+    "id": "gold-006",
+    "question": "What value does the dependency layer's L/T calibration run on, and why is it negated?",
+    "answer": "On -chronos_score (the negated Chronos value), because Chronos's convention is more-negative = stronger dependency, the opposite of the shared desirability transform's higher-is-more-desirable assumption.",
+    "source": "docs/plan/PARAMETERS.md row 7",
+    "category": "parameter",
+    "contains_number": false
+  },
+  {
+    "id": "gold-007",
+    "question": "What is min_calibration_n, which layers does it gate, and what did V6-3's sweep find about it?",
+    "answer": "30 — gates per-gene calibration for the dependency and copy-number layers. Status: EDA-inherited. V6-3 (T2) found it directionally load-bearing (Sobol ST=0.93) but not confidently established at N=8.",
+    "source": "docs/plan/PARAMETERS.md row 9",
+    "category": "parameter",
+    "contains_number": true
+  },
+  {
+    "id": "gold-008",
+    "question": "What is the value of VUS_D (moderate_vus), and what is its status?",
+    "answer": "0.5. Status: invented — this project's own convention, explicitly stated as having no source.",
+    "source": "docs/plan/PARAMETERS.md row 13",
+    "category": "parameter",
+    "contains_number": true
+  },
+  {
+    "id": "gold-009",
+    "question": "What d-value does none_sequenced_clean score for both inclusion and exclusion, and what is its status?",
+    "answer": "Inclusion d=1.0, exclusion d=1.0. Status: invented — a real negative call, but not evidence the gene is expressed or active (CONSTRAINTS.md S8).",
+    "source": "docs/plan/PARAMETERS.md row 15",
+    "category": "parameter",
+    "contains_number": true
+  },
+  {
+    "id": "gold-010",
+    "question": "What d-value does assayed_no_fusion score for an exclusion gene, and what defect does this cause?",
+    "answer": "d=1.0 for exclusion. Status: invented — this is the defect named CONSTRAINTS.md S3 (the fusion layer can defeat the veto), re-derived at V6-2c.",
+    "source": "docs/plan/PARAMETERS.md row 18",
+    "category": "parameter",
+    "contains_number": true
+  },
+  {
+    "id": "gold-011",
+    "question": "What is LAYER_WEIGHTS[\"rna\"] and what Tavtigian evidence-strength tier does it correspond to?",
+    "answer": "4/15 ≈ 0.267, the Strong tier.",
+    "source": "docs/plan/PARAMETERS.md row 20",
+    "category": "parameter",
+    "contains_number": true
+  },
+  {
+    "id": "gold-012",
+    "question": "What is LAYER_WEIGHTS[\"fusion\"], and why is it the smallest of the six weights?",
+    "answer": "1/15 ≈ 0.067, the Supporting tier — the narrowest scope of the six evidence types (rare events, latest promoted from context at P5).",
+    "source": "docs/plan/PARAMETERS.md row 22",
+    "category": "parameter",
+    "contains_number": true
+  },
+  {
+    "id": "gold-013",
+    "question": "Why is protein weighted 2/15 (Moderate) rather than Strong like RNA and dependency?",
+    "answer": "Protein is closest to the actual drug target, but only ~20% catalogue coverage and panel-relative by construction (CONSTRAINTS.md S7) — its A1-A4 admission is PASS but sparse, which places it at the Moderate tier rather than Strong.",
+    "source": "docs/plan/PARAMETERS.md row 21 / docs/reference/ALGORITHM_SPEC.md layer weights table",
+    "category": "parameter",
+    "contains_number": true
+  },
+  {
+    "id": "gold-014",
+    "question": "What exactly triggers the layer (c) veto (D=0), and what is its status?",
+    "answer": "Any d_i == 0.0 for a gene with w_i > 0. Status: cited — Derringer & Suich's geometric mean short-circuit, the property the whole method was chosen for. It requires an exact zero, which is why S3 (the fusion defect) can defeat it.",
+    "source": "docs/plan/PARAMETERS.md row 24",
+    "category": "parameter",
+    "contains_number": true
+  },
+  {
+    "id": "gold-015",
+    "question": "How is rho_bar (the correlation discount) clamped, and why?",
+    "answer": "Clamped as max(rho_bar, 0) — this project's own choice, stated as its own: anti-correlation never boosts a gene above one unit of evidence.",
+    "source": "docs/plan/PARAMETERS.md row 25",
+    "category": "parameter",
+    "contains_number": false
+  },
+  {
+    "id": "gold-016",
+    "question": "What is top_k_similar, what does it control, and what is its status?",
+    "answer": "3 — the number of backup/similar-line suggestions returned. Status: invented — harmless, but was undeclared until PARAMETERS.md registered it.",
+    "source": "docs/plan/PARAMETERS.md row 33",
+    "category": "parameter",
+    "contains_number": true
+  },
+  {
+    "id": "gold-017",
+    "question": "What is the imputed protein detection-floor value on the 2026-08-07 build, and how many rows does it apply to, and is it still used in scoring?",
+    "answer": "-2.4232, applied to 1,255,568 rows in protein.csv. As of V6-6 it is kept for provenance but no longer read by scoring for non-detected rows — score_protein abstains (d=None) whenever detected=False instead.",
+    "source": "docs/plan/PARAMETERS.md row 34",
+    "category": "parameter",
+    "contains_number": true
+  },
+  {
+    "id": "gold-018",
+    "question": "What are the pan-essential gate's two thresholds, and how many of DepMap's 18,304 genes were flagged pan-essential on the 2026-08-10 build?",
+    "answer": "strong_dependency_cutoff = -1.0 and pan_essential_fraction_threshold = 0.90 (a gene is flagged pan-essential if the fraction of measured lines with Chronos dependency_score < -1.0 is >= 0.90). 464 of 18,304 genes were flagged on the 2026-08-10 build.",
+    "source": "docs/plan/PARAMETERS.md row 40",
+    "category": "parameter",
+    "contains_number": true
+  },
+  {
+    "id": "gold-019",
+    "question": "What is STRING_COMBINED_SCORE_THRESHOLD used in the knowledge-graph build, and what is its status?",
+    "answer": "700. Status: cited — STRING v12's own documented confidence bands (0.4/0.7/0.9 = medium/high/highest); 700 is STRING's 'high confidence' cutoff.",
+    "source": "docs/plan/PARAMETERS.md row 292 (§13)",
+    "category": "parameter",
+    "contains_number": true
+  },
+  {
+    "id": "gold-020",
+    "question": "What are CODEPENDENCY_TOP_K and CODEPENDENCY_MIN_ABS_R in the knowledge-graph build, and what is their status?",
+    "answer": "CODEPENDENCY_TOP_K = 20 (caps the co-dependency edge list per gene), CODEPENDENCY_MIN_ABS_R = 0.2 (minimum absolute correlation to keep an edge). Both status: invented — disclosed sparsification heuristics.",
+    "source": "docs/plan/PARAMETERS.md §13",
+    "category": "parameter",
+    "contains_number": true
+  },
+  {
+    "id": "gold-021",
+    "question": "What is the desirability formula for an inclusion gene, in terms of L, T, y and r?",
+    "answer": "d = 0 if y < L; d = ((y - L) / (T - L)) ** r if L <= y <= T; d = 1 if y > T.",
+    "source": "docs/reference/ALGORITHM_SPEC.md, Layer (a)",
+    "category": "algorithm_spec",
+    "contains_number": false
+  },
+  {
+    "id": "gold-022",
+    "question": "How does the exclusion-gene desirability formula differ from the inclusion-gene formula?",
+    "answer": "It is the mirror: d = 1 if y < L (credibly absent); d = ((T - y) / (T - L)) ** r if L <= y <= T; d = 0 if y > T (confidently expressed, disqualifying).",
+    "source": "docs/reference/ALGORITHM_SPEC.md, Layer (a)",
+    "category": "algorithm_spec",
+    "contains_number": false
+  },
+  {
+    "id": "gold-023",
+    "question": "What is the layer (b) combination formula, and is it compensatory or non-compensatory?",
+    "answer": "d_gene = Σ(a_l · d_l) / Σ a_l over layers l with evidence — an evidence-weighted arithmetic mean, deliberately compensatory: a layer that was never measured must not veto a gene another layer supports.",
+    "source": "docs/reference/ALGORITHM_SPEC.md, Layer (b)",
+    "category": "algorithm_spec",
+    "contains_number": false
+  },
+  {
+    "id": "gold-024",
+    "question": "What is the layer (c) across-gene combination formula, and why geometric rather than arithmetic mean?",
+    "answer": "D = exp( Σ w_i · ln d_i / Σ w_i ), with the short-circuit that any d_i=0 for a gene with w_i>0 forces D=0. Geometric, not arithmetic, because one d_i=0 must collapse the whole score regardless of how good everything else is — the non-compensatory, veto-preserving behaviour the inclusion/exclusion semantics require.",
+    "source": "docs/reference/ALGORITHM_SPEC.md, Layer (c)",
+    "category": "algorithm_spec",
+    "contains_number": false
+  },
+  {
+    "id": "gold-025",
+    "question": "What is the CAMERA-derived variance inflation factor formula used for the correlation discount, and what does m_eff mean?",
+    "answer": "VIF_i = 1 + (m-1)·rho_bar_i, w_i = 1/VIF_i, m_eff = Σ w_i. m_eff is reported to the user as the effective number of independent pieces of gene evidence.",
+    "source": "docs/reference/ALGORITHM_SPEC.md, Layer (d)",
+    "category": "algorithm_spec",
+    "contains_number": false
+  },
+  {
+    "id": "gold-026",
+    "question": "Does correlation discounting ever neutralise the veto in layer (c)? Why or why not?",
+    "answer": "No — the veto survives, because w_i > 0 always (VIF_i is finite), so d_i = 0 still forces D = 0. Correlation can reduce a gene's influence; it can never neutralise a disqualification.",
+    "source": "docs/reference/ALGORITHM_SPEC.md, Layer (d)",
+    "category": "algorithm_spec",
+    "contains_number": false
+  },
+  {
+    "id": "gold-027",
+    "question": "What are the three choices in the correlation discount that are this project's own extension of CAMERA, rather than CAMERA's method itself?",
+    "answer": "(1) per-gene rho_bar_i rather than one set-wide rho_bar; (2) clamping rho_bar_i at 0 rather than allowing negative correlation to inflate weight above 1; (3) Spearman correlation computed across the cell-line panel, rather than CAMERA's residual-from-design-matrix estimator.",
+    "source": "docs/reference/ALGORITHM_SPEC.md, Layer (d)",
+    "category": "algorithm_spec",
+    "contains_number": false
+  },
+  {
+    "id": "gold-028",
+    "question": "What gene-set size range did CAMERA validate on, and how does that compare to this project's realistic query size?",
+    "answer": "CAMERA was validated on sets of ~15-580 genes; realistic queries here are ~5-10 genes, outside CAMERA's demonstrated range. This caveat is disclosed, and rho_bar and m_eff must be displayed alongside D so the user can see it.",
+    "source": "docs/reference/ALGORITHM_SPEC.md, Layer (d), The caveat that ships with it",
+    "category": "algorithm_spec",
+    "contains_number": true
+  },
+  {
+    "id": "gold-029",
+    "question": "What are the four confidence tier conditions (High, Moderate, Low, Insufficient)?",
+    "answer": "High: >=3 evidence layers present for >=80% of query genes, and HPA corroborates DepMap RNA where both exist. Moderate: >=2 layers present for >=80% of query genes. Low: RNA evidence only. Insufficient: fewer than half the inclusion genes have any evidence — no rank is emitted.",
+    "source": "docs/reference/ALGORITHM_SPEC.md, Confidence tier table",
+    "category": "algorithm_spec",
+    "contains_number": true
+  },
+  {
+    "id": "gold-030",
+    "question": "Is the confidence tier ever multiplied into D?",
+    "answer": "No. The tier is kept out of the arithmetic deliberately — it is reported beside D, never multiplied into it.",
+    "source": "docs/reference/ALGORITHM_SPEC.md, Confidence tier section",
+    "category": "algorithm_spec",
+    "contains_number": false
+  },
+  {
+    "id": "gold-031",
+    "question": "What is the exact boundary statement this project attaches to every result about what 'High confidence' means?",
+    "answer": "\"High confidence means the available evidence is consistent. It does not mean the result has been experimentally proven.\"",
+    "source": "docs/reference/ALGORITHM_SPEC.md, Confidence tier section (root _.md §2, verbatim)",
+    "category": "algorithm_spec",
+    "contains_number": false
+  },
+  {
+    "id": "gold-032",
+    "question": "Does this project's scorer ever report a calibrated probability, a p-value, or a confidence interval for D?",
+    "answer": "No. D is a desirability aggregate on [0,1] and is never presented as a probability, likelihood, p-value or confidence interval — there is no answer key against which it could be calibrated. This project reports strength and consistency, never a calibrated probability.",
+    "source": "docs/reference/ALGORITHM_SPEC.md (Why a white-box scorer / confidence tier section); docs/plan/CONSTRAINTS.md §2",
+    "category": "algorithm_spec",
+    "contains_number": false
+  },
+  {
+    "id": "gold-033",
+    "question": "What happens when an inclusion gene has no evidence in any layer (edge case 1)?",
+    "answer": "Abstain. Drop it from the combination, reduce m, and list it under 'missing evidence'. Never impute; never score it 0.",
+    "source": "docs/reference/ALGORITHM_SPEC.md, Edge cases table, case 1",
+    "category": "algorithm_spec",
+    "contains_number": false
+  },
+  {
+    "id": "gold-034",
+    "question": "What happens when an exclusion gene has no evidence (edge case 2), and why is this treated differently from an inclusion gene with no evidence?",
+    "answer": "It is flagged as 'cannot certify absence' rather than merely abstained-and-dropped, because for an exclusion criterion, absence of evidence is the dangerous case, not the safe one.",
+    "source": "docs/reference/ALGORITHM_SPEC.md, Edge cases table, case 2",
+    "category": "algorithm_spec",
+    "contains_number": false
+  },
+  {
+    "id": "gold-035",
+    "question": "What happens at m=1 (a single-gene query), per edge case 8?",
+    "answer": "VIF = 1 by construction, so no correlation discount is possible or applied. The system says so explicitly rather than implying a correlation correction was applied.",
+    "source": "docs/reference/ALGORITHM_SPEC.md, Edge cases table, case 8",
+    "category": "algorithm_spec",
+    "contains_number": true
+  },
+  {
+    "id": "gold-036",
+    "question": "What are the four composable layers of the locked algorithm, and what published method does each trace to?",
+    "answer": "(a) Per-gene, per-layer desirability — Derringer & Suich (1980). (b) Within-gene, across-layer combination — a design extension over (a), not itself a separate citation. (c) Across-gene combination — Derringer & Suich (1980) again, with Segall (2012) as supporting evidence for the veto pattern. (d) Correlation discount — Wu & Smyth (2012), the CAMERA method.",
+    "source": "docs/plan/METHOD_DECISION.md §1",
+    "category": "method_decision",
+    "contains_number": false
+  },
+  {
+    "id": "gold-037",
+    "question": "Why was Robust Rank Aggregation (RRA) rejected as the ranking method for this project?",
+    "answer": "RRA aggregates several independently ranked lists, but this project's inclusion/exclusion query produces a per-gene criterion (a desirability value), not a ranked list per gene — a fit-to-query-shape mismatch, not a judgement that RRA is a weak method in general. It was the right tool for the earlier pair-first query shape, which this project no longer uses.",
+    "source": "docs/plan/METHOD_DECISION.md §1",
+    "category": "method_decision",
+    "contains_number": false
+  },
+  {
+    "id": "gold-038",
+    "question": "Does this project's method use p-values or Benjamini-Hochberg correction anywhere?",
+    "answer": "No p-values, no Benjamini-Hochberg, anywhere in this method — it reports strength and consistency, never a calibrated probability.",
+    "source": "docs/plan/METHOD_DECISION.md §1",
+    "category": "method_decision",
+    "contains_number": false
+  },
+  {
+    "id": "gold-039",
+    "question": "What are the three mandatory caveats §2 says a scorer must implement to be 'built right, not just simply'?",
+    "answer": "(1) Mutation and copy number need a gene-role-conditional A4 direction, not a fixed sign. (2) CRISPR needs the sign-flip and the common-essential gate together, always. (3) RNA must never substitute for missing protein evidence, not even partially.",
+    "source": "docs/plan/METHOD_DECISION.md §2, Mandatory caveats",
+    "category": "method_decision",
+    "contains_number": true
+  },
+  {
+    "id": "gold-040",
+    "question": "What A1-A4 admission verdict did the RNA-GEO layer receive, and why?",
+    "answer": "CORROBORATION/BREADTH ONLY, never independently scored — it fails A3 (calibratable): DepMap-GEO median rho=0.82 versus HPA's 0.958, attributed to batch effects.",
+    "source": "docs/plan/METHOD_DECISION.md §2, admission gate table",
+    "category": "method_decision",
+    "contains_number": true
+  },
+  {
+    "id": "gold-041",
+    "question": "What A1-A4 admission verdict did the Metabolomics and miRNA layers receive, and why?",
+    "answer": "CONTEXT/FILTER ONLY, never scored — both fail A1 (gene-addressable): metabolomics has no gene-symbol column, and a miRNA name is not a gene symbol.",
+    "source": "docs/plan/METHOD_DECISION.md §2, admission gate table",
+    "category": "method_decision",
+    "contains_number": false
+  },
+  {
+    "id": "gold-042",
+    "question": "What is gene_role_reference.csv's coverage (how many of the ~38,000 scoreable genes), and is that considered a defect?",
+    "answer": "283 of ~38,000 scoreable genes (0.7%). Not treated as a defect: the table is only consulted for genes a researcher actually queries, and oncology gene panels are dominated by known drivers; every other gene stays 'unknown' and both dependent layers correctly abstain.",
+    "source": "docs/plan/METHOD_DECISION.md §2a, admission table",
+    "category": "method_decision",
+    "contains_number": true
+  },
+  {
+    "id": "gold-043",
+    "question": "How many nodes and edges does the built knowledge graph contain, and what were the measured 1-hop and 2-hop neighbourhood sizes for EGFR?",
+    "answer": "31,713 nodes / 1,559,719 edges. EGFR's 1-hop neighbourhood = 3,270 unique neighbours (37 Reactome pathways, 503 high-confidence STRING partners including ERBB2 and GRB2, ~3,003 curated BioGRID interactions, 9 fusion partners, 25 co-dependency partners); 2-hop = 24,257, a strict superset.",
+    "source": "docs/plan/METHOD_DECISION.md §3, Reactome/STRING/BioGRID/knowledge graph row",
+    "category": "method_decision",
+    "contains_number": true
+  },
+  {
+    "id": "gold-044",
+    "question": "Can the knowledge graph ever change a cell line's score D? What is the mechanism that prevents this?",
+    "answer": "No — the knowledge graph is admitted as explanation-only. rag/knowledge_graph.py never imports from scoring/, mechanically enforced by a structural test (test_no_score_import), so it cannot mechanically enter score_panel.",
+    "source": "docs/plan/METHOD_DECISION.md §3, knowledge graph row",
+    "category": "method_decision",
+    "contains_number": false
+  },
+  {
+    "id": "gold-045",
+    "question": "Why was PRISM repurposing data rejected as a scoring input despite 96.6% of its cell lines resolving to a real ModelID?",
+    "answer": "PRISM's grain is drug response (treatment x cell-line), a categorically different evidence type from the six scored gene-level layers — a join key existing does not create a route into score_panel. It remains reserved as external validation.",
+    "source": "docs/plan/METHOD_DECISION.md §3, PRISM/TCGA row",
+    "category": "method_decision",
+    "contains_number": true
+  },
+  {
+    "id": "gold-046",
+    "question": "Why was TCGA data rejected as a scoring input?",
+    "answer": "Zero columns in either TCGA's sample or patient tables resemble ModelID — no route into score_panel exists at all. Also, this project's rule is to never join a TCGA patient to a cell line.",
+    "source": "docs/plan/METHOD_DECISION.md §3, PRISM/TCGA row",
+    "category": "method_decision",
+    "contains_number": false
+  },
+  {
+    "id": "gold-047",
+    "question": "Why was the second proteomics source (data/depmap_24Q4/supplementary/proteomics_model.csv) rejected for closing the primary protein layer's coverage gap?",
+    "answer": "It covers exactly the same 375 models as the primary protein layer, 0 of the 1,755 primary-protein-gap models, and correlates at Spearman rho=0.968 with the primary layer — strongly suggesting the same underlying assay data, not an independent second source. The protein coverage gap remains genuinely unsolved.",
+    "source": "docs/plan/METHOD_DECISION.md §3, second proteomics source row",
+    "category": "method_decision",
+    "contains_number": true
+  },
+  {
+    "id": "gold-048",
+    "question": "What was measured about primary-CRISPR-uncovered models and the 24Q4 CRISPR screen maps?",
+    "answer": "Of 922 primary-CRISPR-uncovered models, 921 never appear in 24Q4's screen map or efficacy tables at all (never screened); only 1 was screened and excluded, and that 1 passed QC. So the coverage gap is overwhelmingly 'never screened', not 'screened but failed QC'.",
+    "source": "docs/plan/METHOD_DECISION.md §3, CRISPR QC row",
+    "category": "method_decision",
+    "contains_number": true
+  },
+  {
+    "id": "gold-049",
+    "question": "Is there a validated outcome label this project's ranking has been checked against?",
+    "answer": "No. Nothing has been validated against an outcome (CONSTRAINTS.md M1) — this project makes no such claim. The negative-control battery and cross-checks measure identity resolution, expression agreement, and robustness, not whether the ranking is 'good' against a ground-truth label.",
+    "source": "docs/plan/METHOD_DECISION.md §5 / §2's caveat table cross-reference to CONSTRAINTS.md M1",
+    "category": "method_decision",
+    "contains_number": false
+  },
+  {
+    "id": "gold-050",
+    "question": "Which sixth evidence type was promoted from context-only to scored, and at which project phase?",
+    "answer": "Fusion, promoted to scored at P5 (docs/plan/METHOD_DECISION.md §2's admission gate table verdict: SCORED, binary carve-out). Before P5 it was context-only, reported in the narrative but not entering d_gene's arithmetic.",
+    "source": "docs/plan/METHOD_DECISION.md §2, Fusion row; docs/reference/ALGORITHM_SPEC.md P5 change note",
+    "category": "method_decision",
+    "contains_number": false
+  }
+]
