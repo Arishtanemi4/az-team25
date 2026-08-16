@@ -1,0 +1,11 @@
+fastapi
+uvicorn[standard]
+pydantic
+pandas
+openai
+python-dotenv
+rank-bm25
+faiss-cpu
+biopython
+networkx
+sentence-transformers
