@@ -1,0 +1,170 @@
+{
+  "schema_version": "biological-routes-policy-v1",
+  "policy_version": "br01-fixed-routes-v1",
+  "policy_scope": "Extension-owned experimental evidence routes only; native D, rank, tier, veto, candidate partitions, filters and preprocessing are read-only.",
+  "method_policy": {
+    "random_seed": 25,
+    "seed_provenance": "AVI fixed_seed_policy_v1",
+    "bootstrap_replicates": 500,
+    "bootstrap_percentiles": [0.025, 0.975],
+    "bootstrap_resampling": "stratified by lineage and, for conditional dependency, context/reference group",
+    "lineage_adjustment": "Retain lineages with at least 15 evaluable models and subtract each relevant Chronos vector's within-lineage median.",
+    "lineage_minimum_n": 15,
+    "context_minimum_n": 10,
+    "reference_minimum_n": 10,
+    "total_or_shared_minimum_n": 30,
+    "eligible_lineages_minimum": 2,
+    "leave_one_lineage_out_sign_consistency_minimum": 0.8,
+    "leave_one_lineage_out": "Fraction of estimable holdouts with sign matching the full adjusted statistic; zero or no estimable holdout is unresolved.",
+    "model_dependency_support_boundary": -0.5,
+    "model_dependency_support_boundary_label": "Provisional descriptive raw Chronos effect boundary inherited from AVI; sensitivity-tested in BR09.",
+    "conditional_dependency_shift": "median(reference adjusted Chronos) - median(context adjusted Chronos); positive means the context group is more target-dependent.",
+    "rna_context": "Within lineage Q80-or-higher source RNA versus Q20-or-lower; middle quintile is not_applicable and a lineage below 15 is unresolved.",
+    "mutation_context_fields": [
+      "LikelyLoF",
+      "is_driver",
+      "is_hotspot",
+      "OncogeneHighImpact",
+      "TumorSuppressorHighImpact",
+      "TranscriptLikelyLof",
+      "vep_impact=HIGH"
+    ],
+    "mutation_reference_label": "No qualifying event recorded in a mutation-assayed model; this is not definitive wild type without locus-level callability."
+  },
+  "route_families": {
+    "direct_fusion": {
+      "relationship_shape": "unordered canonical Ensembl pair with retained source/target request orientation",
+      "allowed_context_types": [],
+      "status_policy": "supported when at least one exact retained pair call exists; contradicted only when at least one cohort model is demonstrably fusion-assayed and no exact call exists; otherwise unavailable",
+      "model_policy": "exact processed pair row=support; fusion-assayed no exact retained pair=conflict; non-assayed=unknown",
+      "required_fields": ["TotalReadsSupportingFusion", "FFPM", "confidence", "confidence_high", "reading_frame", "in_frame", "breakpoints", "retained_domains"],
+      "prohibited_transformations": ["fusion_probability", "combined_hidden_score"]
+    },
+    "conditional_dependency": {
+      "relationship_shape": "directional source context to target dependency",
+      "allowed_context_types": ["mutation", "rna_high"],
+      "supported_policy": "sample gates pass; target is not common essential; adjusted shift positive; bootstrap lower bound above zero; leave-one-lineage-out sign consistency at least 0.80",
+      "contradicted_policy": "sample gates pass; adjusted shift negative; bootstrap upper bound below zero; leave-one-lineage-out sign consistency at least 0.80",
+      "exploratory_policy": "estimable but interval/stability uncertain, or target common essential; common-essential is never route-qualified",
+      "unavailable_policy": "identity, required assay, group size, total size or two-lineage requirement fails",
+      "model_policy": "context-positive measured QC-usable target Chronos <= -0.5=support; measured above boundary=conflict; reference/middle=not_applicable; absent/QC-unusable=unknown"
+    },
+    "crispr_codependency": {
+      "relationship_shape": "unordered canonical Ensembl pair with retained source/target request orientation",
+      "allowed_context_types": [],
+      "route_label": "exploratory association evidence",
+      "statistic": "raw and lineage-median-adjusted Spearman rho over shared measured QC-usable models",
+      "supported_policy": "cohort gates pass; neither gene common essential; adjusted bootstrap interval excludes zero; leave-one-lineage-out sign consistency at least 0.80",
+      "exploratory_policy": "estimable but interval/stability uncertain, or a common-essential warning applies",
+      "unavailable_policy": "a vector, shared cohort, lineage count or variance is insufficient",
+      "contradicted_policy": "not used for negative rho without a future pre-registered directional hypothesis",
+      "model_policy": "both raw effects <= -0.5=support; exactly one=neutral; neither=conflict; missing/QC/lineage failure=unknown"
+    }
+  },
+  "source_roles": ["ranking_input", "route_input", "context_only", "validation_only"],
+  "sources": [
+    {
+      "source_id": "processed_cell_lines",
+      "source_version": "frozen-processed-v7",
+      "role": "route_input",
+      "allowed_route_families": ["direct_fusion", "conditional_dependency", "crispr_codependency"],
+      "purpose": "Model identity, lineage and QC/problematic state."
+    },
+    {
+      "source_id": "processed_gene_reference",
+      "source_version": "frozen-processed-v7",
+      "role": "route_input",
+      "allowed_route_families": ["direct_fusion", "conditional_dependency", "crispr_codependency"],
+      "purpose": "Canonical Ensembl identity resolution only; unresolved or ambiguous symbols are rejected."
+    },
+    {
+      "source_id": "processed_coverage",
+      "source_version": "frozen-processed-v7",
+      "role": "route_input",
+      "allowed_route_families": ["direct_fusion", "conditional_dependency", "crispr_codependency"],
+      "purpose": "Distinguish observed, measured_absent and not_assayed evidence."
+    },
+    {
+      "source_id": "processed_expression_rna",
+      "source_version": "frozen-processed-v7",
+      "role": "route_input",
+      "allowed_route_families": ["conditional_dependency"],
+      "purpose": "Measured source RNA for within-lineage RNA-high context."
+    },
+    {
+      "source_id": "processed_dependency",
+      "source_version": "frozen-processed-v7",
+      "role": "route_input",
+      "allowed_route_families": ["conditional_dependency", "crispr_codependency"],
+      "purpose": "Measured, QC-usable Chronos target effects and shared codependency vectors."
+    },
+    {
+      "source_id": "processed_mutations",
+      "source_version": "frozen-processed-v7",
+      "role": "route_input",
+      "allowed_route_families": ["conditional_dependency"],
+      "purpose": "Qualifying damaging/driver-like source mutation context."
+    },
+    {
+      "source_id": "processed_fusions",
+      "source_version": "frozen-processed-v7",
+      "role": "route_input",
+      "allowed_route_families": ["direct_fusion"],
+      "purpose": "Exact retained fusion calls and their separate technical fields."
+    },
+    {
+      "source_id": "common_essential_gene_policy",
+      "source_version": "frozen-v7-resource",
+      "role": "route_input",
+      "allowed_route_families": ["conditional_dependency", "crispr_codependency"],
+      "purpose": "Target-selectivity gate/warning; universal essentiality is not selective route evidence."
+    },
+    {
+      "source_id": "native_snapshot",
+      "source_version": "research-query-v1",
+      "role": "context_only",
+      "allowed_route_families": [],
+      "purpose": "Read-only native D, rank, tier, veto, roles and filters attached as context without recomputation."
+    },
+    {
+      "source_id": "processed_copy_number",
+      "source_version": "frozen-processed-v7",
+      "role": "context_only",
+      "allowed_route_families": [],
+      "purpose": "Disclosure-only relative copy number; no absolute-copy-number threshold is permitted."
+    },
+    {
+      "source_id": "processed_protein",
+      "source_version": "frozen-processed-v7",
+      "role": "context_only",
+      "allowed_route_families": [],
+      "purpose": "Molecular evidence/context only, not a first-release route input."
+    }
+  ],
+  "route_sources": {
+    "direct_fusion": ["processed_cell_lines", "processed_gene_reference", "processed_coverage", "processed_fusions"],
+    "conditional_dependency": ["processed_cell_lines", "processed_gene_reference", "processed_coverage", "processed_expression_rna", "processed_dependency", "processed_mutations", "common_essential_gene_policy"],
+    "crispr_codependency": ["processed_cell_lines", "processed_gene_reference", "processed_coverage", "processed_dependency", "common_essential_gene_policy"]
+  },
+  "evidence_ledger": {
+    "key": ["research_query_id", "route_family", "ModelID", "ensembl_id", "evidence_id"],
+    "required_fields": ["research_query_id", "route_family", "route_policy_version", "source_id", "source_version", "data_id", "relationship", "ModelID", "ensembl_id", "raw_value", "unit", "transformation", "denominator", "evidence_state", "qc_state", "limitation", "evidence_id"],
+    "csv_policy": "One evidence item per row; formula-safe text on export.",
+    "json_policy": "Authoritative complete strict JSON export with finite-number handling."
+  },
+  "prohibited_claims": [
+    "Route evidence does not change native D, rank, tier, veto, candidate partition, filter or preprocessing output.",
+    "Do not aggregate values across route families into a score or ranking.",
+    "Do not describe a correlation as causal, mechanistic, a physical interaction, synthetic lethality, tumour similarity, proof of suitability or a recommendation.",
+    "Do not convert missing or not-assayed evidence to zero or a biological negative.",
+    "Do not call a mutation reference group definitive wild type without locus-level callability.",
+    "Do not create a fusion probability or hidden combined score from technical fusion fields.",
+    "Validation-only sources are retrospective corroboration only and cannot train, qualify or supply route evidence."
+  ],
+  "persistence_policy": {
+    "attachment_key": "deterministic relationship ID plus policy version",
+    "post": "Explicit idempotent evaluation against an immutable research snapshot.",
+    "get": "Read attachment only; never recompute.",
+    "ui": "Optional relationship form and separate route panel; never alters native rank column or table order."
+  }
+}

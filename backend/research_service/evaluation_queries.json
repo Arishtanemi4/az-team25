@@ -1,0 +1,19 @@
+{
+  "schema_version": "research-evaluation-battery-v1",
+  "purpose": "A predeclared illustrative software/research battery. These cases are not biological ground truth, endorsed controls, or laboratory-success claims.",
+  "cohort_scope": "unfiltered human cohort",
+  "cases": [
+    {"case_id": "egfr", "inclusion_symbols": ["EGFR"], "exclusion_symbols": []},
+    {"case_id": "braf", "inclusion_symbols": ["BRAF"], "exclusion_symbols": []},
+    {"case_id": "egfr_erbb2", "inclusion_symbols": ["EGFR", "ERBB2"], "exclusion_symbols": []},
+    {"case_id": "braf_map2k1", "inclusion_symbols": ["BRAF", "MAP2K1"], "exclusion_symbols": []},
+    {"case_id": "kras_mapk1", "inclusion_symbols": ["KRAS", "MAPK1"], "exclusion_symbols": []},
+    {"case_id": "egfr_tp53_exclusion", "inclusion_symbols": ["EGFR"], "exclusion_symbols": ["TP53"]}
+  ],
+  "lineage_repeat": {
+    "case_id": "egfr_most_populated_lineage",
+    "inclusion_symbols": ["EGFR"],
+    "exclusion_symbols": [],
+    "selection": "Among explicit human metadata rows with a nonmissing lineage, choose the greatest lineage count; break ties alphabetically by lineage string."
+  }
+}
