@@ -1,0 +1,73 @@
+{
+  "schema_version": "biological-route-controls-v1",
+  "policy_version": "br01-fixed-routes-v1",
+  "execution_policy": "Controls are frozen before BR09 outcome inspection. Fixture-labelled controls prove software paths only, not biological validation.",
+  "controls": [
+    {
+      "control_id": "direct_fusion_bcr_abl1_positive",
+      "kind": "positive_fixture",
+      "relationship": {"route_family": "direct_fusion", "source_gene": "BCR", "target_gene": "ABL1", "context_type": null},
+      "expected_contract": "At least one exact retained pair row is represented as support when present."
+    },
+    {
+      "control_id": "direct_fusion_bcr_muc1_unrelated",
+      "kind": "negative_fixture",
+      "relationship": {"route_family": "direct_fusion", "source_gene": "BCR", "target_gene": "MUC1", "context_type": null},
+      "expected_contract": "A fusion-assayed no-call is conflict; a non-assayed model is unknown."
+    },
+    {
+      "control_id": "conditional_brca1_parp1_mutation",
+      "kind": "declared_relationship",
+      "relationship": {"route_family": "conditional_dependency", "source_gene": "BRCA1", "target_gene": "PARP1", "context_type": "mutation"},
+      "expected_contract": "Directional mutation-context dependency with no qualifying event recorded reference wording."
+    },
+    {
+      "control_id": "conditional_braf_map2k1_mutation",
+      "kind": "declared_relationship",
+      "relationship": {"route_family": "conditional_dependency", "source_gene": "BRAF", "target_gene": "MAP2K1", "context_type": "mutation"},
+      "expected_contract": "Directional mutation-context dependency."
+    },
+    {
+      "control_id": "conditional_erbb2_erbb3_rna_high",
+      "kind": "declared_relationship",
+      "relationship": {"route_family": "conditional_dependency", "source_gene": "ERBB2", "target_gene": "ERBB3", "context_type": "rna_high"},
+      "expected_contract": "Within-lineage Q80 versus Q20 RNA context only."
+    },
+    {
+      "control_id": "conditional_myc_max_rna_high",
+      "kind": "declared_relationship",
+      "relationship": {"route_family": "conditional_dependency", "source_gene": "MYC", "target_gene": "MAX", "context_type": "rna_high"},
+      "expected_contract": "Within-lineage Q80 versus Q20 RNA context only."
+    },
+    {
+      "control_id": "codependency_braf_map2k1",
+      "kind": "declared_relationship",
+      "relationship": {"route_family": "crispr_codependency", "source_gene": "BRAF", "target_gene": "MAP2K1", "context_type": null},
+      "expected_contract": "Lineage-adjusted signed Spearman association, explicitly exploratory."
+    },
+    {
+      "control_id": "codependency_fixture_unrelated_pair",
+      "kind": "unrelated_fixture",
+      "relationship": {"route_family": "crispr_codependency", "source_gene": "FIXTURE_UNRELATED_A", "target_gene": "FIXTURE_UNRELATED_B", "context_type": null},
+      "expected_contract": "Fixture-only unrelated pair; no association is described as mechanism."
+    },
+    {
+      "control_id": "conditional_small_cohort",
+      "kind": "small_cohort_fixture",
+      "relationship": {"route_family": "conditional_dependency", "source_gene": "BRCA1", "target_gene": "PARP1", "context_type": "mutation"},
+      "expected_contract": "Context/reference/total/two-lineage failures are unavailable."
+    },
+    {
+      "control_id": "conditional_common_essential_target",
+      "kind": "common_essential_fixture",
+      "relationship": {"route_family": "conditional_dependency", "source_gene": "BRCA1", "target_gene": "PARP1", "context_type": "mutation"},
+      "expected_contract": "Common-essential target is exploratory and never route-qualified."
+    },
+    {
+      "control_id": "route_missing_assay",
+      "kind": "missing_assay_fixture",
+      "relationship": {"route_family": "direct_fusion", "source_gene": "BCR", "target_gene": "MUC1", "context_type": null},
+      "expected_contract": "not_assayed remains unknown and is never coerced to measured_absent."
+    }
+  ]
+}

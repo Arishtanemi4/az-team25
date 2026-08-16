@@ -1,0 +1,21 @@
+{
+  "schema_version": "biological-route-validation-sources-v1",
+  "policy_version": "br01-fixed-routes-v1",
+  "use_boundary": "These sources are retrospective corroboration in BR09 only. They cannot train, calibrate, qualify, or provide an input/evidence row to any route engine.",
+  "sources": [
+    {
+      "source_id": "sanger_project_score",
+      "source_version": "governed-local-release-only",
+      "role": "validation_only",
+      "purpose": "Retrospective conditional-dependency corroboration when a governed local source is available.",
+      "prohibited_uses": ["route_input", "training", "calibration", "route_qualification", "model_support"]
+    },
+    {
+      "source_id": "prism_repurposing",
+      "source_version": "governed-local-release-only",
+      "role": "validation_only",
+      "purpose": "Retrospective drug-response corroboration only; treatment response is a different endpoint.",
+      "prohibited_uses": ["route_input", "training", "calibration", "route_qualification", "model_support"]
+    }
+  ]
+}

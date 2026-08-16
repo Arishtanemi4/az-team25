@@ -1,0 +1,68 @@
+{
+  "schema_version": "automatic-biological-route-policy-v1",
+  "policy_version": "auto01-fixed-battery-v1",
+  "invocation": "automatic_background",
+  "manual_research_invocation": "manual_research",
+  "selection_timing": "before_route_outcomes",
+  "selection_scope": "Use only the canonical submitted inclusion genes. Exclusion genes receive context but are never promoted to pair hypotheses.",
+  "pair_ordering": "Sort canonical Ensembl identifiers ascending and generate unordered pairs lexicographically.",
+  "maximum_unordered_pairs": 10,
+  "omission": {
+    "reason": "automatic_pair_limit",
+    "record_in_research_export": true,
+    "meaning": "Pairs after the deterministic first ten are omitted for a computational bound, not because of their evidence."
+  },
+  "single_gene_pair_route_status": "not_applicable",
+  "invent_target_gene": false,
+  "exclusion_gene_pair_hypotheses": false,
+  "fixed_task_battery": [
+    {
+      "task_id": "direct_fusion",
+      "route_family": "direct_fusion",
+      "context_type": null,
+      "pair_direction": "unordered"
+    },
+    {
+      "task_id": "crispr_codependency",
+      "route_family": "crispr_codependency",
+      "context_type": null,
+      "pair_direction": "unordered"
+    },
+    {
+      "task_id": "conditional_mutation_first_to_second",
+      "route_family": "conditional_dependency",
+      "context_type": "mutation",
+      "pair_direction": "first_to_second"
+    },
+    {
+      "task_id": "conditional_mutation_second_to_first",
+      "route_family": "conditional_dependency",
+      "context_type": "mutation",
+      "pair_direction": "second_to_first"
+    },
+    {
+      "task_id": "conditional_rna_high_first_to_second",
+      "route_family": "conditional_dependency",
+      "context_type": "rna_high",
+      "pair_direction": "first_to_second"
+    },
+    {
+      "task_id": "conditional_rna_high_second_to_first",
+      "route_family": "conditional_dependency",
+      "context_type": "rna_high",
+      "pair_direction": "second_to_first"
+    }
+  ],
+  "native_ranking_boundary": {
+    "unchanged_fields": [
+      "D",
+      "rank",
+      "tier",
+      "veto",
+      "candidate_membership",
+      "candidate_order"
+    ],
+    "biological_routes_may_change_native_result": false,
+    "meaning": "Automatic biological evidence is supporting or conflicting context only; it never changes native D, rank, tier, veto, candidate membership, or candidate order."
+  }
+}

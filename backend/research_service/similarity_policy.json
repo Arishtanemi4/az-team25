@@ -1,0 +1,45 @@
+{
+  "schema_version": "similarity-policy-v1",
+  "method_version": "c5-fixed-cohort-percentile-v1",
+  "avi_source_sha": "ae602a94c525c16612df297c6b5ff4603457345f",
+  "reference_cohort": "all human models of the anchor's exact known lineage in the pinned processed spine, before query eligibility or top_k",
+  "minimum_reference_n": 3,
+  "small_cohort_warning_n": 30,
+  "minimum_joint_fraction": 0.5,
+  "minimum_available_views": 2,
+  "top_n": 3,
+  "views": [
+    {
+      "view_id": "rna",
+      "weight": 0.2,
+      "processed_layer": "rna",
+      "value_column": "log2tpm1",
+      "source": "processed DepMap RNA",
+      "missingness": "finite observed values only; RNA is already log2(TPM+1), so no second transform is applied"
+    },
+    {
+      "view_id": "dependency",
+      "weight": 0.25,
+      "processed_layer": "dependency",
+      "value_column": "dependency_score",
+      "source": "processed Chronos dependency",
+      "missingness": "finite observed values only; pan-essential flags are retained as explanatory metadata"
+    },
+    {
+      "view_id": "relative_copy_number",
+      "weight": 0.15,
+      "processed_layer": "copy_number",
+      "value_column": "copy_number",
+      "source": "processed relative copy number",
+      "missingness": "finite observed values only; this is relative copy number (diploid approximately 1), not absolute copy number"
+    },
+    {
+      "view_id": "protein",
+      "weight": 0.1,
+      "processed_layer": "protein",
+      "value_column": "zscore",
+      "source": "processed protein z-score",
+      "missingness": "detected must be true and zscore finite; detected=false is missing for similarity"
+    }
+  ]
+}
