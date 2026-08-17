@@ -1,0 +1,767 @@
+.app-shell {
+  padding: 24px 32px 64px;
+  text-align: left;
+}
+
+/* --- Top nav --- */
+
+.top-nav {
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+}
+
+.top-nav-list {
+  padding: 0 32px;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.top-nav-link {
+  display: inline-block;
+  padding: 14px 10px;
+  font-size: 14px;
+  color: var(--text);
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+}
+
+.top-nav-link:hover {
+  color: var(--text-h);
+}
+
+.top-nav-link-active {
+  color: var(--text-h);
+  border-bottom-color: var(--accent);
+  font-weight: 600;
+}
+
+header {
+  margin-bottom: 24px;
+}
+
+.subtitle {
+  color: var(--text);
+  font-size: 15px;
+  max-width: 640px;
+}
+
+/* --- Query form --- */
+
+.query-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 20px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin-bottom: 24px;
+}
+
+.filter-row {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.filter-row > * {
+  flex: 1 1 200px;
+}
+
+.query-form button[type="submit"] {
+  align-self: flex-start;
+  padding: 10px 20px;
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.query-form button[type="submit"]:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.hint {
+  font-size: 13px;
+  color: var(--text);
+}
+
+.loading-notice {
+  font-size: 14px;
+  color: var(--text);
+  margin-bottom: 16px;
+}
+
+.error-notice {
+  color: #c0392b;
+  margin-bottom: 16px;
+}
+
+/* --- Combobox (shared by GeneCombobox and FilterSelect) --- */
+
+.combobox {
+  position: relative;
+  text-align: left;
+}
+
+.combobox-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-h);
+  margin-bottom: 4px;
+}
+
+.combobox-input-row {
+  position: relative;
+}
+
+.combobox input[type="text"],
+.combobox input[type="number"] {
+  width: 100%;
+  padding: 8px 28px 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 14px;
+  background: var(--bg);
+  color: var(--text-h);
+}
+
+.combobox-caret {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 26px;
+  border: none;
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.combobox-hint {
+  margin: 4px 0 0;
+  font-size: 11px;
+  color: var(--text);
+  font-style: italic;
+}
+
+.combobox-dropdown {
+  position: absolute;
+  z-index: 10;
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin: 4px 0 0;
+  padding: 4px;
+  list-style: none;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  box-shadow: var(--shadow);
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.combobox-dropdown li {
+  padding: 6px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.combobox-dropdown li.highlighted,
+.combobox-dropdown li:hover {
+  background: var(--accent-bg);
+}
+
+.muted {
+  color: var(--text);
+  font-size: 12px;
+}
+
+.chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  background: var(--accent-bg);
+  border: 1px solid var(--accent-border);
+  border-radius: 999px;
+  font-size: 13px;
+}
+
+.chip button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--text-h);
+  line-height: 1;
+}
+
+.filter-input-row {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.clear-button {
+  position: absolute;
+  right: 8px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: var(--text);
+}
+
+/* --- Results --- */
+
+.results-section {
+  border-top: 1px solid var(--border);
+  padding-top: 24px;
+}
+
+.results-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.results-header button {
+  padding: 6px 14px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--text-h);
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.boundary-statement {
+  font-size: 13px;
+  font-style: italic;
+  color: var(--text);
+  padding: 10px 12px;
+  border-left: 3px solid var(--accent);
+  background: var(--accent-bg);
+  margin-bottom: 16px;
+}
+
+.diagnostic-banner {
+  padding: 12px;
+  border: 1px solid #c0392b;
+  border-radius: 6px;
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+
+.results-summary {
+  font-size: 13px;
+  color: var(--text);
+  margin-bottom: 12px;
+}
+
+.ranked-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ranked-row {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.ranked-row-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  background: var(--bg);
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  font-size: 14px;
+  flex-wrap: wrap;
+}
+
+.rank-index {
+  font-weight: 700;
+  color: var(--text-h);
+}
+
+.model-id {
+  flex: 1 1 auto;
+  color: var(--text-h);
+}
+
+.d-score {
+  font-family: var(--mono);
+  font-size: 13px;
+}
+
+.confidence-badge {
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.tier-high {
+  background: rgba(46, 204, 113, 0.2);
+  color: #1e8449;
+}
+.tier-moderate {
+  background: rgba(241, 196, 15, 0.2);
+  color: #9a7d0a;
+}
+.tier-low {
+  background: rgba(230, 126, 34, 0.2);
+  color: #a04000;
+}
+.tier-insufficient {
+  background: rgba(149, 165, 166, 0.2);
+  color: #616a6b;
+}
+
+.problematic-badge {
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: rgba(192, 57, 43, 0.15);
+  color: #c0392b;
+}
+
+/* --- Cell line detail / pipeline stepper --- */
+
+.cell-line-detail {
+  padding: 16px;
+  border-top: 1px solid var(--border);
+}
+
+.pipeline-steps {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.pipeline-step {
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}
+
+.pipeline-step-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.step-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: white;
+  font-size: 12px;
+}
+
+.pipeline-step-body {
+  font-size: 13px;
+  color: var(--text-h);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.headline-score {
+  font-family: var(--mono);
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.veto-notice {
+  color: #c0392b;
+}
+
+.veto-clear {
+  color: #1e8449;
+}
+
+/* --- info tooltip --- */
+
+.info-tooltip-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.info-icon {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1px solid var(--accent-border);
+  background: var(--accent-bg);
+  color: var(--accent);
+  font-size: 11px;
+  font-style: italic;
+  font-family: Georgia, serif;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.info-popover {
+  position: absolute;
+  z-index: 20;
+  top: 100%;
+  left: 0;
+  margin-top: 6px;
+  width: 340px;
+  max-width: 80vw;
+  padding: 10px 12px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  box-shadow: var(--shadow);
+  font-weight: normal;
+}
+
+.info-popover-formula {
+  font-family: var(--mono);
+  font-size: 12px;
+  margin: 0 0 6px;
+  white-space: pre-wrap;
+}
+
+.info-popover-biology {
+  font-size: 12.5px;
+  color: var(--text);
+  margin: 0;
+}
+
+/* --- per-gene evidence table --- */
+
+.evidence-table-wrapper {
+  margin-top: 8px;
+}
+
+.text-button {
+  border: none;
+  background: none;
+  color: var(--accent);
+  cursor: pointer;
+  font-size: 13px;
+  padding: 0;
+}
+
+.evidence-table-scroll {
+  overflow-x: auto;
+  margin-top: 10px;
+}
+
+.evidence-table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 12.5px;
+}
+
+.evidence-table th,
+.evidence-table td {
+  border: 1px solid var(--border);
+  padding: 6px 8px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.layer-value-note {
+  display: block;
+  font-size: 10.5px;
+  color: var(--text);
+}
+
+.layer-state-not_assayed {
+  opacity: 0.5;
+}
+
+.gene-narratives {
+  margin-top: 12px;
+  padding-left: 18px;
+  font-size: 12.5px;
+  color: var(--text);
+}
+
+.insufficient-evidence-panel {
+  margin-top: 16px;
+  font-size: 13px;
+}
+
+.insufficient-evidence-panel ul {
+  margin-top: 8px;
+  padding-left: 18px;
+  color: var(--text);
+}
+
+/* --- RAG panels: narrator, methodology Q&A, literature search, query expansion --- */
+
+.narrator-panel {
+  margin-top: 16px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.narrator-output {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 13.5px;
+}
+
+.ai-disclaimer {
+  font-size: 12px;
+  font-style: italic;
+  color: var(--text);
+  padding: 8px 10px;
+  border-left: 3px solid var(--accent);
+  background: var(--accent-bg);
+}
+
+.narrator-cell-line {
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}
+
+.narrator-gene-explanations {
+  margin: 6px 0;
+  padding-left: 18px;
+}
+
+.methodology-qa,
+.literature-search {
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+
+.methodology-qa form,
+.literature-search form {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.methodology-qa input[type="text"],
+.literature-search input[type="text"] {
+  flex: 1 1 auto;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 14px;
+  background: var(--bg);
+  color: var(--text-h);
+}
+
+.methodology-qa button,
+.literature-search button {
+  padding: 8px 16px;
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* --- Ranking progress (SSE stage checklist) --- */
+
+.ranking-progress-steps {
+  list-style: none;
+  margin: 0 0 16px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 13px;
+}
+
+.ranking-progress-steps li {
+  position: relative;
+  padding-left: 22px;
+  color: var(--text);
+}
+
+.ranking-progress-steps li.done::before {
+  content: "\2713";
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+}
+
+.ranking-progress-steps li.current {
+  color: var(--text-h);
+}
+
+.ranking-progress-steps li.current::before {
+  content: "...";
+  position: absolute;
+  left: 0;
+}
+
+.ranking-progress-steps li.pending {
+  opacity: 0.5;
+}
+
+/* --- Floating AI assistant widget --- */
+
+.ai-assistant {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 50;
+}
+
+.ai-assistant-fab {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: none;
+  background: var(--accent);
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+}
+
+.ai-assistant-panel {
+  position: absolute;
+  right: 0;
+  bottom: 64px;
+  width: 380px;
+  max-width: 90vw;
+  max-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.ai-assistant-panel-hidden {
+  display: none;
+}
+
+.ai-assistant-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--border);
+}
+
+.ai-assistant-tabs button {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--text);
+}
+
+.ai-assistant-tabs button.active {
+  color: var(--text-h);
+  border-bottom: 2px solid var(--accent);
+}
+
+.ai-assistant-body {
+  padding: 14px;
+  overflow-y: auto;
+}
+
+.ai-assistant-tab-hidden {
+  display: none;
+}
+
+.methodology-qa button:disabled,
+.literature-search button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.methodology-answer,
+.literature-results {
+  margin-top: 12px;
+  font-size: 13.5px;
+}
+
+.literature-finding {
+  margin-bottom: 12px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}
+
+.literature-finding blockquote {
+  margin: 0 0 6px;
+  padding-left: 10px;
+  border-left: 3px solid var(--accent-border);
+  font-style: italic;
+}
+
+.expansion-panel {
+  margin-top: 4px;
+}
+
+.expansion-suggestion {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 6px 8px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}
+
+.expansion-suggestion .chip button {
+  margin-left: 4px;
+  padding: 1px 6px;
+  border: 1px solid var(--accent-border);
+  border-radius: 4px;
+  background: var(--bg);
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.provenance-badge {
+  font-size: 10.5px;
+  color: var(--text);
+}
