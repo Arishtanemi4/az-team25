@@ -1,0 +1,20 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      # Not read-only -- rag/literature.py writes its on-disk PubMed cache under
+      # data/processed/rag/literature_cache/, and gene/scoring/data_service now share this same
+      # mount. data_service itself only ever reads from it (docs/plan/PRODUCT_SURFACE.md SS3):
+      # data/processed/*.{csv,parquet} and the optional data/processed/eda_aggregates.json built
+      # by backend/data_service/build_eda_aggregates.py.
+      - ./data:/app/data
+      - ./docs:/app/docs:ro
+      - ./validation:/app/validation:ro
+    env_file:
+      - .env
+    environment:
+      BACKEND_CORS_ORIGINS: http://localhost:5173,http://127.0.0.1:5173
