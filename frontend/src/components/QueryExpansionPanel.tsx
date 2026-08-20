@@ -42,9 +42,16 @@ export function QueryExpansionPanel({ inclusionGenes, onAddGene }: QueryExpansio
       const matches = await searchGenes(suggestion.gene, 5);
       const exact = matches.find((g) => g.symbol.toUpperCase() === suggestion.gene.toUpperCase());
       const match = exact ?? matches[0];
-      if (match) onAddGene(match);
-    } catch {
-      // A failed resolution just leaves the suggestion in place -- the researcher can retry.
+      if (match) {
+        onAddGene(match);
+      } else {
+        setError(`No gene match found for "${suggestion.gene}".`);
+      }
+    } catch (err) {
+      // A failed resolution just leaves the suggestion in place -- the researcher can retry --
+      // but they need to be told it failed rather than seeing "Add" silently reset with no
+      // explanation.
+      setError(err instanceof Error ? err.message : `Failed to resolve "${suggestion.gene}". Is gene_service running?`);
     } finally {
       setAddingGene(null);
     }

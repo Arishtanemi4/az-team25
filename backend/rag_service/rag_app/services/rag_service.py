@@ -39,6 +39,31 @@ def _search_c1(query, top_k):
     return _c1_index_cache.search(query, top_k=top_k)
 
 
+# These four partitions are unbounded (they can hold every candidate that didn't make the
+# ranked top-N -- up to the full cell-line panel), unlike ranked_cell_lines which is already
+# capped by the query's top_n. Dumping them verbatim into the narration prompt is what blows the
+# LLM's context window on broad queries. The record's own candidate_counts field already carries
+# the authoritative counts for each of these, so nothing the narrative needs is lost by
+# summarizing them here instead.
+_UNBOUNDED_PARTITIONS = (
+    "ranked_beyond_top_n",
+    "low_confidence_lines",
+    "insufficient_evidence_lines",
+    "disqualified_lines",
+)
+
+
+def _bound_evidence_record(evidence_record):
+    """Returns a copy of evidence_record safe to hand to narrator.narrate(): the unbounded
+    partitions are replaced with a count summary instead of their full line-level contents."""
+    bounded = dict(evidence_record)
+    for key in _UNBOUNDED_PARTITIONS:
+        lines = bounded.get(key)
+        if isinstance(lines, list):
+            bounded[key] = f"[{len(lines)} lines omitted -- see candidate_counts for the summary]"
+    return bounded
+
+
 def _narration_query(evidence_record):
     """A plain retrieval query built from the query's own gene symbols -- narrate()'s own prompt
     says the retrieved context is 'for methodology explanations and citations only'."""
@@ -59,7 +84,8 @@ class RagService:
     def narrate_result(self, evidence_record, top_k=5):
         query = _narration_query(evidence_record)
         context_chunks = _search_c1(query, top_k)
-        response = narrator.narrate(evidence_record, context_chunks=context_chunks, registry=self.registry)
+        bounded_record = _bound_evidence_record(evidence_record)
+        response = narrator.narrate(bounded_record, context_chunks=context_chunks, registry=self.registry)
         return display_sanitiser.sanitise_narration_response(response)
 
     def answer_methodology_question(self, question):

@@ -6,8 +6,9 @@ together."""
 
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 
 from rag_app.config import CORS_ORIGINS
 from rag_app.routers import graph, literature, methodology, narration, query_expansion
@@ -41,3 +42,13 @@ app.include_router(graph.router)
 @app.get("/health")
 def health():
     return {"status": "ok"}
+
+
+@app.exception_handler(Exception)
+async def unhandled_exception_handler(request: Request, exc: Exception):
+    # Safety net: FastAPI/Starlette's own default for an uncaught exception is a plain-text 500
+    # body, which the frontend's fetch clients (postJson in ragServiceClient.ts) can't parse for
+    # a `detail` message -- they'd fall back to a generic "Request failed (500)". Every router
+    # here already catches the specific exceptions it expects (RuntimeError, etc.); this only
+    # fires for whatever gap remains, and still gives the UI something readable.
+    return JSONResponse(status_code=500, content={"detail": f"{type(exc).__name__}: {exc}"})

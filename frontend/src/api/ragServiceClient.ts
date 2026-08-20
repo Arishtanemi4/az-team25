@@ -11,11 +11,12 @@ const BASE_URL = import.meta.env.VITE_RAG_SERVICE_URL ?? "http://localhost:8000"
 
 export class RagRequestError extends Error {}
 
-async function postJson<T>(path: string, body: unknown): Promise<T> {
+async function postJson<T>(path: string, body: unknown, signal?: AbortSignal): Promise<T> {
   const response = await fetch(`${BASE_URL}${path}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(body),
+    signal,
   });
   if (!response.ok) {
     const problem = await response.json().catch(() => null);
@@ -31,8 +32,12 @@ async function postJson<T>(path: string, body: unknown): Promise<T> {
   return response.json();
 }
 
-export function narrateResult(evidenceRecord: RankResponse, topKContext = 5): Promise<NarrationResponse> {
-  return postJson("/narrate", { evidence_record: evidenceRecord, top_k_context: topKContext });
+export function narrateResult(
+  evidenceRecord: RankResponse,
+  topKContext = 5,
+  signal?: AbortSignal,
+): Promise<NarrationResponse> {
+  return postJson("/narrate", { evidence_record: evidenceRecord, top_k_context: topKContext }, signal);
 }
 
 export function askMethodologyQuestion(question: string): Promise<MethodologyAnswer> {
