@@ -3,7 +3,7 @@ import time
 from pathlib import Path
 
 from dotenv import load_dotenv
-from openai import OpenAI, RateLimitError
+from openai import APIStatusError, BadRequestError, OpenAI, RateLimitError
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 load_dotenv(REPO_ROOT / ".env")
@@ -30,6 +30,12 @@ RATE_LIMIT_RETRY_DELAYS = (5, 15, 30)  # seconds -- exhausts in under a minute, 
 
 _client = None
 _call_timestamps = []  # sliding one-minute window of chat() call times, oldest first
+
+
+class ProviderRequestError(RuntimeError):
+    """Raised when the LLM API rejects a request outright (e.g. context_length_exceeded) --
+    distinct from RateLimitError (retried below) since retrying an oversized prompt unchanged
+    would just fail identically."""
 
 
 def _get_client():
@@ -78,3 +84,8 @@ def chat(messages, tools=None, model=None, temperature=0.0, response_format=None
             if delay is None:
                 raise
             time.sleep(delay)
+        except (BadRequestError, APIStatusError) as exc:
+            # Not retryable -- most commonly context_length_exceeded from an oversized prompt.
+            # Retrying the same request would fail identically, so fail closed immediately with
+            # a message callers (narrator.py) can surface instead of an opaque SDK traceback.
+            raise ProviderRequestError(f"LLM request rejected by the API: {exc}") from exc

@@ -35,6 +35,11 @@ Respond with ONLY a JSON object matching this shape:
   "boundary_statement": "the boundary statement, copied verbatim from the record"
 }"""
 
+# Conservative proxy for the LLM's context budget (chars, not tokens -- avoids a tokenizer
+# dependency here). Well under even the smallest context window this project's provider.py
+# models support, so this trips well before a real context_length_exceeded from the API.
+MAX_PROMPT_CHARS = 60_000
+
 
 class GeneExplanation(BaseModel):
     ensembl_id: str
@@ -79,7 +84,10 @@ def _build_user_prompt(evidence_record, context_chunks):
 
 
 def _generate_once(messages):
-    response = provider.chat(messages, response_format={"type": "json_object"})
+    try:
+        response = provider.chat(messages, response_format={"type": "json_object"})
+    except provider.ProviderRequestError as exc:
+        return exc
     try:
         parsed = json.loads(response.content)
         return NarrationResult(**parsed)
@@ -92,13 +100,30 @@ def narrate(evidence_record, context_chunks=None, registry=None):
         registry = citations.build_registry()
     context_chunks = context_chunks or []
 
+    user_prompt = _build_user_prompt(evidence_record, context_chunks)
+    if len(user_prompt) > MAX_PROMPT_CHARS:
+        raise RuntimeError(
+            "narrate() aborted -- the evidence record is too large to narrate safely "
+            f"({len(user_prompt)} chars, limit {MAX_PROMPT_CHARS}). Narrow the query to reduce "
+            "the number of ranked cell lines rather than retrying."
+        )
+
     messages = [
         {"role": "system", "content": SYSTEM_PROMPT},
-        {"role": "user", "content": _build_user_prompt(evidence_record, context_chunks)},
+        {"role": "user", "content": user_prompt},
     ]
 
+    check = None
     for attempt in range(2):
         result = _generate_once(messages)
+        if isinstance(result, provider.ProviderRequestError):
+            # Not a schema/grounding problem the repair-turn prompt can fix -- most commonly a
+            # context-length rejection from the API. Retrying with the same oversized messages
+            # would fail identically, so fail closed immediately instead of burning the second
+            # attempt.
+            raise RuntimeError(
+                "narrate() aborted -- the LLM API rejected the request: " + str(result)
+            ) from result
         if isinstance(result, Exception):
             messages.append({"role": "assistant", "content": str(result)})
             messages.append({
@@ -124,6 +149,11 @@ def narrate(evidence_record, context_chunks=None, registry=None):
             ),
         })
 
+    if check is None:
+        raise RuntimeError(
+            "narrate() failed to produce valid JSON after two attempts -- CONSTRAINTS.md R1 "
+            "fails closed, so this result is not shipped."
+        )
     raise RuntimeError(
         "narrate() failed to produce a grounded result after two attempts -- CONSTRAINTS.md R1 "
         "fails closed, so this result is not shipped. Last verification: " + json.dumps(check)

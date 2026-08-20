@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { narrateResult, RagRequestError } from "../api/ragServiceClient";
 import type { NarrationResponse } from "../types/rag";
 import type { RankResponse } from "../types/scoring";
@@ -33,13 +33,27 @@ export function NarratorPanel({ evidenceRecord }: NarratorPanelProps) {
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<NarrationResponse | null>(null);
   const cellLineNames = buildCellLineNameLookup(evidenceRecord);
+  const abortControllerRef = useRef<AbortController | null>(null);
+
+  // NarratorPanel only renders while a ranking result exists (AiAssistantWidget.tsx) --
+  // RankPage clears that result the moment a new query starts, unmounting this panel mid-request
+  // if narration is still in flight. Without this, the fetch kept running after unmount: a
+  // wasted, rate-limited LLM call whose eventual response tried to setState on a gone component.
+  useEffect(() => {
+    return () => {
+      abortControllerRef.current?.abort();
+    };
+  }, []);
 
   async function handleGenerate() {
+    const controller = new AbortController();
+    abortControllerRef.current = controller;
     setIsLoading(true);
     setError(null);
     try {
-      setResult(await narrateResult(evidenceRecord));
+      setResult(await narrateResult(evidenceRecord, 5, controller.signal));
     } catch (err) {
+      if (err instanceof DOMException && err.name === "AbortError") return;
       setError(err instanceof RagRequestError ? err.message : "Narration request failed. Is rag_service running?");
     } finally {
       setIsLoading(false);
