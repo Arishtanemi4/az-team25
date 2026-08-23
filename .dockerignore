@@ -1,0 +1,24 @@
+# Never needed inside a build context -- data/ is bind-mounted at runtime (docker-compose.yml),
+# never COPY'd into an image. Excluding it keeps `docker build` fast even though data/raw/ and
+# data/augmented/ are several GB via git-lfs.
+data/
+
+.git/
+.gitignore
+
+# Node
+frontend/node_modules/
+frontend/dist/
+
+# Python
+**/__pycache__/
+**/*.ipynb_checkpoints/
+.pytest_cache/
+
+# Secrets -- never baked into an image layer, only injected at runtime via env_file.
+.env
+
+# Editor / misc
+.vscode/
+*CLAUDE.md*
+*CODEX.md*

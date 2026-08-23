@@ -1,8 +1,38 @@
 services:
+  # One-shot: turns a fresh clone's data/raw/ + data/augmented/ (the only two data/ paths
+  # git-lfs tracks) into everything scoring_service/rag_service need at request time --
+  # data/processed/ (preprocessing/preprocess.py) and the desirability calibration constants
+  # scoring_service's SCORING_SERVICE_RNA_CONSTANTS_PATH points at (both gitignored, regenerable
+  # output, never committed -- see .gitignore). Also best-effort builds the optional C1 doc index
+  # and knowledge graph. See deploy/pipeline_entrypoint.sh for the exact steps and what's
+  # required vs. optional. Runs once per `docker compose up`; each step is skipped if its output
+  # is already on disk, so this is fast after the first run.
+  #
+  # Memory: the first (uncached) run of preprocessing/preprocess.py loads the ~900MB-1.1GB raw
+  # expression/mutation files into pandas -- confirmed to need more than the ~8GB Docker Desktop
+  # allocates by default (it gets SIGKILL'd by the VM's OOM killer, surfaced as "Killed" in this
+  # service's logs and a non-zero exit that correctly blocks `backend` from starting). Raise
+  # Docker Desktop's memory limit (Settings > Resources) to 12GB+ before the first run if you hit
+  # this; every run after the first is unaffected since the output already exists on disk.
+  pipeline:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    command: ["bash", "/app/deploy/pipeline_entrypoint.sh"]
+    volumes:
+      - ./data:/app/data
+      - ./docs:/app/docs:ro
+      - ./scoring/resources:/app/scoring/resources
+    env_file:
+      - .env
+
   backend:
     build:
       context: .
       dockerfile: backend/Dockerfile
+    depends_on:
+      pipeline:
+        condition: service_completed_successfully
     ports:
       - "8000:8000"
     volumes:
@@ -14,7 +44,20 @@ services:
       - ./data:/app/data
       - ./docs:/app/docs:ro
       - ./validation:/app/validation:ro
+      # Shared with `pipeline`, not read-only -- desirability_constants.json (+ its sweep-floor
+      # sibling) lands here from scoring/build_desirability_constants.py, alongside the
+      # already-committed desirability_constants_extended*.json this mount also exposes.
+      - ./scoring/resources:/app/scoring/resources
     env_file:
       - .env
     environment:
       BACKEND_CORS_ORIGINS: http://localhost:5173,http://127.0.0.1:5173
+
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    depends_on:
+      - backend
+    ports:
+      - "5173:80"
