@@ -10,6 +10,7 @@ from rag_app.lib import rag_path  # noqa: F401 -- import order matters: puts rag
                                     # before the QueryExpansionFailedError import below can succeed.
 
 from query_expansion_agent import QueryExpansionFailedError
+from provider import ProviderRateLimitedError
 
 from rag_app.schemas.rag import QueryExpansionRequest
 
@@ -25,7 +26,13 @@ def expand(request: Request, body: QueryExpansionRequest) -> dict[str, Any]:
         # The model exhausted its tool-call turns without a parseable final answer -- a genuine
         # agent failure, not a bad request. Caught before the generic RuntimeError clause below,
         # since QueryExpansionFailedError is itself a RuntimeError subclass.
-        raise HTTPException(status_code=502, detail=str(exc)) from exc
+        raise HTTPException(
+            status_code=502,
+            detail=f"Query expansion couldn't produce a usable answer ({exc}). This looks like a "
+                   "limitation of the current AI model, not a bug -- try again in a moment.",
+        ) from exc
+    except ProviderRateLimitedError as exc:
+        raise HTTPException(status_code=429, detail=str(exc)) from exc
     except RuntimeError as exc:
         # e.g. NVIDIA_API_KEY is not set -- a service misconfiguration, not a bad request.
         raise HTTPException(status_code=500, detail=str(exc)) from exc

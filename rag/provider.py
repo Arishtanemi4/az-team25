@@ -38,6 +38,12 @@ class ProviderRequestError(RuntimeError):
     would just fail identically."""
 
 
+class ProviderRateLimitedError(RuntimeError):
+    """Raised when the NVIDIA API's rate limit is hit and retries are exhausted. This project's
+    NVIDIA_API_KEY is a free-tier key shared across users, which is the actual cause here -- not
+    an app bug."""
+
+
 def _get_client():
     global _client
     if _client is None:
@@ -80,9 +86,13 @@ def chat(messages, tools=None, model=None, temperature=0.0, response_format=None
         try:
             completion = client.chat.completions.create(**kwargs)
             return completion.choices[0].message
-        except RateLimitError:
+        except RateLimitError as exc:
             if delay is None:
-                raise
+                raise ProviderRateLimitedError(
+                    "NVIDIA API rate limit reached -- this project runs on a free-tier NVIDIA "
+                    "API key shared across all users, capped at 40 requests/minute. Please wait "
+                    "a minute and try again."
+                ) from exc
             time.sleep(delay)
         except (BadRequestError, APIStatusError) as exc:
             # Not retryable -- most commonly context_length_exceeded from an oversized prompt.

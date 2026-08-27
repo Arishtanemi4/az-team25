@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { LiteratureSearchBox } from "./LiteratureSearchBox";
-import { MethodologyQABox } from "./MethodologyQABox";
+// import { MethodologyQABox } from "./MethodologyQABox"; // Methodology tab disabled -- not evaluated/stabilized yet.
 import { NarratorPanel } from "./NarratorPanel";
 import type { RankResponse } from "../types/scoring";
 
@@ -31,6 +31,7 @@ export function AiAssistantWidget({ result }: AiAssistantWidgetProps) {
           >
             Narrator
           </button>
+          {/* Methodology tab disabled -- not evaluated/stabilized yet.
           <button
             type="button"
             className={activeTab === "methodology" ? "active" : ""}
@@ -38,6 +39,7 @@ export function AiAssistantWidget({ result }: AiAssistantWidgetProps) {
           >
             Methodology
           </button>
+          */}
           <button
             type="button"
             className={activeTab === "literature" ? "active" : ""}
@@ -54,9 +56,11 @@ export function AiAssistantWidget({ result }: AiAssistantWidgetProps) {
               <p className="muted">Run a ranking query to enable the AI narrative.</p>
             )}
           </div>
+          {/* Methodology tab disabled -- not evaluated/stabilized yet.
           <div className={activeTab === "methodology" ? "" : "ai-assistant-tab-hidden"}>
             <MethodologyQABox />
           </div>
+          */}
           <div className={activeTab === "literature" ? "" : "ai-assistant-tab-hidden"}>
             <LiteratureSearchBox />
           </div>

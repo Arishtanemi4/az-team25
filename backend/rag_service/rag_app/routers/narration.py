@@ -5,6 +5,11 @@ from typing import Any
 
 from fastapi import APIRouter, HTTPException, Request
 
+from rag_app.lib import rag_path  # noqa: F401 -- import order matters: puts rag/ on sys.path
+                                    # before the ProviderRateLimitedError import below can succeed.
+
+from provider import ProviderRateLimitedError
+
 from rag_app.schemas.rag import NarrateRequest
 
 router = APIRouter(tags=["narration"])
@@ -15,6 +20,8 @@ def narrate(request: Request, body: NarrateRequest) -> dict[str, Any]:
     service = request.app.state.rag_service
     try:
         return service.narrate_result(body.evidence_record, top_k=body.top_k_context)
+    except ProviderRateLimitedError as exc:
+        raise HTTPException(status_code=429, detail=str(exc)) from exc
     except RuntimeError as exc:
         # narrate()'s own documented failure mode: two attempts both failed schema validation or
         # the grounding check -- a genuine backend failure, not a bad request.
