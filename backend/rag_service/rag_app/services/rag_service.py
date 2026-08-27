@@ -40,11 +40,11 @@ def _search_c1(query, top_k):
 
 
 # These four partitions are unbounded (they can hold every candidate that didn't make the
-# ranked top-N -- up to the full cell-line panel), unlike ranked_cell_lines which is already
-# capped by the query's top_n. Dumping them verbatim into the narration prompt is what blows the
-# LLM's context window on broad queries. The record's own candidate_counts field already carries
-# the authoritative counts for each of these, so nothing the narrative needs is lost by
-# summarizing them here instead.
+# ranked top-N -- up to the full cell-line panel), unlike ranked_cell_lines, which is capped in
+# *count* by the query's top_n (but not in per-line size -- see _trim_ranked_line for that).
+# Dumping these four verbatim into the narration prompt is what blows the LLM's context window on
+# broad queries. The record's own candidate_counts field already carries the authoritative counts
+# for each of these, so nothing the narrative needs is lost by summarizing them here instead.
 _UNBOUNDED_PARTITIONS = (
     "ranked_beyond_top_n",
     "low_confidence_lines",
@@ -53,14 +53,39 @@ _UNBOUNDED_PARTITIONS = (
 )
 
 
+def _trim_ranked_line(line):
+    """Drops fields from a ranked_cell_lines entry that narrate() doesn't need: the
+    pre-rendered "narrative" prose (narrate()'s whole job is to generate this itself from the
+    structured d_gene/layers numbers -- it never reads this field, confirmed by grep) and the
+    static per-line gap/redundant text (tumour_representativeness_note, hallmark_tags_note,
+    missing_evidence, warnings), which duplicate information already present in the structured
+    per_gene fields or carry no per-query signal. Every number the LLM must cite stays available
+    as a real JSON number in per_gene[].d_gene / .layers -- only the prose duplicating those
+    numbers is removed. The untrimmed line is still what's returned to the frontend by /rank;
+    this copy is only what narrate() sees."""
+    trimmed = {
+        k: v for k, v in line.items()
+        if k not in ("tumour_representativeness_note", "hallmark_tags_note", "missing_evidence", "warnings")
+    }
+    trimmed["per_gene"] = [
+        {k: v for k, v in gene.items() if k != "narrative"}
+        for gene in line.get("per_gene", [])
+    ]
+    return trimmed
+
+
 def _bound_evidence_record(evidence_record):
     """Returns a copy of evidence_record safe to hand to narrator.narrate(): the unbounded
-    partitions are replaced with a count summary instead of their full line-level contents."""
+    partitions are replaced with a count summary instead of their full line-level contents, and
+    ranked_cell_lines has its redundant prose trimmed (see _trim_ranked_line)."""
     bounded = dict(evidence_record)
     for key in _UNBOUNDED_PARTITIONS:
         lines = bounded.get(key)
         if isinstance(lines, list):
             bounded[key] = f"[{len(lines)} lines omitted -- see candidate_counts for the summary]"
+    ranked = bounded.get("ranked_cell_lines")
+    if isinstance(ranked, list):
+        bounded["ranked_cell_lines"] = [_trim_ranked_line(line) for line in ranked]
     return bounded
 
 

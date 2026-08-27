@@ -51,8 +51,11 @@ export function expandQuery(inclusionGenes: string[], signal?: AbortSignal): Pro
   return postJson("/expand", { inclusion_genes: inclusionGenes }, signal);
 }
 
-export function searchLiterature(question: string): Promise<LiteratureResponse> {
-  return postJson("/literature/search", { question });
+// find_evidence() is a multi-turn tool-calling agent (rag/literature_agent.py) that hits live
+// PubMed/NCBI across up to 6 turns -- comparable to or slower than /expand. `signal` lets the box
+// offer a real Cancel button instead of the researcher wondering whether the search has hung.
+export function searchLiterature(question: string, signal?: AbortSignal): Promise<LiteratureResponse> {
+  return postJson("/literature/search", { question }, signal);
 }
 
 // The one GET call in this client -- /graph/neighborhood (PRODUCT_SURFACE.md SS3.5) reads a

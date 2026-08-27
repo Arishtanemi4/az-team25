@@ -99,15 +99,40 @@ def find_evidence(question, max_turns=MAX_TOOL_TURNS):
         {"role": "user", "content": question},
     ]
     tool_results = []
+    json_repairs_left = 1
 
     for _ in range(max_turns):
         message = provider.chat(messages, tools=TOOL_SCHEMAS)
         tool_calls = getattr(message, "tool_calls", None)
+        if not tool_calls and not message.content:
+            # Some models occasionally return an empty turn (no tool call, no content) rather
+            # than a real final answer -- same live, observed failure mode
+            # query_expansion_agent.py already guards against. Nudge once instead of burning the
+            # JSON-repair budget on it; still bounded by max_turns.
+            messages.append({
+                "role": "user",
+                "content": "Please give your final answer now: the JSON object described in the "
+                           "system prompt (or {\"findings\": []} if you found nothing), and "
+                           "nothing else.",
+            })
+            continue
         if not tool_calls:
             try:
                 parsed = json.loads(message.content)
                 findings = parsed.get("findings", [])
             except (json.JSONDecodeError, TypeError, AttributeError) as exc:
+                if json_repairs_left > 0:
+                    # One repair chance, same convention as narrator.py's repair turn -- a
+                    # malformed final answer is usually a format slip after a search that already
+                    # succeeded, not a sign the search itself failed.
+                    json_repairs_left -= 1
+                    messages.append({"role": "assistant", "content": message.content or ""})
+                    messages.append({
+                        "role": "user",
+                        "content": f"That response was not valid JSON ({exc}). Respond again with "
+                                   "ONLY the JSON object described in the system prompt.",
+                    })
+                    continue
                 raise LiteratureAgentFailedError(f"final response was not valid JSON: {exc}")
 
             fetched = _fetched_texts_by_pmid(tool_results)

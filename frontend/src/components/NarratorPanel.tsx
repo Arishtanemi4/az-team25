@@ -56,8 +56,13 @@ export function NarratorPanel({ evidenceRecord }: NarratorPanelProps) {
       if (err instanceof DOMException && err.name === "AbortError") return;
       setError(err instanceof RagRequestError ? err.message : "Narration request failed. Is rag_service running?");
     } finally {
+      abortControllerRef.current = null;
       setIsLoading(false);
     }
+  }
+
+  function handleCancel() {
+    abortControllerRef.current?.abort();
   }
 
   return (
@@ -65,6 +70,13 @@ export function NarratorPanel({ evidenceRecord }: NarratorPanelProps) {
       <button type="button" onClick={handleGenerate} disabled={isLoading}>
         {isLoading ? "Generating narrative..." : "Generate AI narrative"}
       </button>
+      {isLoading && (
+        <span className="narrator-loading-note">
+          This calls an LLM over the full result set and can take 20-60 seconds (longer if a
+          repair pass is needed).{" "}
+          <button type="button" onClick={handleCancel}>Cancel</button>
+        </span>
+      )}
       {error && <p className="error-notice">{error}</p>}
       {result && (
         <div className="narrator-output">
