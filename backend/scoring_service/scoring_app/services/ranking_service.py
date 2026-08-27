@@ -9,6 +9,7 @@ import copy
 import os
 import queue
 import threading
+import time
 
 from scoring_app.lib import scoring_path  # noqa: F401 -- import order matters: puts scoring/ on
                                     # sys.path before the `import score`/`import export` below can succeed.
@@ -127,6 +128,13 @@ class RankingService:
         which would defeat the point of streaming a multi-minute computation."""
         stage_queue: queue.Queue = queue.Queue()
         outcome_holder: dict = {}
+        start_time = time.monotonic()
+
+        def logged_on_stage(label):
+            # TEMP DIAGNOSTIC (see plan): times each score_panel checkpoint to locate where a
+            # /rank request stalls. Remove once the hang is root-caused and fixed.
+            print(f"[ranking_service] +{time.monotonic() - start_time:.1f}s stage: {label}")
+            stage_queue.put(label)
 
         def run_score_panel():
             try:
@@ -150,7 +158,7 @@ class RankingService:
                     essentiality_constants_path=str(ESSENTIALITY_CONSTANTS_PATH),
                     gene_role_path=str(GENE_ROLE_PATH),
                     unresolved_symbols_path=str(UNRESOLVED_SYMBOLS_PATH),
-                    on_stage=stage_queue.put,
+                    on_stage=logged_on_stage,
                 )
             except Exception as exc:  # noqa: BLE001 -- re-raised on the generator's own thread below
                 outcome_holder["error"] = exc
@@ -170,6 +178,7 @@ class RankingService:
             raise outcome_holder["error"]
 
         outcome = outcome_holder["result"]
+        print(f"[ranking_service] +{time.monotonic() - start_time:.1f}s stage: {FINAL_STAGE_LABEL}")
         yield "stage", FINAL_STAGE_LABEL
 
         export = scoring_export.export_query_result(
@@ -204,6 +213,7 @@ class RankingService:
                 line["cell_line_name"] = self.cell_line_names.get(line["model_id"])
         callback = getattr(self, "result_callback", None)
         if callback is not None:
+            print(f"[ranking_service] +{time.monotonic() - start_time:.1f}s result_callback: start")
             try:
                 # A callback gets copies: extension persistence cannot mutate the native result
                 # that will be returned by this service, even accidentally.
@@ -214,6 +224,8 @@ class RankingService:
                 export["research_query_id"] = None
                 export["research_status"] = "unavailable"
                 export["research_reason"] = "Research snapshot creation failed; native ranking remains available."
+            print(f"[ranking_service] +{time.monotonic() - start_time:.1f}s result_callback: done")
+        print(f"[ranking_service] +{time.monotonic() - start_time:.1f}s stage: result (final SSE event)")
         yield "result", scoring_export.sanitize_for_json(export)
 
     def rank(

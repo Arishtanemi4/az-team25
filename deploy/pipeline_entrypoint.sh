@@ -40,10 +40,10 @@ else
 fi
 
 echo "=== [4/4] rag: knowledge graph (optional) ==="
-if [ -f data/external/knowledge_graph/derived/knowledge_graph_edges.parquet ]; then
+if [ -f data/augmented/rag/knowledge_graph/derived/knowledge_graph_edges.parquet ]; then
   echo "Knowledge graph already built -- skipping."
-elif [ -d data/external/reactome/raw ] && [ -d data/external/string_v12/raw ] \
-     && [ -f data/external/biogrid/raw/BIOGRID-ORGANISM-5.0.259.tab3.zip ]; then
+elif [ -d data/augmented/rag/reactome/raw ] && [ -d data/augmented/rag/string_v12/raw ] \
+     && [ -f data/augmented/rag/biogrid/raw/BIOGRID-ORGANISM-5.0.259.tab3.zip ]; then
   if python rag/build_knowledge_graph.py; then
     echo "Knowledge graph built."
   else
@@ -51,9 +51,8 @@ elif [ -d data/external/reactome/raw ] && [ -d data/external/string_v12/raw ] \
          "/graph/neighborhood endpoint will report available: false."
   fi
 else
-  echo "data/external/ raw inputs (Reactome/STRING/BioGRID) not present on this machine --" \
-       "skipping. See docs/reference/DOWNLOAD_STEPS.md to add them, then rerun. The" \
-       "/graph/neighborhood endpoint will report available: false until this is built."
+  echo "data/augmented/rag/ raw inputs (Reactome/STRING/BioGRID) not present on this machine --" \
+       "skipping. The /graph/neighborhood endpoint will report available: false until this is built."
 fi
 
 echo "=== Pipeline complete ==="

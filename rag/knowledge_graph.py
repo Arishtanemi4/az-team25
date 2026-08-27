@@ -4,8 +4,8 @@ import networkx as nx
 import pandas as pd
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-NODES_PATH = REPO_ROOT / "data" / "external" / "knowledge_graph" / "derived" / "knowledge_graph_nodes.parquet"
-EDGES_PATH = REPO_ROOT / "data" / "external" / "knowledge_graph" / "derived" / "knowledge_graph_edges.parquet"
+NODES_PATH = REPO_ROOT / "data" / "augmented" / "rag" / "knowledge_graph" / "derived" / "knowledge_graph_nodes.parquet"
+EDGES_PATH = REPO_ROOT / "data" / "augmented" / "rag" / "knowledge_graph" / "derived" / "knowledge_graph_edges.parquet"
 
 
 def load_graph(nodes_path=NODES_PATH, edges_path=EDGES_PATH):

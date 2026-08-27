@@ -2,16 +2,16 @@
 full built graph (rag/knowledge_graph.py's Parquet outputs) is absent but the raw Reactome
 source files are present.
 
-Parses data/external/reactome/raw/{Ensembl2Reactome.txt, ReactomePathways.txt} directly, using
-the exact same column schema rag/build_knowledge_graph.py::load_reactome uses -- reimplemented
-here, not imported, since that module is the frozen builder and C4 is explicit: "imports must
-not invoke builder" and "do not run frozen builders that write frozen outputs." The schema
-itself (Reactome's own published tab-separated, headerless format) is not proprietary code; only
-the module that writes frozen outputs is off-limits to import.
+Parses data/augmented/rag/reactome/raw/{Ensembl2Reactome.txt, ReactomePathways.txt} directly,
+using the exact same column schema rag/build_knowledge_graph.py::load_reactome uses --
+reimplemented here, not imported, since that module is the frozen builder and C4 is explicit:
+"imports must not invoke builder" and "do not run frozen builders that write frozen outputs." The
+schema itself (Reactome's own published tab-separated, headerless format) is not proprietary
+code; only the module that writes frozen outputs is off-limits to import.
 
 Explicitly partial: no STRING, no BioGRID, no fusion/co-dependency edges -- pathway membership
-only. Any derived cache this module writes lands under backend/research_service/runtime/, never inside
-data/external/ -- extending the baseline's own outputs is not this package's job.
+only. Any derived cache this module writes lands under backend/research_service/runtime/, never
+inside data/augmented/rag/ -- extending the baseline's own outputs is not this package's job.
 """
 
 import os
@@ -27,10 +27,8 @@ _LFS_POINTER_SIGNATURE = "version https://git-lfs.github.com/spec/v1"
 
 def _is_lfs_pointer(path):
     """A Git LFS-tracked file that was never `git lfs pull`-ed still exists on disk as a small
-    text stub (this worktree's own data/external/reactome/raw/ files are exactly this -- V6-7,
-    docs/plan/STATUS.md item 60/61, materialised only a scoped subset elsewhere). `.exists()`
-    alone cannot tell a real 183MB Reactome file from its 3-line pointer stub; this can, cheaply
-    (read only the first line, never the whole file)."""
+    text stub. `.exists()` alone cannot tell a real 183MB Reactome file from its 3-line pointer
+    stub; this can, cheaply (read only the first line, never the whole file)."""
     try:
         with open(path, "r", encoding="utf-8", errors="ignore") as handle:
             return handle.readline().strip() == _LFS_POINTER_SIGNATURE
@@ -44,7 +42,7 @@ def _resolve_reactome_dir(reactome_dir=None):
     env_value = os.environ.get("REACTOME_RAW_DIR")
     if env_value:
         return Path(env_value)
-    return Path(__file__).resolve().parents[2] / "data" / "external" / "reactome" / "raw"
+    return Path(__file__).resolve().parents[2] / "data" / "augmented" / "rag" / "reactome" / "raw"
 
 
 def load_gene_pathway_membership(reactome_dir=None, cache_dir=None, use_cache=True):
@@ -55,9 +53,9 @@ def load_gene_pathway_membership(reactome_dir=None, cache_dir=None, use_cache=Tr
     own gene column is already Ensembl -- this excludes any other identifier namespace the raw
     file might carry).
 
-    Caches the parsed result as Parquet under backend/research_service/runtime/ (never inside data/external/)
-    so a repeated query against the same raw files does not re-parse them from scratch --
-    invalidated whenever either raw file's mtime is newer than the cache's own.
+    Caches the parsed result as Parquet under backend/research_service/runtime/ (never inside
+    data/augmented/rag/) so a repeated query against the same raw files does not re-parse them
+    from scratch -- invalidated whenever either raw file's mtime is newer than the cache's own.
     """
     reactome_dir = _resolve_reactome_dir(reactome_dir)
     e2r_path = reactome_dir / "Ensembl2Reactome.txt"
@@ -67,8 +65,8 @@ def load_gene_pathway_membership(reactome_dir=None, cache_dir=None, use_cache=Tr
     if _is_lfs_pointer(e2r_path) or _is_lfs_pointer(pathways_path):
         raise FileNotFoundError(
             f"Raw Reactome files under {reactome_dir} are unpulled Git LFS pointer stubs, not "
-            f"the real data -- run `git lfs pull` for data/external/reactome/raw/ before this "
-            f"fallback can be used."
+            f"the real data -- run `git lfs pull` for data/augmented/rag/reactome/raw/ before "
+            f"this fallback can be used."
         )
 
     cache_dir = Path(cache_dir) if cache_dir is not None else _DEFAULT_CACHE_DIR

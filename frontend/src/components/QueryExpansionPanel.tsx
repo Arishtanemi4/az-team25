@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { searchGenes } from "../api/geneServiceClient";
 import { expandQuery, RagRequestError } from "../api/ragServiceClient";
 import type { ExpansionSuggestion } from "../types/rag";
@@ -16,20 +16,35 @@ export function QueryExpansionPanel({ inclusionGenes, onAddGene }: QueryExpansio
   const [error, setError] = useState<string | null>(null);
   const [suggestions, setSuggestions] = useState<ExpansionSuggestion[]>([]);
   const [addingGene, setAddingGene] = useState<string | null>(null);
+  // /expand is a multi-turn LLM tool-calling agent, routinely 60-90s+ -- not a hang, but nothing
+  // distinguishes "still working" from "frozen" without this, so a researcher can cancel out of
+  // a slow call instead of wondering whether the page needs a refresh.
+  const abortRef = useRef<AbortController | null>(null);
 
   async function handleSuggest() {
     setIsLoading(true);
     setError(null);
+    const controller = new AbortController();
+    abortRef.current = controller;
     try {
-      const response = await expandQuery(inclusionGenes.map((g) => g.symbol));
+      const response = await expandQuery(inclusionGenes.map((g) => g.symbol), controller.signal);
       // Suggestions missing source_db/edge_type failed the structural provenance check --
       // shown de-emphasized below, never offered as addable.
       setSuggestions(response.suggestions);
     } catch (err) {
-      setError(err instanceof RagRequestError ? err.message : "Query expansion failed. Is rag_service running?");
+      if (err instanceof DOMException && err.name === "AbortError") {
+        // Cancelled by the researcher -- not a failure, say nothing.
+      } else {
+        setError(err instanceof RagRequestError ? err.message : "Query expansion failed. Is rag_service running?");
+      }
     } finally {
+      abortRef.current = null;
       setIsLoading(false);
     }
+  }
+
+  function handleCancel() {
+    abortRef.current?.abort();
   }
 
   async function handleAdd(suggestion: ExpansionSuggestion) {
@@ -62,6 +77,12 @@ export function QueryExpansionPanel({ inclusionGenes, onAddGene }: QueryExpansio
       <button type="button" onClick={handleSuggest} disabled={inclusionGenes.length === 0 || isLoading}>
         {isLoading ? "Consulting knowledge graph..." : "Suggest related genes"}
       </button>
+      {isLoading && (
+        <span className="expansion-loading-note">
+          This runs a multi-step reasoning agent and can take 1-2 minutes.{" "}
+          <button type="button" onClick={handleCancel}>Cancel</button>
+        </span>
+      )}
       {error && <p className="error-notice">{error}</p>}
       {suggestions.length > 0 && (
         <ul className="chip-row">
