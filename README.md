@@ -90,9 +90,6 @@ Nothing here is imported by the actual pipeline.
 **`validation/`** — Cross-checks the pipeline's output against independent published datasets, so
 the ranking isn't just internally consistent but externally sane.
 
-**`evaluation/`** — A critical look back at the finished system: what it gets right, where it's
-weaker, and what we'd do differently.
-
 **`deploy/`** — The scripts that make `docker compose up` a one-command setup, running
 preprocessing and calibration automatically before anything else starts.
 
