@@ -44,8 +44,11 @@ export function askMethodologyQuestion(question: string): Promise<MethodologyAns
   return postJson("/methodology/ask", { question });
 }
 
-export function expandQuery(inclusionGenes: string[]): Promise<ExpansionResponse> {
-  return postJson("/expand", { inclusion_genes: inclusionGenes });
+// /expand runs a multi-turn tool-calling LLM agent (rag/query_expansion_agent.py) against a
+// large model -- routinely 60-90s+ for a handful of turns, not a hang. `signal` lets the panel
+// offer a real Cancel button instead of the researcher wondering whether the UI has frozen.
+export function expandQuery(inclusionGenes: string[], signal?: AbortSignal): Promise<ExpansionResponse> {
+  return postJson("/expand", { inclusion_genes: inclusionGenes }, signal);
 }
 
 export function searchLiterature(question: string): Promise<LiteratureResponse> {

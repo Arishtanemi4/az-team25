@@ -7,14 +7,14 @@ import numpy as np
 import pandas as pd
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-REACTOME_DIR = REPO_ROOT / "data" / "external" / "reactome" / "raw"
-STRING_DIR = REPO_ROOT / "data" / "external" / "string_v12" / "raw"
-BIOGRID_ZIP = REPO_ROOT / "data" / "external" / "biogrid" / "raw" / "BIOGRID-ORGANISM-5.0.259.tab3.zip"
+REACTOME_DIR = REPO_ROOT / "data" / "augmented" / "rag" / "reactome" / "raw"
+STRING_DIR = REPO_ROOT / "data" / "augmented" / "rag" / "string_v12" / "raw"
+BIOGRID_ZIP = REPO_ROOT / "data" / "augmented" / "rag" / "biogrid" / "raw" / "BIOGRID-ORGANISM-5.0.259.tab3.zip"
 BIOGRID_HUMAN_MEMBER = "BIOGRID-ORGANISM-Homo_sapiens-5.0.259.tab3.txt"
 GENE_REFERENCE_PATH = REPO_ROOT / "data" / "processed" / "gene_reference.csv"
 FUSIONS_PATH = REPO_ROOT / "data" / "processed" / "fusions.csv"
 DEPENDENCY_PATH = REPO_ROOT / "data" / "processed" / "dependency.csv"
-OUT_DIR = REPO_ROOT / "data" / "external" / "knowledge_graph" / "derived"
+OUT_DIR = REPO_ROOT / "data" / "augmented" / "rag" / "knowledge_graph" / "derived"
 NODES_OUT_PATH = OUT_DIR / "knowledge_graph_nodes.parquet"
 EDGES_OUT_PATH = OUT_DIR / "knowledge_graph_edges.parquet"
 MANIFEST_OUT_PATH = OUT_DIR / "knowledge_graph_build_manifest.json"
