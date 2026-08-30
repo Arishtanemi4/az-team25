@@ -29,7 +29,8 @@ def search(request: Request, body: LiteratureQuestionRequest) -> dict[str, Any]:
             status_code=502,
             detail=f"The literature agent couldn't produce a usable answer ({exc}). This looks "
                    "like a limitation of the current AI model on this question, not a bug -- try "
-                   "rephrasing your question, or try again in a moment.",
+                   "rephrasing your question, or try again in a moment, or you might have to try "
+                   "using a better model as the current one is a free tier 120b model.",
         ) from exc
     except ProviderRateLimitedError as exc:
         raise HTTPException(status_code=429, detail=str(exc)) from exc

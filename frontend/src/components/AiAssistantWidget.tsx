@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { LiteratureSearchBox } from "./LiteratureSearchBox";
+// import { LiteratureSearchBox } from "./LiteratureSearchBox"; // Literature tab disabled -- agent turn budget too tight, see rag/literature_agent.py.
 // import { MethodologyQABox } from "./MethodologyQABox"; // Methodology tab disabled -- not evaluated/stabilized yet.
 import { NarratorPanel } from "./NarratorPanel";
 import type { RankResponse } from "../types/scoring";
@@ -10,12 +10,12 @@ interface AiAssistantWidgetProps {
   result: RankResponse | null;
 }
 
-// Floating, minimized-by-default home for the three read-only AI features (result narration,
-// methodology Q&A, literature search) -- QueryExpansionPanel stays embedded in QueryForm since
-// it directly edits the inclusion gene list rather than producing read-only output. The panel and
-// all three tabs stay mounted for the widget's whole lifetime (only CSS-hidden when closed or
-// inactive) so minimizing the widget or switching tabs never discards in-progress or completed
-// question text/answers.
+// Floating, minimized-by-default home for the read-only AI features (result narration;
+// methodology Q&A and literature search are currently disabled, see tabs below) --
+// QueryExpansionPanel stays embedded in QueryForm since it directly edits the inclusion gene list
+// rather than producing read-only output. The panel and its tabs stay mounted for the widget's
+// whole lifetime (only CSS-hidden when closed or inactive) so minimizing the widget or switching
+// tabs never discards in-progress or completed question text/answers.
 export function AiAssistantWidget({ result }: AiAssistantWidgetProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<AssistantTab>("narrator");
@@ -40,6 +40,7 @@ export function AiAssistantWidget({ result }: AiAssistantWidgetProps) {
             Methodology
           </button>
           */}
+          {/* Literature tab disabled -- agent turn budget too tight, see rag/literature_agent.py.
           <button
             type="button"
             className={activeTab === "literature" ? "active" : ""}
@@ -47,6 +48,7 @@ export function AiAssistantWidget({ result }: AiAssistantWidgetProps) {
           >
             Literature
           </button>
+          */}
         </div>
         <div className="ai-assistant-body">
           <div className={activeTab === "narrator" ? "" : "ai-assistant-tab-hidden"}>
@@ -61,9 +63,11 @@ export function AiAssistantWidget({ result }: AiAssistantWidgetProps) {
             <MethodologyQABox />
           </div>
           */}
+          {/* Literature tab disabled -- agent turn budget too tight, see rag/literature_agent.py.
           <div className={activeTab === "literature" ? "" : "ai-assistant-tab-hidden"}>
             <LiteratureSearchBox />
           </div>
+          */}
         </div>
       </div>
       <button
