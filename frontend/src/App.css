@@ -454,6 +454,11 @@ header {
   font-weight: normal;
 }
 
+.literature-search .info-popover {
+  left: auto;
+  right: 0;
+}
+
 .info-popover-formula {
   font-family: var(--mono);
   font-size: 12px;

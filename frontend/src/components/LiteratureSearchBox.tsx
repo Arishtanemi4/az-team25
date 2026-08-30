@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { RagRequestError, searchLiterature } from "../api/ragServiceClient";
 import type { LiteratureResponse } from "../types/rag";
 
@@ -11,6 +11,7 @@ export function LiteratureSearchBox() {
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<LiteratureResponse | null>(null);
   const [showHint, setShowHint] = useState(false);
+  const hintWrapperRef = useRef<HTMLSpanElement>(null);
   // find_evidence() is a multi-turn agent hitting live PubMed/NCBI, routinely slow -- lets the
   // researcher cancel out instead of wondering whether the search has hung (same convention as
   // QueryExpansionPanel/NarratorPanel). No unmount-abort effect needed: this box stays mounted
@@ -40,6 +41,17 @@ export function LiteratureSearchBox() {
     abortRef.current?.abort();
   }
 
+  // Click-only (no hover): hover handlers previously fought with click over the same
+  // showHint state and closed the popover before the cursor could reach it.
+  useEffect(() => {
+    if (!showHint) return;
+    function handleOutsideClick(e: MouseEvent) {
+      if (!hintWrapperRef.current?.contains(e.target as Node)) setShowHint(false);
+    }
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => document.removeEventListener("mousedown", handleOutsideClick);
+  }, [showHint]);
+
   return (
     <section className="literature-search">
       <h2>Search the literature</h2>
@@ -53,15 +65,13 @@ export function LiteratureSearchBox() {
         <button type="submit" disabled={!question.trim() || isLoading}>
           {isLoading ? "Searching PubMed..." : "Search"}
         </button>
-        <span className="info-tooltip-wrapper">
+        <span className="info-tooltip-wrapper" ref={hintWrapperRef}>
           <button
             type="button"
             className="info-icon"
             aria-label="Example questions"
             aria-expanded={showHint}
             onClick={() => setShowHint((v) => !v)}
-            onMouseEnter={() => setShowHint(true)}
-            onMouseLeave={() => setShowHint(false)}
           >
             i
           </button>

@@ -9,7 +9,10 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 load_dotenv(REPO_ROOT / ".env")
 
 DEFAULT_BASE_URL = "https://integrate.api.nvidia.com/v1"
-DEFAULT_MODEL = "nvidia/nemotron-3-ultra-550b-a55b"
+# DEFAULT_MODEL = "nvidia/nemotron-3-ultra-550b-a55b"  # 404s as of 2026-08-30 -- NVIDIA broke
+# this model's serverless function server-side (still listed in /v1/models, but
+# /v1/chat/completions returns "Function id ... is not found"); swap back if NVIDIA fixes it.
+DEFAULT_MODEL = "nvidia/nemotron-3-super-120b-a12b"
 GLM_MODEL = "z-ai/glm-5.2"
 LLAMA_MODEL = "meta/llama-3.3-70b-instruct"
 
