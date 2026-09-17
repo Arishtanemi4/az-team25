@@ -1,7 +1,7 @@
 # CellLineSelector
 
 A tool built for AstraZeneca that takes a researcher's genes of interest and hands back a short,
-ranked list of cancer cell lines to actually work with — along with the evidence behind every
+ranked list of cancer cell lines to actually work with  along with the evidence behind every
 pick, so nobody has to take the ranking on faith.
 
 Give it a set of genes you want included or excluded, and it walks through expression, protein,
